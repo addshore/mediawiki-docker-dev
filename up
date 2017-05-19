@@ -18,3 +18,5 @@ if hash sudo 2>/dev/null; then
 else
     docker-compose up > ./../../log/docker-compose.log 2>&1 &
 fi
+
+tail -f ./../../log/docker-compose.log

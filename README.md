@@ -17,19 +17,25 @@ https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 git clone https://github.com/addshore/mediawiki-docker-dev.git ~/dev/github/addshore/mediawiki-docker-dev
 ```
 
-#### 3) Clone MediaWiki Core
+#### 3) Clone MediaWiki Core & the Vector Skin
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
 ```
 git clone https://gerrit.wikimedia.org/r/mediawiki/core ~/dev/gerrit/mediawiki
+git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ~/dev/gerrit/mediawiki/skins/Vector
 ```
 
-Or from [Github Mirror](https://github.com/wikimedia/mediawiki):
+Or from [Github Mirror](https://github.com/wikimedia/mediawiki) (often quicker):
 
 ```
 git clone https://github.com/wikimedia/mediawiki.git ~/dev/gerrit/mediawiki
+git clone https://github.com/wikimedia/mediawiki-skins-Vector.git ~/dev/gerrit/mediawiki/skins/Vector
+
+# You can then set the remote to point back to gerrit:
+
 git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/core
+git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 ```
 
 #### 4) Create a basic LocalSettings.php

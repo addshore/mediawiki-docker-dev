@@ -49,7 +49,7 @@ services:
      - VIRTUAL_HOST=~^nginx\.php7\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
 
   mediawiki-nginx-hhvm:
     image: webdevops/hhvm-nginx

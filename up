@@ -12,4 +12,9 @@ fi
 
 cd $(dirname $0)/docker/mediawiki-dev
 
-docker-compose up
+# Linux will need sudo, sudo doesn't exist on windows
+if hash sudo 2>/dev/null; then
+    sudo docker-compose up
+else
+    docker-compose up
+fi

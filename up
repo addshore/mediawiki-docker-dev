@@ -19,4 +19,6 @@ else
     docker-compose up > ./../../log/docker-compose.log 2>&1 &
 fi
 
+echo "Tailing docker-composer.log"
+
 tail -f ./../../log/docker-compose.log

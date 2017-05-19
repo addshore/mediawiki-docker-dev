@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Running install.php script on mediawiki-apache-php7 container"
+docker exec -it "mediawikidev_mediawiki-apache-php7_1" bash //var/www/mediawiki/.docker/installdbs

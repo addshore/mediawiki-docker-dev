@@ -42,7 +42,11 @@ require_once __DIR__ . '/.docker/LocalSettings.php';
 
 #### 5) Install Mediawiki databases
 
-**See below:** 'To install the mediawiki DB' in the 'operation' section below.
+```
+~/dev/github/addshore/mediawiki-docker-dev/up
+~/dev/github/addshore/mediawiki-docker-dev/installdbs
+~/dev/github/addshore/mediawiki-docker-dev/down
+```
 
 ### Operation
 
@@ -73,9 +77,9 @@ php /var/www/mediawiki/maintenance/install.php --dbuser mediawiki --dbpass mwpas
 
 **To drop the persistent storage**
 ```
-docker volume rm docker_mediawiki-mysql-data
-docker volume rm docker_mediawiki-mariadb-data
-docker volume rm docker_mediawiki-graphite-data
+docker volume rm mediawikidev_mediawiki-mysql-data
+docker volume rm mediawikidev_mediawiki-mariadb-data
+docker volume rm mediawikidev_mediawiki-graphite-data
 ```
 
 ### Access

@@ -2,12 +2,7 @@
 
 cd $(dirname $0)/docker/mediawiki-dev
 
-# Linux will need sudo, sudo doesn't exist on windows
-if hash sudo 2>/dev/null; then
-    sudo docker-compose down > ./../../log/docker-compose.log 2>&1 &
-else
-    docker-compose down > ./../../log/docker-compose.log 2>&1 &
-fi
+docker-compose down > ./../../log/docker-compose.log 2>&1 &
 
 echo "Tailing docker-composer.log"
 

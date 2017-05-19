@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker volume rm mediawikidev_mediawiki-mysql-data
+docker volume rm mediawikidev_mediawiki-mariadb-data
+docker volume rm mediawikidev_mediawiki-graphite-data

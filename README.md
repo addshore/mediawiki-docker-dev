@@ -2,6 +2,8 @@
 
 If you don't want to use the default port of 8080 and the default mediawiki path of ~/dev/git/gerrit/mediawiki then please just change the .env file for now....
 
+All scripts (install, uninstall, up, down) will need sudo on linux systems for docker to work.
+
 ### Install
 
 #### 1) Install Docker & Docker Compose
@@ -44,7 +46,7 @@ require_once __DIR__ . '/.docker/LocalSettings.php';
 
 ```
 ~/dev/github/addshore/mediawiki-docker-dev/up
-~/dev/github/addshore/mediawiki-docker-dev/installdbs
+~/dev/github/addshore/mediawiki-docker-dev/install
 ~/dev/github/addshore/mediawiki-docker-dev/down
 ```
 
@@ -64,22 +66,6 @@ Running the up script will tell you what you need to add.
 
 ```
 ~/dev/github/addshore/mediawiki-docker-dev/down
-```
-
-**To install the mediawiki DB**
-
-Connect to one of the webhosting container and run the following:
-
-```
-php /var/www/mediawiki/maintenance/install.php --dbuser mediawiki --dbpass mwpass --dbname mediawiki --dbserver mediawiki-mysql --lang en --pass adminpass dev-mysql admin
-php /var/www/mediawiki/maintenance/install.php --dbuser mediawiki --dbpass mwpass --dbname mediawiki --dbserver mediawiki-mariadb --lang en --pass adminpass dev-mariadb admin
-```
-
-**To drop the persistent storage**
-```
-docker volume rm mediawikidev_mediawiki-mysql-data
-docker volume rm mediawikidev_mediawiki-mariadb-data
-docker volume rm mediawikidev_mediawiki-graphite-data
 ```
 
 ### Access
@@ -104,7 +90,7 @@ docker volume rm mediawikidev_mediawiki-graphite-data
 
 You can run commands using the name of the container:
 ```
-docker exec -it "mediawikidev_mediawiki-apache-hhvm_1" bash
+docker exec -it "mediawikidev_mediawiki-apache-php7_1" bash
 ```
 
 If this doesn't work, Get the ID of the container that you want to run a command on:

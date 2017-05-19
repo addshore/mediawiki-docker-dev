@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if hash php 2>/dev/null; then
+    php ./scripts/checkHosts.php
+    [ $? -ne 0 ] && exit
+else
+    echo "PHP not installed so hosts file not checked."
+fi
+
+docker-compose up

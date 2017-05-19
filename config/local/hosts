@@ -1,0 +1,14 @@
+# mw docker start
+127.0.0.1 mw default.mw
+# services
+127.0.0.1 phpmyadmin.mw
+127.0.0.1 graphite.mw
+# nginx
+127.0.0.1 nginx.mw php5.mw nginx.php5.mw nginx.php5.mysql.mw nginx.php5.mariadb.mw
+127.0.0.1          php7.mw nginx.php7.mw nginx.php7.mysql.mw nginx.php7.mariadb.mw
+127.0.0.1          hhvm.mw nginx.hhvm.mw nginx.hhvm.mysql.mw nginx.hhvm.mariadb.mw
+# apache
+127.0.0.1 apache.mw php5.mw apache.php5.mw apache.php5.mysql.mw apache.php5.mariadb.mw
+127.0.0.1           php7.mw apache.php7.mw apache.php7.mysql.mw apache.php7.mariadb.mw
+127.0.0.1           hhvm.mw apache.hhvm.mw apache.hhvm.mysql.mw apache.hhvm.mariadb.mw
+# mw docker end

@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
 
@@ -39,7 +39,7 @@ services:
      - VIRTUAL_HOST=mw,default.mw,~^nginx\.php5\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
     restart: always
   
   mediawiki-nginx-php7:
@@ -58,9 +58,9 @@ services:
      - VIRTUAL_HOST=~^nginx\.hhvm\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
-     - ./config/hhvm/php.ini:/etc/hhvm/php.ini
-     - ./config/hhvm/server.ini:/etc/hhvm/server.ini
+     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./../../config/hhvm/php.ini:/etc/hhvm/php.ini
+     - ./../../config/hhvm/server.ini:/etc/hhvm/server.ini
 
   mediawiki-apache-php5:
     image: webdevops/php-apache:5.6
@@ -69,7 +69,7 @@ services:
      - VIRTUAL_HOST=~^apache\.php5\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
     restart: always
 
   mediawiki-apache-php7:
@@ -79,7 +79,7 @@ services:
      - VIRTUAL_HOST=~^apache\.php7\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
 
   mediawiki-apache-hhvm:
     image: webdevops/hhvm-apache
@@ -88,9 +88,9 @@ services:
      - VIRTUAL_HOST=~^apache\.hhvm\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
-     - ./config/hhvm/php.ini:/etc/hhvm/php.ini
-     - ./config/hhvm/server.ini:/etc/hhvm/server.ini
+     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./../../config/hhvm/php.ini:/etc/hhvm/php.ini
+     - ./../../config/hhvm/server.ini:/etc/hhvm/server.ini
 
   mediawiki-graphite-statsd:
     image: hopsoft/graphite-statsd

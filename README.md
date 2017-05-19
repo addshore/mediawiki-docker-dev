@@ -4,9 +4,9 @@ If you don't want to use the default port of 8080 and the default mediawiki path
 
 ### Install
 
-#### 1) Install Docker
+#### 1) Install Docker & Docker Compose
 
-https://www.docker.com/get-docker
+https://docs.docker.com/compose/install/
 
 #### 2) Clone this repository
 
@@ -32,6 +32,8 @@ git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/core
 #### 4) Create a basic LocalSettings.php
 
 The .docker/LocalSettings.php file will exist within the containers running Mediawiki.
+
+Make a LocalSettings.php in the root of the Mediawiki repo containing the following:
 
 ```
 <?php
@@ -98,7 +100,7 @@ docker volume rm docker_mediawiki-graphite-data
 
 You can run commands using the name of the container:
 ```
-docker exec -it "mediawiki-docker-dev_mediawiki-apache-hhvm_1" bash
+docker exec -it "mediawikidev_mediawiki-apache-hhvm_1" bash
 ```
 
 If this doesn't work, Get the ID of the container that you want to run a command on:

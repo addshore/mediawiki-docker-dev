@@ -50,6 +50,10 @@ require_once __DIR__ . '/.docker/LocalSettings.php';
 ~/dev/github/addshore/mediawiki-docker-dev/down
 ```
 
+#### 6) Update your local hosts file
+
+You will need to check the ./config/local/hosts file and add these to your local hosts file.
+
 ### Operation
 
 You need to populate your hosts file to get the most out of this docker stuff.

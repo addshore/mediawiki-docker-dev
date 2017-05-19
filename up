@@ -2,13 +2,14 @@
 
 cd $(dirname $0)
 
-if hash php 2>/dev/null; then
-    php ./scripts/checkHosts.php
-    [ $? -ne 0 ] && exit
-else
-    echo "PHP not installed so hosts file not checked."
-    echo "You may want to manually check the ./config/local/hosts file and add these to your local hosts folder."
-fi
+#if hash php 2>/dev/null; then
+#    php ./scripts/checkHosts.php
+#    [ $? -ne 0 ] && exit
+#else
+#    echo "PHP not installed so hosts file not checked."
+#    echo "You may want to manually check the ./config/local/hosts file and add these to your local hosts file."
+#fi
+echo "You will need to check the ./config/local/hosts file and add these to your local hosts file."
 
 cd $(dirname $0)/docker/mediawiki-dev
 

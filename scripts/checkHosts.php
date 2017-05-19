@@ -14,7 +14,6 @@ if ( file_exists( $windowsLocation ) ) {
     echo "Can't find your hosts file to check!" . PHP_EOL;
 }
 $localHostsFile = file_get_contents( $location );
-$localHostsFile = file_get_contents( $windowsLocation );
 
 // And the content that we want
 $dockerHosts = file_get_contents( __DIR__ . '/../config/local/hosts' );

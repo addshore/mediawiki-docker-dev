@@ -2,13 +2,14 @@
 
 If you don't want to use the default port of 8080 and the default mediawiki path of ~/dev/git/gerrit/mediawiki then please just change the .env file for now....
 
-All scripts (install, uninstall, up, down) will need sudo on linux systems for docker to work.
-
 ### Install
 
 #### 1) Install Docker & Docker Compose
 
 https://docs.docker.com/compose/install/
+
+On linux you will have to add your user to the docker group:
+https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 
 #### 2) Clone this repository
 

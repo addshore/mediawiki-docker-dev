@@ -15,6 +15,4 @@ cd $(dirname $0)/docker/mediawiki-dev
 
 docker-compose up > ./../../log/docker-compose.log 2>&1 &
 
-echo "Tailing docker-composer.log"
-
-tail -f ./../../log/docker-compose.log
+echo "Containers are starting"

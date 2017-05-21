@@ -8,7 +8,7 @@ If you don't want to use the default port of 8080 and the default mediawiki path
 
 https://docs.docker.com/compose/install/
 
-On linux you will have to add your user to the docker group:
+If you don't want to run the container as root, you will have to add your user to the docker group:
 https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 
 #### 2) Clone this repository
@@ -49,7 +49,7 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
 
-#### 5) Install Mediawiki databases
+#### 5) Install MediaWiki databases
 
 ```
 ~/dev/github/addshore/mediawiki-docker-dev/up

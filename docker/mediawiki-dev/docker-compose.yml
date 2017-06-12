@@ -9,7 +9,6 @@ services:
       - MYSQL_USER=mediawiki
       - MYSQL_PASSWORD=mwpass
       - MYSQL_ROOT_PASSWORD=toor
-    restart: always
     volumes:
       - mediawiki-mysql-data:/var/lib/mysql
 
@@ -20,7 +19,6 @@ services:
       - MYSQL_USER=mediawiki
       - MYSQL_PASSWORD=mwpass
       - MYSQL_ROOT_PASSWORD=toor
-    restart: always
     volumes:
       - mediawiki-mariadb-data:/var/lib/mysql
       
@@ -30,7 +28,6 @@ services:
      - PMA_HOSTS=mediawiki-mysql,mediawiki-mariadb
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw
-    restart: always
   
   mediawiki-nginx-php5:
     image: webdevops/php-nginx:5.6
@@ -40,7 +37,6 @@ services:
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
-    restart: always
   
   mediawiki-nginx-php7:
     image: webdevops/php-nginx:7.1
@@ -70,7 +66,6 @@ services:
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
-    restart: always
 
   mediawiki-apache-php7:
     image: webdevops/php-apache:7.1
@@ -96,7 +91,6 @@ services:
     image: hopsoft/graphite-statsd
     environment:
      - VIRTUAL_HOST=graphite.mw
-    restart: always
     volumes:
      - mediawiki-graphite-data:/opt/graphite/storage
 

@@ -1,5 +1,5 @@
 #!/bin/sh
 
-echo "Containers are being pulled down"
+echo "Containers & Volumes are being pulled down"
 
-docker-compose down
+docker-compose down -v

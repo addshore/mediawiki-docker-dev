@@ -1,7 +1,0 @@
-#!/bin/sh
-
-echo "Running composer install on mediawiki-apache-php5 container"
-docker-compose exec -it "mediawiki-apache-php5" composer install --working-dir //var/www/mediawiki
-
-echo "Running install.php script on mediawiki-apache-php7 container"
-docker-compose exec -it "mediawiki-apache-php7" bash //var/www/mediawiki/.docker/installdbs

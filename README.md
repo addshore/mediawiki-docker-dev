@@ -14,7 +14,7 @@ https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 #### 2) Clone this repository
 
 ```
-git clone https://github.com/addshore/mediawiki-docker-dev.git ~/dev/github/addshore/mediawiki-docker-dev
+git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
 #### 3) Clone MediaWiki Core & the Vector Skin
@@ -49,34 +49,44 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
 
-#### 5) Install Mediawiki databases
-
-```
-~/dev/github/addshore/mediawiki-docker-dev/up
-~/dev/github/addshore/mediawiki-docker-dev/install
-~/dev/github/addshore/mediawiki-docker-dev/down
-```
-
-#### 6) Update your local hosts file
+#### 5) Update your local hosts file
 
 You will need to check the ./config/local/hosts file and add these to your local hosts file.
 
 ### Operation
 
-You need to populate your hosts file to get the most out of this docker stuff.
+You need to populate your hosts file to get the most out of this docker stuff (see above).
 
-Running the up script will tell you what you need to add.
+**To set up the containers**:
 
-**To start the containers**:
+This includes running install.php where needed.
 
 ```
-~/dev/github/addshore/mediawiki-docker-dev/up
+./up
 ```
 
 **To stop the containers**:
 
+Databases persist.
+
 ```
-~/dev/github/addshore/mediawiki-docker-dev/down
+./stop
+```
+
+**To restart the containers**:
+
+If things have already been setup using up.
+
+```
+./start
+```
+
+**To tear down the containers**:
+
+Removes databases.
+
+```
+./down
 ```
 
 ### Access
@@ -99,21 +109,10 @@ Running the up script will tell you what you need to add.
 
 #### Container
 
-You can run commands using the name of the container:
+You can run commands using the name of the service:
 ```
-docker exec -it "mediawikidev_mediawiki-apache-php7_1" bash
+docker-compose exec "mediawiki-apache-php7" bash
 ```
-
-If this doesn't work, Get the ID of the container that you want to run a command on:
-```
-docker container ls
-```
-
-And then use it to run a command:
-```
-docker exec -it "98ur10fkj1909j3" bash
-```
-
 
 ### TODO
 

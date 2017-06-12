@@ -11,8 +11,6 @@ cd $(dirname $0)
 #fi
 echo "You will need to check the ./config/local/hosts file and add these to your local hosts file."
 
-cd $(dirname $0)/docker/mediawiki-dev
-
-docker-compose up > ./../../log/docker-compose.log 2>&1 &
-
 echo "Containers are starting"
+
+docker-compose up -d

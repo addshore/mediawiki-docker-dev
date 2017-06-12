@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $(dirname $0)/docker/mediawiki-dev
+echo "Containers are being pulled down"
 
-docker-compose down > ./../../log/docker-compose.log 2>&1 &
-
-echo "Containers are stopping"
+docker-compose down

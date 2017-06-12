@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "Containers are stopping"
+
+docker-compose stop

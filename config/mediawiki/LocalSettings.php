@@ -10,10 +10,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $dockerRequestInfo = [];
 call_user_func( function() {
 	global $dockerRequestInfo;
-	
+
 	$parsedHost = parse_url( $_SERVER['HTTP_HOST'] );
 	$host = $parsedHost['host'];
-	
+
 	// Defaults
 	$dockerRequestInfo = [
 		'webserver' => 'nginx',
@@ -21,7 +21,7 @@ call_user_func( function() {
 		'database' => 'mysql',
 		'port' => $parsedHost['port'],
 	];
-	
+
 	// Allowed Values
 	$allowed = [
 		'webserver' => [
@@ -37,7 +37,7 @@ call_user_func( function() {
 			'mariadb',
 		],
 	];
-	
+
 	// Set from the domain
 	foreach ( $allowed as $type => $list ) {
 		foreach ( $list as $item ) {
@@ -66,7 +66,7 @@ $wgDBpassword = "mwpass";
 
 ## Site settings
 
-##$wgUsePathInfo = false;
+## $wgUsePathInfo = false;
 
 $wgAssumeProxiesUseDefaultProtocolPorts = false; # This actually does nothing as WebRequest::detectServer() is called in DefaultSettings before this file is loaded.
 $wgServer = "http://$dockerHost:$dockerPort";
@@ -79,9 +79,9 @@ $wgStatsdServer = "mediawiki-graphite-statsd";
 
 ## Dev & Debug
 
-ini_set('xdebug.var_display_max_depth', -1);
-ini_set('xdebug.var_display_max_children', -1);
-ini_set('xdebug.var_display_max_data', -1);
+ini_set( 'xdebug.var_display_max_depth', -1 );
+ini_set( 'xdebug.var_display_max_children', -1 );
+ini_set( 'xdebug.var_display_max_data', -1 );
 
 error_reporting( -1 );
 ini_set( 'display_errors', 1 );

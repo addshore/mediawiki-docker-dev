@@ -11,8 +11,18 @@ cd $(dirname $0)
 #fi
 echo "You will need to check the ./config/local/hosts file and add these to your local hosts file."
 
-cd $(dirname $0)/docker/mediawiki-dev
-
-docker-compose up > ./../../log/docker-compose.log 2>&1 &
-
+# Start Containers
 echo "Containers are starting"
+docker-compose up -d
+
+# Install MediaWiki dbs
+echo "MediaWiki is installing"
+
+echo "Running composer install on mediawiki-apache-php5 container"
+docker-compose exec "mediawiki-apache-php5" composer install --working-dir //var/www/mediawiki
+
+echo "Running install.php script on mediawiki-apache-php7 container"
+docker-compose exec "mediawiki-apache-php7" bash //var/www/mediawiki/.docker/installdbs
+
+# Done
+echo "Your development environment is running"

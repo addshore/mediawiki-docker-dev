@@ -9,7 +9,6 @@ services:
       - MYSQL_USER=mediawiki
       - MYSQL_PASSWORD=mwpass
       - MYSQL_ROOT_PASSWORD=toor
-    restart: always
     volumes:
       - mediawiki-mysql-data:/var/lib/mysql
 
@@ -20,7 +19,6 @@ services:
       - MYSQL_USER=mediawiki
       - MYSQL_PASSWORD=mwpass
       - MYSQL_ROOT_PASSWORD=toor
-    restart: always
     volumes:
       - mediawiki-mariadb-data:/var/lib/mysql
       
@@ -30,7 +28,6 @@ services:
      - PMA_HOSTS=mediawiki-mysql,mediawiki-mariadb
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw
-    restart: always
   
   mediawiki-nginx-php5:
     image: webdevops/php-nginx:5.6
@@ -39,8 +36,7 @@ services:
      - VIRTUAL_HOST=mw,default.mw,~^nginx\.php5\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
-    restart: always
+     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
   
   mediawiki-nginx-php7:
     image: webdevops/php-nginx:7.1
@@ -49,7 +45,7 @@ services:
      - VIRTUAL_HOST=~^nginx\.php7\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
 
   mediawiki-nginx-hhvm:
     image: webdevops/hhvm-nginx
@@ -58,9 +54,9 @@ services:
      - VIRTUAL_HOST=~^nginx\.hhvm\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
-     - ./../../config/hhvm/php.ini:/etc/hhvm/php.ini
-     - ./../../config/hhvm/server.ini:/etc/hhvm/server.ini
+     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./config/hhvm/php.ini:/etc/hhvm/php.ini
+     - ./config/hhvm/server.ini:/etc/hhvm/server.ini
 
   mediawiki-apache-php5:
     image: webdevops/php-apache:5.6
@@ -69,8 +65,7 @@ services:
      - VIRTUAL_HOST=~^apache\.php5\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
-    restart: always
+     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
 
   mediawiki-apache-php7:
     image: webdevops/php-apache:7.1
@@ -79,7 +74,7 @@ services:
      - VIRTUAL_HOST=~^apache\.php7\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
 
   mediawiki-apache-hhvm:
     image: webdevops/hhvm-apache
@@ -88,15 +83,14 @@ services:
      - VIRTUAL_HOST=~^apache\.hhvm\..*\.mw
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
-     - ./../../config/mediawiki:/var/www/mediawiki/.docker:ro
-     - ./../../config/hhvm/php.ini:/etc/hhvm/php.ini
-     - ./../../config/hhvm/server.ini:/etc/hhvm/server.ini
+     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
+     - ./config/hhvm/php.ini:/etc/hhvm/php.ini
+     - ./config/hhvm/server.ini:/etc/hhvm/server.ini
 
   mediawiki-graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:
      - VIRTUAL_HOST=graphite.mw
-    restart: always
     volumes:
      - mediawiki-graphite-data:/opt/graphite/storage
 

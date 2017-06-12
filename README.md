@@ -8,7 +8,7 @@ If you don't want to use the default port of 8080 and the default mediawiki path
 
 https://docs.docker.com/compose/install/
 
-On linux you will have to add your user to the docker group:
+If you don't want to run the container as root, you will have to add your user to the docker group:
 https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 
 #### 2) Clone this repository

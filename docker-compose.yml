@@ -34,6 +34,9 @@ services:
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=mw,default.mw,~^nginx\.php5\..*\.mw
+    depends_on:
+     - mediawiki-mysql
+     - mediawiki-mariadb
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -43,6 +46,9 @@ services:
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=~^nginx\.php7\..*\.mw
+    depends_on:
+     - mediawiki-mysql
+     - mediawiki-mariadb
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -52,6 +58,9 @@ services:
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=~^nginx\.hhvm\..*\.mw
+    depends_on:
+     - mediawiki-mysql
+     - mediawiki-mariadb
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -63,6 +72,9 @@ services:
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=~^apache\.php5\..*\.mw
+    depends_on:
+     - mediawiki-mysql
+     - mediawiki-mariadb
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -72,6 +84,9 @@ services:
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=~^apache\.php7\..*\.mw
+    depends_on:
+     - mediawiki-mysql
+     - mediawiki-mariadb
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -81,6 +96,9 @@ services:
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=~^apache\.hhvm\..*\.mw
+    depends_on:
+     - mediawiki-mysql
+     - mediawiki-mariadb
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro

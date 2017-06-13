@@ -48,7 +48,8 @@ call_user_func( function() {
 	}
 } );
 
-$dockerHost = $dockerRequestInfo['webserver'] . '.' . $dockerRequestInfo['runtime'] . '.' . $dockerRequestInfo['database'] . '.mw';
+$dockerId = $dockerRequestInfo['webserver'] . '.' . $dockerRequestInfo['runtime'] . '.' . $dockerRequestInfo['database'];
+$dockerHost = $dockerId . '.mw';
 $dockerPort = $dockerRequestInfo['port'];
 
 ## Database settings
@@ -78,6 +79,8 @@ $wgMetaNamespace = "Project";
 $wgStatsdServer = "mediawiki-graphite-statsd";
 
 ## Dev & Debug
+
+$wgDebugLogFile = "/var/log/{$dockerId}.debug.log";
 
 ini_set( 'xdebug.var_display_max_depth', -1 );
 ini_set( 'xdebug.var_display_max_children', -1 );

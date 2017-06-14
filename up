@@ -19,10 +19,10 @@ docker-compose up -d
 echo "MediaWiki is installing"
 
 echo "Running composer install on mediawiki-apache-php5 container"
-docker-compose exec "mediawiki-apache-php5" composer install --working-dir //var/www/mediawiki
+docker-compose exec "mediawiki-apache-php5" composer install --working-dir /var/www/mediawiki
 
 echo "Running install.php script on mediawiki-apache-php7 container"
-docker-compose exec "mediawiki-apache-php7" bash //var/www/mediawiki/.docker/installdbs
+docker-compose exec "mediawiki-apache-php7" bash /var/www/mediawiki/.docker/installdbs
 
 # Done
 echo "Your development environment is running"

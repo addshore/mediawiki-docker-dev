@@ -6,13 +6,9 @@ then
     mv /var/www/mediawiki/LocalSettings.php /var/www/mediawiki/LocalSettings.php.docker.tmp
 fi
 
-# Install the base Mediawiki tables on both db servers & remove the generated LocalSettings.php
-echo "Running install.php for mysql server"
-php /var/www/mediawiki/maintenance/install.php --dbuser mediawiki --dbpass mwpass --dbname mediawiki --dbserver mediawiki-mysql --lang en --pass adminpass dev-mysql admin
-rm /var/www/mediawiki/LocalSettings.php
-
-echo "Running install.php for mariadb server"
-php /var/www/mediawiki/maintenance/install.php --dbuser mediawiki --dbpass mwpass --dbname mediawiki --dbserver mediawiki-mariadb --lang en --pass adminpass dev-mariadb admin
+# Install the base Mediawiki tables on the db server & remove the generated LocalSettings.php
+echo "Running install.php"
+php /var/www/mediawiki/maintenance/install.php --dbuser mediawiki --dbpass mwpass --dbname mediawiki --dbserver db --lang en --pass adminpass docker-dev admin
 rm /var/www/mediawiki/LocalSettings.php
 
 # Move back the old LocalSettings if we had moved one!

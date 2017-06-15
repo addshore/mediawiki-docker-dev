@@ -61,6 +61,8 @@ You need to populate your hosts file to get the most out of this docker stuff (s
 
 This includes running install.php where needed.
 
+You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
+
 ```
 ./up
 ```
@@ -96,7 +98,7 @@ Removes databases.
 **Tools**
 
  - [Graphite](http://graphite.mw:8080)
- - [PhpMyAdmin](http://phpmyadmin.mw:8080)
+ - [PhpMyAdmin](http://phpmyadmin.mw:8  080)
  
 **Mediawiki**
 
@@ -111,7 +113,7 @@ Removes databases.
 
 You can run commands using the name of the service:
 ```
-docker-compose exec "mediawiki-apache-php7" bash
+docker-compose exec "web" bash
 ```
 
 ### TODO

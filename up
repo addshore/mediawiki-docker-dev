@@ -11,6 +11,14 @@ cd $(dirname $0)
 #fi
 echo "You will need to check the ./config/local/hosts file and add these to your local hosts file."
 
+# Create a combined .env file
+touch ./.env
+rm ./.env
+cat ./default.env >> .env
+sed -i -e '$a\' .env
+touch ./local.env
+cat ./local.env >> .env
+
 # Start Containers
 echo "Containers are starting"
 docker-compose up -d
@@ -18,11 +26,14 @@ docker-compose up -d
 # Install MediaWiki dbs
 echo "MediaWiki is installing"
 
-echo "Running composer install on mediawiki-apache-php5 container"
-docker-compose exec "mediawiki-apache-php5" composer install --working-dir //var/www/mediawiki
+echo "Running composer install on the web container"
+docker-compose exec "web" composer install --working-dir //var/www/mediawiki
 
-echo "Running install.php script on mediawiki-apache-php7 container"
-docker-compose exec "mediawiki-apache-php7" bash //var/www/mediawiki/.docker/installdbs
+echo "Waiting for the db server to finish starting"
+docker-compose exec "web" //srv/wait-for-it.sh db:3306
+
+echo "Running install.php script on the web container"
+docker-compose exec "web" bash //var/www/mediawiki/.docker/installdbs
 
 # Done
 echo "Your development environment is running"

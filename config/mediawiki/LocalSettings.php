@@ -7,80 +7,37 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 ## Docker stuff
 
-$dockerRequestInfo = [];
-call_user_func( function() {
-	global $dockerRequestInfo;
-
-	$parsedHost = parse_url( $_SERVER['HTTP_HOST'] );
-	$host = $parsedHost['host'];
-
-	// Defaults
-	$dockerRequestInfo = [
-		'webserver' => 'nginx',
-		'runtime' => 'php5',
-		'database' => 'mysql',
-		'port' => $parsedHost['port'],
-	];
-
-	// Allowed Values
-	$allowed = [
-		'webserver' => [
-			'apache',
-			'nginx',
-		],
-		'runtime' => [
-			'php5',
-			'php7',
-		],
-		'database' => [
-			'mysql',
-			'mariadb',
-		],
-	];
-
-	// Set from the domain
-	foreach ( $allowed as $type => $list ) {
-		foreach ( $list as $item ) {
-			if ( strstr( $host, $item . '.' )  ) {
-				$dockerRequestInfo[$type] = $item;
-			}
-		}
-	}
-} );
-
-$dockerId = $dockerRequestInfo['webserver'] . '.' . $dockerRequestInfo['runtime'] . '.' . $dockerRequestInfo['database'];
-$dockerHost = $dockerId . '.mw';
-$dockerPort = $dockerRequestInfo['port'];
+$dockerParsedHost = parse_url( $_SERVER['HTTP_HOST'] );
+$dockerPort = $dockerParsedHost['port'];
 
 ## Database settings
-
-$wgDBserver = "mediawiki-" . $dockerRequestInfo['database'];
-if ( in_array( $dockerRequestInfo['database'], [ 'mariadb', 'mysql' ] ) ) {
-	$wgDBtype = "mysql";
-	$wgDBprefix = "";
-	$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
-}
+$wgDBserver = "db";
 $wgDBname = "mediawiki";
 $wgDBuser = "mediawiki";
 $wgDBpassword = "mwpass";
 $wgDBpassword = "mwpass";
+
+// mysql only stuff (would need to change for sqlite)
+$wgDBtype = "mysql";
+$wgDBprefix = "";
+$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
 ## Site settings
 
 ## $wgUsePathInfo = false;
 
 $wgAssumeProxiesUseDefaultProtocolPorts = false; # This actually does nothing as WebRequest::detectServer() is called in DefaultSettings before this file is loaded.
-$wgServer = "http://$dockerHost:$dockerPort";
+$wgServer = "http://web.mw.dev:" . $dockerPort;
 $wgScriptPath = "";
 
-$wgSitename = "mediawiki-docker $dockerHost";
+$wgSitename = "mediawiki-docker";
 $wgMetaNamespace = "Project";
 
 $wgStatsdServer = "mediawiki-graphite-statsd";
 
 ## Dev & Debug
 
-$wgDebugLogFile = "/var/log/{$dockerId}.debug.log";
+$wgDebugLogFile = "/var/log/debug.log";
 
 ini_set( 'xdebug.var_display_max_depth', -1 );
 ini_set( 'xdebug.var_display_max_children', -1 );
@@ -102,8 +59,8 @@ $wgEnableJavaScriptTest = true;
 ## Email
 
 $wgEnableEmail = true;
-$wgEmergencyContact = "mediawiki@$dockerHost";
-$wgPasswordSender = "mediawiki@$dockerHost";
+$wgEmergencyContact = "mediawiki@mw.dev";
+$wgPasswordSender = "mediawiki@mw.dev";
 $wgEnableUserEmail = true;
 $wgEmailAuthentication = true;
 

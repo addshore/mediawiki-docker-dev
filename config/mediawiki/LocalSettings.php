@@ -33,7 +33,7 @@ $wgScriptPath = "";
 $wgSitename = "mediawiki-docker";
 $wgMetaNamespace = "Project";
 
-$wgStatsdServer = "mediawiki-graphite-statsd";
+$wgStatsdServer = "graphite-statsd";
 
 ## Dev & Debug
 

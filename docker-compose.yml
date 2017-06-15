@@ -20,10 +20,15 @@ services:
      - VIRTUAL_HOST=phpmyadmin.mw.dev
   
   web:
-    image: webdevops/${PHPORHHVM}-${WEBSERVER}:${RUNTIMEVERSION}
+    image: webdevops/${PHPORHHVM}-${WEBSERVER}${DOCKERPHPDEV}:${RUNTIMEVERSION}
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
      - VIRTUAL_HOST=mw.dev,web.mw.dev
+     - PHP_DEBUGGER=xdebug
+     - XDEBUG_REMOTE_AUTOSTART=1
+     - XDEBUG_REMOTE_HOST=${IDELOCALHOST}
+     - XDEBUG_REMOTE_PORT=9000
+     - XDEBUG_REMOTE_CONNECT_BACK=0
     depends_on:
      - db
     volumes:

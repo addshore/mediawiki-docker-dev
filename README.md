@@ -91,30 +91,30 @@ Removes databases.
 ./down
 ```
 
+**Run commands on the webserver**:
+
+If the containers are running you can use the ./bash script to open up a interactive shell on the webserver.
+
+This can be used to run tests, maintenance scripts etc.
+
+```
+./bash
+```
+
+
 ### Access
 
-#### Web
+ - [MediaWiki Webserver](http://web.mw.dev:8080)
+ - [Graphite](http://graphite.mw.dev:8080)
+ - [PhpMyAdmin](http://phpmyadmin.mw.dev:8080)
 
-**Tools**
+### Debugging
 
- - [Graphite](http://graphite.mw:8080)
- - [PhpMyAdmin](http://phpmyadmin.mw:8  080)
- 
-**Mediawiki**
+While using PHP you can use remote xdebug debugging.
 
- - [Nginx & PHP5 & MySQL](http://nginx.php5.mysql.mw:8080)
- - [Nginx & PHP7 & MySQL](http://nginx.php7.mysql.mw:8080)
- - [Nginx & HHVM & MySQL](http://nginx.hhvm.mysql.mw:8080)
- - [Nginx & HHVM & MariaDb](http://nginx.hhvm.mariadb.mw:8080)
- - [Apache & HHVM & MariaDb](http://apache.hhvm.mariadb.mw:8080)
- - etc. http://<webserver>.<runtime>.<dbtype>.mw:8080
+To do so you need to set IDELOCALHOST in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker.
 
-#### Container
-
-You can run commands using the name of the service:
-```
-docker-compose exec "web" bash
-```
+xdbeug connecitons will then be sent to this IP address on port 9000.
 
 ### TODO
 

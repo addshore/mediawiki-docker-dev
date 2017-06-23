@@ -38,6 +38,10 @@ docker-compose exec "web" composer install --working-dir //var/www/mediawiki
 echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306
 
+echo "Adding services to hosts file"
+./addhost phpmyadmin.web.mw.dev
+./addhost graphite.web.mw.dev
+
 # Add the default site
 ./addsite default
 

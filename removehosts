@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Check windows first as windows can also have a /etc/hosts
+if [ ! -f C:\\Windows\\System32\\drivers\\etc\\hosts ]; then
+    if [ ! -f /etc/hosts ]; then
+        echo "Failed to find hosts file."
+        exit
+    else
+        HOSTSFILE=/etc/hosts
+    fi
+else
+    HOSTSFILE=C:\\Windows\\System32\\drivers\\etc\\hosts
+fi
+
+# When running on windows as administrator sed may not be in the PATH by default
+if [ ! -f /usr/bin/sed ]; then
+    SEDFILE=grep
+else
+    SEDFILE=/usr/bin/sed
+fi
+
+# TODO escalate / warn if file not accessible by current user
+
+# Remove all of the lines we have added
+$SEDFILE -i.bak '/mediawiki-docker-dev/d' $HOSTSFILE
+# Remove any excess whitespace
+$SEDFILE -i.bak '/^[[:space:]]*$/{:a;$d;N;/\n[[:space:]]*$/ba}' $HOSTSFILE

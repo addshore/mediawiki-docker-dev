@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Check windows first as windows can also have a /etc/hosts
+if [ ! -f C:\\Windows\\System32\\drivers\\etc\\hosts ]; then
+    if [ ! -f /etc/hosts ]; then
+        echo "Failed to find hosts file."
+        exit
+    else
+        HOSTSFILE=/etc/hosts
+    fi
+else
+    HOSTSFILE=C:\\Windows\\System32\\drivers\\etc\\hosts
+fi
+
+# TODO escalate / warn if file not accessible by current user
+
+echo '' >> $HOSTSFILE
+echo "127.0.0.1 $1 # mediawiki-docker-dev" >> $HOSTSFILE

@@ -35,6 +35,9 @@ $wgScriptPath = "";
 $wgSitename = "docker-$dockerSiteName";
 $wgMetaNamespace = "Project";
 
+$wgUploadDirectory = "{$IP}/images/docker/{$dockerSiteName}";
+$wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerSiteName}";
+
 $wgStatsdServer = "graphite-statsd";
 
 ## Dev & Debug

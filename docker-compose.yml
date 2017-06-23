@@ -35,6 +35,7 @@ services:
      - ./config/hhvm/php.ini:/etc/hhvm/php.ini
      - ./config/hhvm/server.ini:/etc/hhvm/server.ini
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
+     - mw-images:/var/www/mediawiki/images/docker
 
   graphite-statsd:
     image: hopsoft/graphite-statsd
@@ -53,3 +54,4 @@ services:
 volumes:
   sql-data:
   graphite-data:
+  mw-images:

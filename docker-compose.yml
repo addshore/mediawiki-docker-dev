@@ -29,6 +29,7 @@ services:
      - XDEBUG_REMOTE_HOST=${IDELOCALHOST}
      - XDEBUG_REMOTE_PORT=9000
      - XDEBUG_REMOTE_CONNECT_BACK=0
+     - PHP_IDE_CONFIG=serverName=docker
     depends_on:
      - db
     volumes:

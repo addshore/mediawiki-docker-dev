@@ -125,3 +125,4 @@ xdbeug connecitons will then be sent to this IP address on port 9000.
  - Setup awesomeness db names and stuff
    - [webserver].[runtime].[dbtype].[dbsuffix].mw <<< :( requires wildcard domains......
    - dbname = [dbtype].[dbsuffix]
+ - Should be able to run with no internet (so do something about composer install step))

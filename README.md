@@ -109,6 +109,12 @@ You can add a new site by name using the ./addsite command
 ./addsite enwiki
 ```
 
+**Run tests**:
+
+```
+./phpunit --wiki default //var/www/mediawiki/extensions/FileImporter/tests/phpunit
+```
+
 ### Access
 
  - [Default MediaWiki Site](http://default.web.mw.dev:8080)

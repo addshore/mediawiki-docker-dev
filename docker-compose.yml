@@ -5,9 +5,6 @@ services:
   db:
     image: ${DB}:latest
     environment:
-      - MYSQL_DATABASE=mediawiki
-      - MYSQL_USER=mediawiki
-      - MYSQL_PASSWORD=mwpass
       - MYSQL_ROOT_PASSWORD=toor
     volumes:
       - sql-data:/var/lib/mysql
@@ -23,7 +20,7 @@ services:
     image: webdevops/${PHPORHHVM}-${WEBSERVER}${DOCKERPHPDEV}:${RUNTIMEVERSION}
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
-     - VIRTUAL_HOST=mw.dev,web.mw.dev
+     - VIRTUAL_HOST=*.web.mw.dev
      - PHP_DEBUGGER=xdebug
      - XDEBUG_REMOTE_AUTOSTART=1
      - XDEBUG_REMOTE_HOST=${IDELOCALHOST}

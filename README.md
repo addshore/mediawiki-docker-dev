@@ -59,7 +59,7 @@ You need to populate your hosts file to get the most out of this docker stuff (s
 
 **To set up the containers**:
 
-This includes running install.php where needed.
+This includes setting up a default wiki @ https://default.web.mw.dev:8080
 
 You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
 
@@ -101,10 +101,17 @@ This can be used to run tests, maintenance scripts etc.
 ./bash
 ```
 
+**Add a new site**:
+
+You can add a new site by name using the ./addsite command
+
+```
+./addsite enwiki
+```
 
 ### Access
 
- - [MediaWiki Webserver](http://web.mw.dev:8080)
+ - [Default MediaWiki Site](http://default.web.mw.dev:8080)
  - [Graphite](http://graphite.mw.dev:8080)
  - [PhpMyAdmin](http://phpmyadmin.mw.dev:8080)
 
@@ -121,8 +128,5 @@ xdbeug connecitons will then be sent to this IP address on port 9000.
  - FIX HHVM strict mode
    - Strict Warning: It is not safe to rely on the system's timezone settings. Please use the date.timezone setting, the TZ environment variable or the date_default_timezone_set() function.
  - Statsv endpoint
- - Script to install mediawiki on one of the databases...
- - Setup awesomeness db names and stuff
-   - [webserver].[runtime].[dbtype].[dbsuffix].mw <<< :( requires wildcard domains......
-   - dbname = [dbtype].[dbsuffix]
+ - Setup awesome hosts file additions & removals
  - Should be able to run with no internet (so do something about composer install step))

@@ -9,13 +9,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $dockerParsedHost = parse_url( $_SERVER['HTTP_HOST'] );
 $dockerPort = $dockerParsedHost['port'];
+$dockerHost = $dockerParsedHost['host'];
+$dockerHostParts = explode( '.', $dockerParsedHost['host'] );
+$dockerSiteName = $dockerHostParts[0];
 
 ## Database settings
 $wgDBserver = "db";
-$wgDBname = "mediawiki";
-$wgDBuser = "mediawiki";
-$wgDBpassword = "mwpass";
-$wgDBpassword = "mwpass";
+$wgDBname = $dockerSiteName;
+$wgDBuser = "root";
+$wgDBpassword = "toor";
 
 // mysql only stuff (would need to change for sqlite)
 $wgDBtype = "mysql";
@@ -27,10 +29,10 @@ $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 ## $wgUsePathInfo = false;
 
 $wgAssumeProxiesUseDefaultProtocolPorts = false; # This actually does nothing as WebRequest::detectServer() is called in DefaultSettings before this file is loaded.
-$wgServer = "http://web.mw.dev:" . $dockerPort;
+$wgServer = "http://$dockerHost:$dockerPort";
 $wgScriptPath = "";
 
-$wgSitename = "mediawiki-docker";
+$wgSitename = "docker-$dockerSiteName";
 $wgMetaNamespace = "Project";
 
 $wgStatsdServer = "graphite-statsd";
@@ -59,8 +61,8 @@ $wgEnableJavaScriptTest = true;
 ## Email
 
 $wgEnableEmail = true;
-$wgEmergencyContact = "mediawiki@mw.dev";
-$wgPasswordSender = "mediawiki@mw.dev";
+$wgEmergencyContact = "mediawiki@$dockerHost";
+$wgPasswordSender = "mediawiki@$dockerHost";
 $wgEnableUserEmail = true;
 $wgEmailAuthentication = true;
 

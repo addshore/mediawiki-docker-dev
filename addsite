@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "Adding new site: $1"
+
+echo "Running install.php script on the web container for site: $1"
+docker-compose exec "web" bash //var/www/mediawiki/.docker/installdbs $1

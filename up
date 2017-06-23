@@ -31,17 +31,15 @@ fi
 echo "Containers are starting"
 docker-compose up -d
 
-# Install MediaWiki dbs
-echo "MediaWiki is installing"
-
+# Update composer
 echo "Running composer install on the web container"
 docker-compose exec "web" composer install --working-dir //var/www/mediawiki
 
 echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306
 
-echo "Running install.php script on the web container"
-docker-compose exec "web" bash //var/www/mediawiki/.docker/installdbs
+# Add the default site
+./addsite default
 
 # Done
 echo "Your development environment is running"

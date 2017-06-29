@@ -8,7 +8,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ## Docker stuff
 if ( defined( "MW_DB" ) ) {
     $dockerPort = 8080; // This probably doesn't matter?
-    $dockerHost = MW_DB . '.web.mw.dev';
+    $dockerHost = MW_DB . '.web.mw.local';
 
 } elseif( $_SERVER['HTTP_HOST'] !== null ) {
     $dockerParsedHost = parse_url( $_SERVER['HTTP_HOST'] );

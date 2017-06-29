@@ -39,8 +39,8 @@ echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306
 
 echo "Adding services to hosts file"
-./addhost phpmyadmin.web.mw.dev
-./addhost graphite.web.mw.dev
+./addhost phpmyadmin.mw.local
+./addhost graphite.mw.local
 
 # Add the default site
 ./addsite default

@@ -14,13 +14,13 @@ services:
     environment:
      - PMA_HOSTS=db
      - PMA_ARBITRARY=1
-     - VIRTUAL_HOST=phpmyadmin.mw.dev
+     - VIRTUAL_HOST=phpmyadmin.mw.local
   
   web:
     image: webdevops/${PHPORHHVM}-${WEBSERVER}${DOCKERPHPDEV}:${RUNTIMEVERSION}
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
-     - VIRTUAL_HOST=*.web.mw.dev
+     - VIRTUAL_HOST=*.web.mw.local
      - PHP_DEBUGGER=xdebug
      - XDEBUG_REMOTE_AUTOSTART=1
      - XDEBUG_REMOTE_HOST=${IDELOCALHOST}
@@ -40,7 +40,7 @@ services:
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:
-     - VIRTUAL_HOST=graphite.mw.dev
+     - VIRTUAL_HOST=graphite.mw.local
     volumes:
      - graphite-data:/opt/graphite/storage
 

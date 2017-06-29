@@ -59,7 +59,7 @@ You need to populate your hosts file to get the most out of this docker stuff (s
 
 **To set up the containers**:
 
-This includes setting up a default wiki @ https://default.web.mw.dev:8080
+This includes setting up a default wiki @ https://default.web.mw.local:8080
 
 You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
 
@@ -117,9 +117,9 @@ You can add a new site by name using the ./addsite command
 
 ### Access
 
- - [Default MediaWiki Site](http://default.web.mw.dev:8080)
- - [Graphite](http://graphite.mw.dev:8080)
- - [PhpMyAdmin](http://phpmyadmin.mw.dev:8080)
+ - [Default MediaWiki Site](http://default.web.mw.local:8080)
+ - [Graphite](http://graphite.mw.local:8080)
+ - [PhpMyAdmin](http://phpmyadmin.mw.local:8080)
 
 ### Debugging
 

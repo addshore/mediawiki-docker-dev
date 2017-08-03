@@ -4,10 +4,10 @@ echo "Adding new site: $1"
 
 echo "Creating and setting permissions for images directory"
 docker-compose exec "web" mkdir //var/www/mediawiki/images/docker/$1
-docker-compose exec "web" chmod -R 0777 //var/www/mediawiki/images/docker/
+docker-compose exec "web" chown application:application //var/www/mediawiki/images/docker/
 
 echo "Running install.php script"
-docker-compose exec "web" bash //var/www/mediawiki/.docker/installdbs $1
+docker-compose exec --user application "web" bash //var/www/mediawiki/.docker/installdbs $1
 
 echo "Adding site to hosts file"
 ./addhost $1.web.mw.local

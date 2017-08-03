@@ -33,7 +33,7 @@ docker-compose up -d
 
 # Update composer
 echo "Running composer install on the web container"
-docker-compose exec "web" composer install --working-dir //var/www/mediawiki
+docker-compose exec --user application "web" composer install --working-dir //var/www/mediawiki
 
 echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306
@@ -41,6 +41,10 @@ docker-compose exec "web" //srv/wait-for-it.sh db:3306
 echo "Adding services to hosts file"
 ./addhost phpmyadmin.mw.local
 ./addhost graphite.mw.local
+
+echo "Setting up log directory"
+docker-compose exec "web" mkdir //var/log/mediawiki
+docker-compose exec "web" chown application:application //var/log/mediawiki
 
 # Add the default site
 ./addsite default

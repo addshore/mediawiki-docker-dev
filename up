@@ -46,6 +46,9 @@ echo "Setting up log directory"
 docker-compose exec "web" mkdir //var/log/mediawiki
 docker-compose exec "web" chown application:application //var/log/mediawiki
 
+echo "Setting up images directory"
+docker-compose exec "web" chown application:application //var/www/mediawiki/images/docker
+
 # Add the default site
 ./addsite default
 

@@ -12,9 +12,14 @@ else
     HOSTSFILE=C:\\Windows\\System32\\drivers\\etc\\hosts
 fi
 
-# When running on windows as administrator sed may not be in the PATH by default
+# When running on windows as administrator grep & sed may not be in the PATH by default
+if [ ! -f /usr/bin/grep ]; then
+    GREPFILE=grep
+else
+    GREPFILE=/usr/bin/grep
+fi
 if [ ! -f /usr/bin/sed ]; then
-    SEDFILE=grep
+    SEDFILE=sed
 else
     SEDFILE=/usr/bin/sed
 fi
@@ -22,6 +27,10 @@ fi
 # TODO escalate / warn if file not accessible by current user
 
 # Remove all of the lines we have added
-$SEDFILE -i.bak '/mediawiki-docker-dev/d' $HOSTSFILE
+$GREPFILE -v mediawiki-docker-dev $HOSTSFILE > ./.hosts.tmp
 # Remove any excess whitespace
-$SEDFILE -i.bak '/^[[:space:]]*$/{:a;$d;N;/\n[[:space:]]*$/ba}' $HOSTSFILE
+$SEDFILE -i.bak '/^[[:space:]]*$/{:a;$d;N;/\n[[:space:]]*$/ba}' ./.hosts.tmp
+# Overwrite the hosts file with our new content
+cat ./.hosts.tmp > $HOSTSFILE
+# Delete the temp files
+rm ./.hosts.tmp

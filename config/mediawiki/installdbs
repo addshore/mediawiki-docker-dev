@@ -15,3 +15,6 @@ if [ -f /var/www/mediawiki/LocalSettings.php.docker.tmp ]
 then
     mv /var/www/mediawiki/LocalSettings.php.docker.tmp /var/www/mediawiki/LocalSettings.php
 fi
+
+# Run update.php too
+php /var/www/mediawiki/maintenance/update.php --wiki $1 --quick

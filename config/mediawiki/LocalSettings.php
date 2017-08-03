@@ -7,13 +7,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 ## Docker stuff
 if ( defined( "MW_DB" ) ) {
-    $dockerPort = 8080; // This probably doesn't matter?
+    $dockerPort = 80; // This probably doesn't matter?
     $dockerHost = MW_DB . '.web.mw.local';
-
-} elseif( $_SERVER['HTTP_HOST'] !== null ) {
-    $dockerParsedHost = parse_url( $_SERVER['HTTP_HOST'] );
-    $dockerPort = $dockerParsedHost['port'];
-    $dockerHost = $dockerParsedHost['host'];
+} elseif( $_SERVER['SERVER_NAME'] !== null ) {
+    $dockerPort = $_SERVER['SERVER_PORT'];
+    $dockerHost = $_SERVER['SERVER_NAME'];
 } else {
     die( 'Unable to decide which site is being used.' );
 }

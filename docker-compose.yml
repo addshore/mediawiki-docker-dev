@@ -46,11 +46,13 @@ services:
 
   nginx-proxy:
     image: jwilder/nginx-proxy
+    environment:
+     - VIRTUAL_HOST=proxy.mw.local
     ports:
       - "${DOCKER_MW_PORT}:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    
+
 volumes:
   sql-data:
   graphite-data:

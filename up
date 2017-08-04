@@ -2,15 +2,6 @@
 
 cd $(dirname $0)
 
-#if hash php 2>/dev/null; then
-#    php ./scripts/checkHosts.php
-#    [ $? -ne 0 ] && exit
-#else
-#    echo "PHP not installed so hosts file not checked."
-#    echo "You may want to manually check the ./config/local/hosts file and add these to your local hosts file."
-#fi
-echo "You will need to check the ./config/local/hosts file and add these to your local hosts file."
-
 # Create a combined .env file
 touch ./.env
 rm ./.env
@@ -39,6 +30,7 @@ echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306
 
 echo "Adding services to hosts file"
+./addhost proxy.mw.local
 ./addhost phpmyadmin.mw.local
 ./addhost graphite.mw.local
 

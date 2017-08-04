@@ -5,23 +5,23 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+$wgAssumeProxiesUseDefaultProtocolPorts = false;
+
 ## Docker stuff
 if ( defined( "MW_DB" ) ) {
-    $dockerPort = 80; // This probably doesn't matter?
-    $dockerHost = MW_DB . '.web.mw.local';
-} elseif( $_SERVER['SERVER_NAME'] !== null ) {
-    $dockerPort = $_SERVER['SERVER_PORT'];
-    $dockerHost = $_SERVER['SERVER_NAME'];
+    $dockerDb = MW_DB;
+    $wgServer = "//$dockerDb.web.mw.local:80";
+} elseif( array_key_exists( 'SERVER_NAME', $_SERVER ) ) {
+    $dockerHostParts = explode( '.', $_SERVER['SERVER_NAME'] );
+    $dockerDb = $dockerHostParts[0];
+    $wgServer = WebRequest::detectServer();
 } else {
     die( 'Unable to decide which site is being used.' );
 }
 
-$dockerHostParts = explode( '.', $dockerHost );
-$dockerSiteName = $dockerHostParts[0];
-
 ## Database settings
 $wgDBserver = "db";
-$wgDBname = $dockerSiteName;
+$wgDBname = $dockerDb;
 $wgDBuser = "root";
 $wgDBpassword = "toor";
 
@@ -31,18 +31,13 @@ $wgDBprefix = "";
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
 ## Site settings
-
-## $wgUsePathInfo = false;
-
-$wgAssumeProxiesUseDefaultProtocolPorts = false; # This actually does nothing as WebRequest::detectServer() is called in DefaultSettings before this file is loaded.
-$wgServer = "http://$dockerHost:$dockerPort";
 $wgScriptPath = "";
 
-$wgSitename = "docker-$dockerSiteName";
+$wgSitename = "docker-$dockerDb";
 $wgMetaNamespace = "Project";
 
-$wgUploadDirectory = "{$IP}/images/docker/{$dockerSiteName}";
-$wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerSiteName}";
+$wgUploadDirectory = "{$IP}/images/docker/{$dockerDb}";
+$wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerDb}";
 
 $wgStatsdServer = "graphite-statsd";
 
@@ -71,8 +66,8 @@ $wgEnableJavaScriptTest = true;
 ## Email
 
 $wgEnableEmail = true;
-$wgEmergencyContact = "mediawiki@$dockerHost";
-$wgPasswordSender = "mediawiki@$dockerHost";
+$wgEmergencyContact = "mediawiki@$dockerDb";
+$wgPasswordSender = "mediawiki@$dockerDb";
 $wgEnableUserEmail = true;
 $wgEmailAuthentication = true;
 

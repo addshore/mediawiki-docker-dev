@@ -32,8 +32,8 @@ services:
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
-     - ./config/hhvm/php.ini:/etc/hhvm/php.ini
-     - ./config/hhvm/server.ini:/etc/hhvm/server.ini
+     - ./config/hhvm/php.ini:/etc/hhvm/php.ini:ro
+     - ./config/hhvm/server.ini:/etc/hhvm/server.ini:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker
 

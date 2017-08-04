@@ -1,5 +1,0 @@
-# mw docker start
-127.0.0.1 default.web.mw.local
-127.0.0.1 phpmyadmin.mw.local
-127.0.0.1 graphite.mw.local
-# mw docker end

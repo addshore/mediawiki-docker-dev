@@ -22,15 +22,15 @@ git clone https://github.com/addshore/mediawiki-docker-dev.git
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
 ```
-git clone https://gerrit.wikimedia.org/r/mediawiki/core ~/dev/gerrit/mediawiki
-git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ~/dev/gerrit/mediawiki/skins/Vector
+git clone https://gerrit.wikimedia.org/r/mediawiki/core ~/dev/git/gerrit/mediawiki
+git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ~/dev/git/gerrit/mediawiki/skins/Vector
 ```
 
 Or from [Github Mirror](https://github.com/wikimedia/mediawiki) (often quicker):
 
 ```
-git clone https://github.com/wikimedia/mediawiki.git ~/dev/gerrit/mediawiki
-git clone https://github.com/wikimedia/mediawiki-skins-Vector.git ~/dev/gerrit/mediawiki/skins/Vector
+git clone https://github.com/wikimedia/mediawiki.git ~/dev/git/gerrit/mediawiki
+git clone https://github.com/wikimedia/mediawiki-skins-Vector.git ~/dev/git/gerrit/mediawiki/skins/Vector
 
 # You can then set the remote to point back to gerrit:
 

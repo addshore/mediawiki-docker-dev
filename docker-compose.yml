@@ -12,7 +12,9 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-     - PMA_HOSTS=db
+     - PMA_USER:root
+     - PMA_PASSWORD:toor
+     - PMA_HOST=db
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw.local
   

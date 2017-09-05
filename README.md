@@ -51,7 +51,7 @@ require_once __DIR__ . '/.docker/LocalSettings.php';
 
 **To set up the containers**:
 
-This includes setting up a default wiki @ https://default.web.mw.local:8080
+This includes setting up a default wiki @ http://default.web.mw.local:8080
 
 You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
 

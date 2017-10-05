@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Check windows first as windows can also have a /etc/hosts
 if [ ! -f C:\\Windows\\System32\\drivers\\etc\\hosts ]; then
     if [ ! -f /etc/hosts ]; then

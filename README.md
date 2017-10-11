@@ -49,6 +49,17 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
 
+#### 5) Run various commands to interact with the environment
+
+You can setup a small bash alias to make running the various commands much easier.
+An example is provided below:
+
+```bash
+alias mw-docker-dev='_(){ (cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./$@) ;}; _'
+```
+
+Without such a bash alias you will have the run the scripts from within the mediawiki-docker-dev directory itself.
+
 **To set up the containers**:
 
 This includes setting up a default wiki @ http://default.web.mw.local:8080
@@ -56,7 +67,7 @@ This includes setting up a default wiki @ http://default.web.mw.local:8080
 You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
 
 ```
-./up
+mw-docker-dev up
 ```
 
 **To stop the containers**:
@@ -64,7 +75,7 @@ You can choose the spec of the system that the up command will set up by using a
 Databases persist.
 
 ```
-./stop
+mw-docker-dev stop
 ```
 
 **To restart the containers**:
@@ -72,7 +83,7 @@ Databases persist.
 If things have already been setup using up.
 
 ```
-./start
+mw-docker-dev start
 ```
 
 **To tear down the containers**:
@@ -80,7 +91,7 @@ If things have already been setup using up.
 Removes databases.
 
 ```
-./down
+mw-docker-dev down
 ```
 
 **Run commands on the webserver**:
@@ -90,7 +101,7 @@ If the containers are running you can use the ./bash script to open up a interac
 This can be used to run tests, maintenance scripts etc.
 
 ```
-./bash
+mw-docker-dev bash
 ```
 
 **Add a new site**:
@@ -98,13 +109,13 @@ This can be used to run tests, maintenance scripts etc.
 You can add a new site by name using the ./addsite command
 
 ```
-./addsite enwiki
+mw-docker-dev addsite enwiki
 ```
 
 **Run tests**:
 
 ```
-./phpunit --wiki default //var/www/mediawiki/extensions/FileImporter/tests/phpunit
+mw-docker-dev phpunit --wiki default //var/www/mediawiki/extensions/FileImporter/tests/phpunit
 ```
 
 ### Access

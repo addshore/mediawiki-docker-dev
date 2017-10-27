@@ -101,11 +101,6 @@ $wgAuthenticationTokenVersion = "1";
 $wgUpgradeKey = "t8qu09t9uw09ti09itq092t3j";
 $wgSecretKey = "a5dca55190e1c3927e098c317dd74e85c7eced36f959275114773b188fbabdbc";
 
-## Skins
-
-$wgDefaultSkin = "vector";
-wfLoadSkin( 'Vector' );
-
 ## Permissions
 
 $wgGroupPermissions['*']['noratelimit'] = true;

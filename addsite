@@ -11,4 +11,4 @@ echo "Running install.php script"
 docker-compose exec --user application "web" bash //var/www/mediawiki/.docker/installdbs $1
 
 echo "Adding site to hosts file"
-./addhost $1.web.mw.local
+./addhost $1.web.mw.local.wmftest.net

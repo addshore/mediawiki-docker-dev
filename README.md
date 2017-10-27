@@ -62,7 +62,7 @@ Without such a bash alias you will have the run the scripts from within the medi
 
 **To set up the containers**:
 
-This includes setting up a default wiki @ http://default.web.mw.local:8080
+This includes setting up a default wiki @ http://default.web.mw.local.wmftest.net:8080
 
 You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
 
@@ -120,9 +120,9 @@ mw-docker-dev phpunit --wiki default //var/www/mediawiki/extensions/FileImporter
 
 ### Access
 
- - [Default MediaWiki Site](http://default.web.mw.local:8080)
- - [Graphite](http://graphite.mw.local:8080)
- - [PhpMyAdmin](http://phpmyadmin.mw.local:8080)
+ - [Default MediaWiki Site](http://default.web.mw.local.wmftest.net:8080)
+ - [Graphite](http://graphite.mw.local.wmftest.net:8080)
+ - [PhpMyAdmin](http://phpmyadmin.mw.local.wmftest.net:8080)
 
 ### Debugging
 

@@ -1,6 +1,5 @@
 #!/bin/sh
-
-set -e
+set -eu
 
 echo "Containers & Volumes are being pulled down"
 docker-compose down -v

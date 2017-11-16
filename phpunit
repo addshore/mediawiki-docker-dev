@@ -1,5 +1,4 @@
 #!/bin/sh
-
-set -e
+set -eu
 
 docker-compose exec "web" php //var/www/mediawiki/tests/phpunit/phpunit.php $@

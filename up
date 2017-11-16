@@ -5,13 +5,19 @@ set -e
 cd $(dirname $0)
 
 # Create a combined .env file
-touch ./.env
-rm ./.env
-cat ./default.env >> .env
-sed -i -e '$a\' .env
-touch ./local.env
-cat ./local.env >> .env
-sed -i -e '$a\' .env
+touch .env
+rm .env
+cat default.env >> .env
+# Ensure there is a trailing new line before appending the next chunk
+# Avoid `sed -i -e '$a\'` because of compat with BSD sed (macOS).
+# `sed -i '' -e '$a\'` could work there, but that doesn't work on GNU sed.
+# Just use echo instead. We always re-create the target, so appending
+# unconditionally won't cause indefinite growth.
+# https://github.com/addshore/mediawiki-docker-dev/issues/18
+echo >> .env
+touch local.env
+cat local.env >> .env
+echo >> .env
 
 # Switch -dev for php vs hhvm (as there is no -dev) for hhvm
 if grep -q PHPORHHVM=hhvm .env; then

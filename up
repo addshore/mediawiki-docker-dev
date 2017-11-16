@@ -37,7 +37,10 @@ docker-compose exec "web" chown application:application //var/www/mediawiki
 docker-compose exec "web" chown application:application //var/www/mediawiki/vendor
 # Permission for composer-cache volume
 docker-compose exec "web" chown application:application //cache/composer
-docker-compose exec --user application "web" composer update --working-dir //var/www/mediawiki
+# Wrap in 'sh -c' because it seems that for some reason the exit code from
+# 'composer update' is wrongly reported as an error when executed by docker
+# directly. Without this wrap, it fails in Travis CI.
+docker-compose exec --user application "web" sh -c 'composer update --working-dir /var/www/mediawiki'
 
 echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306

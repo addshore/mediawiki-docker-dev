@@ -32,7 +32,11 @@ docker-compose up -d
 
 # Update composer
 echo "Running composer install on the web container"
+# Permission for mw-path volume (composer update writes to composer.lock)
+docker-compose exec "web" chown application:application //var/www/mediawiki
+# Permission for mw-vendor volume
 docker-compose exec "web" chown application:application //var/www/mediawiki/vendor
+# Permission for composer-cache volume
 docker-compose exec "web" chown application:application //cache/composer
 docker-compose exec --user application "web" composer update --working-dir //var/www/mediawiki
 

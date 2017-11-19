@@ -10,7 +10,7 @@ $wgAssumeProxiesUseDefaultProtocolPorts = false;
 ## Docker stuff
 if ( defined( "MW_DB" ) ) {
     $dockerDb = MW_DB;
-    $wgServer = "//$dockerDb.web.mw.local.wmftest.net:80";
+    $wgServer = "//$dockerDb.web.mw.localhost:80";
 } elseif( array_key_exists( 'SERVER_NAME', $_SERVER ) ) {
     $dockerHostParts = explode( '.', $_SERVER['SERVER_NAME'] );
     $dockerDb = $dockerHostParts[0];

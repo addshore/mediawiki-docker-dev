@@ -1,4 +1,5 @@
 .idea
 local.env
 .env
+.hosts.tmp
 .hosts.tmp.bak

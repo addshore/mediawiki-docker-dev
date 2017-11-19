@@ -16,13 +16,13 @@ services:
      - PMA_PASSWORD:toor
      - PMA_HOST=db
      - PMA_ARBITRARY=1
-     - VIRTUAL_HOST=phpmyadmin.mw.local.wmftest.net
+     - VIRTUAL_HOST=phpmyadmin.mw.localhost
 
   web:
     image: webdevops/${PHPORHHVM}-${WEBSERVER}${DOCKERPHPDEV}:${RUNTIMEVERSION}
     environment:
      - WEB_DOCUMENT_ROOT=/var/www/mediawiki
-     - VIRTUAL_HOST=*.web.mw.local.wmftest.net
+     - VIRTUAL_HOST=*.web.mw.localhost
      - PHP_DEBUGGER=xdebug
      - XDEBUG_REMOTE_AUTOSTART=1
      - XDEBUG_REMOTE_HOST=${IDELOCALHOST}
@@ -45,14 +45,14 @@ services:
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:
-     - VIRTUAL_HOST=graphite.mw.local.wmftest.net
+     - VIRTUAL_HOST=graphite.mw.localhost
     volumes:
      - graphite-data:/opt/graphite/storage
 
   nginx-proxy:
     image: jwilder/nginx-proxy
     environment:
-     - VIRTUAL_HOST=proxy.mw.local.wmftest.net
+     - VIRTUAL_HOST=proxy.mw.localhost
     ports:
       - "${DOCKER_MW_PORT}:80"
     volumes:

@@ -40,9 +40,9 @@ echo "Waiting for the db server to finish starting"
 docker-compose exec "web" //srv/wait-for-it.sh db:3306
 
 echo "Adding services to hosts file"
-./addhost proxy.mw.local.wmftest.net
-./addhost phpmyadmin.mw.local.wmftest.net
-./addhost graphite.mw.local.wmftest.net
+./addhost proxy.mw.localhost
+./addhost phpmyadmin.mw.localhost
+./addhost graphite.mw.localhost
 
 echo "Setting up log directory"
 docker-compose exec "web" mkdir //var/log/mediawiki

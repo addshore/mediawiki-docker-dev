@@ -1,0 +1,53 @@
+#!/bin/bash
+
+set -eu
+
+# Check Windows first as Windows can also have a /etc/hosts
+if [ ! -f C:\\Windows\\System32\\drivers\\etc\\hosts ]; then
+    if [ ! -f /etc/hosts ]; then
+        echo "Failed to find hosts file."
+        exit
+    else
+        HOSTSFILE=/etc/hosts
+    fi
+else
+    HOSTSFILE=C:\\Windows\\System32\\drivers\\etc\\hosts
+fi
+
+# When running on Windows as administrator, 'grep' and 'sed' may not be in the PATH
+if [ ! -f /usr/bin/grep ]; then
+    GREP=grep
+else
+    GREP=/usr/bin/grep
+fi
+
+param="${1:-}"
+actual=`$GREP mediawiki-docker-dev "$HOSTSFILE" | sort`
+expected=`cat .hosts | sort`
+if [ "$actual" = "$expected" ]
+then
+    echo "Already in sync."
+    exit
+else
+    echo "The hosts file did not match the expected entries."
+    echo
+    echo -e "# Expected:\n$expected"
+    echo -e "# Actual:\n$actual"
+    if [ "$param" = "--verify" ]
+    then
+        exit 1
+    fi
+fi
+
+
+# TODO escalate / warn if file not accessible by current user
+
+# Get current content without any of our entries
+$GREP -v mediawiki-docker-dev "$HOSTSFILE" > .hosts.tmp
+# Add our expected entries
+echo >> .hosts.tmp
+cat .hosts >> .hosts.tmp
+# Try to update hosts file with our new content
+cat .hosts.tmp > "$HOSTSFILE"
+# Remove temporary file
+rm .hosts.tmp

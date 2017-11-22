@@ -2,7 +2,7 @@
 
 set -eu
 
-# Check windows first as windows can also have a /etc/hosts
+# Check Windows first as Windows can also have a /etc/hosts
 if [ ! -f C:\\Windows\\System32\\drivers\\etc\\hosts ]; then
     if [ ! -f /etc/hosts ]; then
         echo "Failed to find hosts file."
@@ -14,7 +14,7 @@ else
     HOSTSFILE=C:\\Windows\\System32\\drivers\\etc\\hosts
 fi
 
-# When running on windows as administrator grep & sed may not be in the PATH by default
+# When running on Windows as administrator, 'grep' and 'sed' may not be in the PATH
 if [ ! -f /usr/bin/grep ]; then
     GREPFILE=grep
 else

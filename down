@@ -4,5 +4,4 @@ set -eu
 echo "Containers & Volumes are being pulled down"
 docker-compose down -v
 
-echo "Hosts being removed"
-./removehosts
+rm .hosts

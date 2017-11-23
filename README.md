@@ -1,5 +1,12 @@
 ## Instructions
 
+By default the below steps will install MediaWiki at `~/dev/mediawiki`
+and start a server for <http://default.web.mw.localhost:8080>.
+
+Many aspect of the container, including the port and MediaWiki path, can be customised
+by creating a `local.env` in this directory, in which to override one or more variables
+from `default.env`.
+
 ### Install
 
 #### 1) Install Docker & Docker Compose
@@ -8,7 +15,7 @@ https://docs.docker.com/compose/install/
 
 ###### Unix notes
 
-- You mostly want the docker-ce package not the docker package (please read the install instructions)
+- Use the `docker-ce` package, not the `docker` package (read their install instructions)
 - If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
 https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
    - This does not mean your containers will not run as root. These are different settings not really used currently by this dev setup.
@@ -19,7 +26,7 @@ https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
-#### 3) Clone MediaWiki Core & the Vector Skin (default skin)
+#### 3) Clone MediaWiki core & the Vector skin
 
 You can start without the skin but you will find that your MediaWiki install doesn't look very nice.
 
@@ -69,6 +76,8 @@ Alter any settings that you want to change, for example the install location of 
 
 **Create and start the Docker containers:**
 
+This includes setting up a default wiki @ http://default.web.mw.localhost:8080
+
 ```
 ./up
 ```
@@ -89,14 +98,17 @@ need to use `sudo ./hosts-sync` instead if the file is not writable by the shell
 
 ## Commands
 
-You can setup a small bash alias to make running the various commands much easier.
-An example is provided below:
+The below commands are shell scripts in the mediawiki-docker-dev directory.
+
+For example, the Up command can be invoked as `./up`, and the Bash command as `./bash`, etc.
+
+To easily invoke these while working in another directory (e.g. mediawiki/core, or an extension) you can add a small bash alias to your `bashrc` file. For example:
 
 ```bash
 alias mw-docker-dev='_(){ (cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./$@) ;}; _'
 ```
 
-Without such a bash alias you will have the run the scripts from within the mediawiki-docker-dev directory itself.
+The below documentation assumes this alias in examples, but each of these also works directly. Instead of `mw-docker-dev start` you would run `./start` from your Terminal tab for mw-docker-dev.
 
 ### Up
 
@@ -164,11 +176,34 @@ if possible.
 mw-docker-dev hosts-sync
 ```
 
+### Update a wiki
+
+Run `git pull` in your the relevant Git repositories for MediaWiki core
+and extensions.
+
+If you need to apply schema changes after updating MediaWiki, or after
+installing additional extensions, you can follow the regular MediaWiki
+instructions. Just make sure you're on the web server when doing so.
+
+For example:
+
+```
+$ mw-docker-dev bash
+
+root@web:/var/www/mediawiki# php maintenance/update.php
+```
+
 ### PHPUnit
+
+Be sure to set `default` (the wiki db), this is a multi-wiki environment.
+
+For example:
 
 ```
 mw-docker-dev phpunit-file default extensions/FileImporter/tests/phpunit
 ```
+
+See also <https://www.mediawiki.org/wiki/Manual:PHP_unit_testing>
 
 ### QUnit
 

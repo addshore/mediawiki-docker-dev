@@ -17,6 +17,6 @@ script:
   - ./up
   - cat .env
   # Once to show useful output
-  - curl -i 'http://default.web.mw.localhost:8080'
+  - curl -I -L 'http://default.web.mw.localhost:8080'
   # Again for the exit code to fail the build if needed (curl, why can't we have both?)
   - curl -s --fail --show-error 'http://default.web.mw.localhost:8080'

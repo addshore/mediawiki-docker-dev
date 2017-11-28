@@ -37,6 +37,9 @@ docker-compose exec "web" chown application:application //var/www/mediawiki
 docker-compose exec "web" chown application:application //var/www/mediawiki/vendor
 # Permission for composer-cache volume
 docker-compose exec "web" chown application:application //cache/composer
+# Add document root index file (NOTE: docker-compose lacks a "cp" command)
+docker cp config/mediawiki/index.php "$(docker-compose ps -q web)"://var/www/index.php
+docker-compose exec "web" chown application:application //var/www/index.php
 # Wrap in 'sh -c' because it seems that for some reason the exit code from
 # 'composer update' is wrongly reported as an error when executed by docker
 # directly. Without this wrap, it fails in Travis CI.

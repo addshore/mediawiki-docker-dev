@@ -35,7 +35,7 @@ $wgScriptPath = "";
 
 $wgSitename = "docker-$dockerDb";
 $wgMetaNamespace = "Project";
-$wgFavicon = "./.docker/favicon.ico";
+$wgFavicon = "{$wgScriptPath}/.docker/favicon.ico";
 
 $wgUploadDirectory = "{$IP}/images/docker/{$dockerDb}";
 $wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerDb}";

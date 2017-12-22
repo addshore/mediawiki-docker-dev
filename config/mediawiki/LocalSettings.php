@@ -42,6 +42,8 @@ $wgDBservers = array(
 	),
 );
 
+$wgShowHostnames = true;
+
 // mysql only stuff (would need to change for sqlite)
 $wgDBprefix = "";
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";

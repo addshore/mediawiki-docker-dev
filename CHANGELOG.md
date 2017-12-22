@@ -6,6 +6,7 @@ This file contains a brief overview of the Majorish changes to the environment.
 
 ######22nd
 
+* [MediaWiki tmp directory now writable](https://github.com/addshore/mediawiki-docker-dev/issues/38)
 * [Simplify phpunit script usage](https://github.com/addshore/mediawiki-docker-dev/issues/15)
 Now you can simply do: `phpunit default tests/phpunit/includes/PageArchiveTest.php` for example.
 * [Don't use replica db for phpunit tests](https://github.com/addshore/mediawiki-docker-dev/commit/cdfc830a75510b5250a4031ef104eec381ba969d)
@@ -14,6 +15,9 @@ Prior to this phpunit tests would fail due to temporary tables and the master & 
 To enable displaying db lags in the API by default.
 * [DB Master & Slave setup](https://github.com/addshore/mediawiki-docker-dev/commit/60f8d68d9bcd7cf0e220aa123dda90825b43dc40)
 Each wiki will now include a master and a slave.
+* [Composer Cache mountable from local system](https://github.com/addshore/mediawiki-docker-dev/commit/60f8d68d9bcd7cf0e220aa123dda90825b43dc40)
+You can now mount a local directory to use as the composer cache to speed up composer installs and updates.
+See the `COMPOSER_CACHE_PATH_OR_VOL` env var.
 
 ####November 2017
 

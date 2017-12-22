@@ -62,6 +62,8 @@ $wgFavicon = "{$wgScriptPath}/.docker/favicon.ico";
 $wgUploadDirectory = "{$IP}/images/docker/{$dockerDb}";
 $wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerDb}";
 
+$wgTmpDirectory = "{$wgUploadDirectory}/tmp";
+
 $wgStatsdServer = "graphite-statsd";
 
 ## Dev & Debug

@@ -2,19 +2,44 @@ version: '2'
 
 services:
 
-  db:
+  db-master:
     image: ${DB}:latest
     environment:
       - MYSQL_ROOT_PASSWORD=toor
     volumes:
-      - sql-data:/var/lib/mysql
+      - sql-data-master:/var/lib/mysql
+      - ./config/mysql/master:/etc/mysql/conf.d/
+
+  db-slave:
+    image: ${DB}:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+    volumes:
+      - sql-data-slave:/var/lib/mysql
+      - ./config/mysql/slave:/etc/mysql/conf.d/
+
+  db-configure:
+    image: ${DB}:latest
+    environment:
+      - "MYSQL_SLAVE_PASSWORD=toor"
+      - "MYSQL_MASTER_PASSWORD=toor"
+      - "MYSQL_ROOT_PASSWORD=toor"
+      - "MYSQL_REPLICATION_USER=repl"
+      - "MYSQL_REPLICATION_PASSWORD=repl"
+    depends_on:
+     - db-master
+     - db-slave
+    volumes:
+      - ./scripts/mysql_connector.sh:/tmp/mysql_connector.sh
+      - ./scripts/wait-for-it.sh:/tmp/wait-for-it.sh
+    command: /bin/bash -x /tmp/mysql_connector.sh
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
      - PMA_USER:root
      - PMA_PASSWORD:toor
-     - PMA_HOST=db
+     - PMA_HOST=db-master
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw.localhost
 
@@ -34,7 +59,7 @@ services:
      - PHP_IDE_CONFIG=serverName=docker
      - COMPOSER_CACHE_DIR=/cache/composer
     depends_on:
-     - db
+     - db-configure
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -43,7 +68,7 @@ services:
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker
      - mw-vendor:/var/www/mediawiki/vendor
-     - composer-cache:/cache/composer
+     - "${COMPOSER_CACHE_PATH_OR_VOL}:/cache/composer"
 
   graphite-statsd:
     image: hopsoft/graphite-statsd
@@ -62,7 +87,8 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
 volumes:
-  sql-data:
+  sql-data-master:
+  sql-data-slave:
   graphite-data:
   mw-images:
   mw-vendor:

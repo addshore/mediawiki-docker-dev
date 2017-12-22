@@ -7,7 +7,7 @@ then
 fi
 
 # Install the base Mediawiki tables on the db server & remove the generated LocalSettings.php
-php /var/www/mediawiki/maintenance/install.php --dbuser root --dbpass toor --dbname $1 --dbserver db --lang en --pass adminpass docker-$1 admin
+php /var/www/mediawiki/maintenance/install.php --dbuser root --dbpass toor --dbname $1 --dbserver db-master --lang en --pass adminpass docker-$1 admin
 rm /var/www/mediawiki/LocalSettings.php
 
 # Move back the old LocalSettings if we had moved one!

@@ -20,13 +20,29 @@ if ( defined( "MW_DB" ) ) {
 }
 
 ## Database settings
-$wgDBserver = "db";
 $wgDBname = $dockerDb;
-$wgDBuser = "root";
-$wgDBpassword = "toor";
+$wgDBservers = array(
+	array(
+		'host' => "db-master",
+		'dbname' => $dockerDb,
+		'user' => 'root',
+		'password' => 'toor',
+		'type' => "mysql",
+		'flags' => DBO_DEFAULT,
+		'load' => 0,
+	),
+	array(
+		'host' => "db-slave",
+		'dbname' => $dockerDb,
+		'user' => 'root',
+		'password' => 'toor',
+		'type' => "mysql",
+		'flags' => DBO_DEFAULT,
+		'load' => 1,
+	),
+);
 
 // mysql only stuff (would need to change for sqlite)
-$wgDBtype = "mysql";
 $wgDBprefix = "";
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 

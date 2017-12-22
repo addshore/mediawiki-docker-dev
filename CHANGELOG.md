@@ -6,6 +6,8 @@ This file contains a brief overview of the Majorish changes to the environment.
 
 ######22nd
 
+* [Simplify phpunit script usage](https://github.com/addshore/mediawiki-docker-dev/issues/15)
+Now you can simply do: `phpunit default tests/phpunit/includes/PageArchiveTest.php` for example.
 * [Don't use replica db for phpunit tests](https://github.com/addshore/mediawiki-docker-dev/commit/cdfc830a75510b5250a4031ef104eec381ba969d)
 Prior to this phpunit tests would fail due to temporary tables and the master & slave db setup.
 * [$wgShowHostnames = true; by default](https://github.com/addshore/mediawiki-docker-dev/commit/e7f572dd339b41dbcdb316238a4b1d09f9935416)

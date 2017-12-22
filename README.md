@@ -8,10 +8,12 @@ If you don't want to use the default port of 8080 and the default mediawiki path
 
 https://docs.docker.com/compose/install/
 
-If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
-https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
+######Unix notes
 
-Note that this does not mean your containers will not run as root. This is a different setting and it is either set in the Dockerfile of the image (see USER setting) or during the execution of the image (-u/--user of docker-run, user: setting of docker compose)
+- You mostly want the docker-ce package not the docker package (please read the install instructions)
+- If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
+https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
+   - This does not mean your containers will not run as root. These are different settings not really used currently by this dev setup.
 
 #### 2) Clone this repository
 

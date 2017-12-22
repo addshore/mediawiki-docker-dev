@@ -21,26 +21,30 @@ if ( defined( "MW_DB" ) ) {
 
 ## Database settings
 $wgDBname = $dockerDb;
-$wgDBservers = array(
-	array(
-		'host' => "db-master",
-		'dbname' => $dockerDb,
-		'user' => 'root',
-		'password' => 'toor',
-		'type' => "mysql",
-		'flags' => DBO_DEFAULT,
-		'load' => 0,
-	),
-	array(
-		'host' => "db-slave",
-		'dbname' => $dockerDb,
-		'user' => 'root',
-		'password' => 'toor',
-		'type' => "mysql",
-		'flags' => DBO_DEFAULT,
-		'load' => 1,
-	),
-);
+$dockerMasterDb = [
+	'host' => "db-master",
+	'dbname' => $dockerDb,
+	'user' => 'root',
+	'password' => 'toor',
+	'type' => "mysql",
+	'flags' => DBO_DEFAULT,
+	'load' => 0,
+];
+$dockerSlaveDb = [
+	'host' => "db-slave",
+	'dbname' => $dockerDb,
+	'user' => 'root',
+	'password' => 'toor',
+	'type' => "mysql",
+	'flags' => DBO_DEFAULT,
+	'load' => 1,
+];
+$wgDBservers = [ $dockerMasterDb ];
+// Unit tests fail when run with replication, due to not having the temporary tables.
+// So for unit tests just run with the master.
+if ( !defined( 'MW_PHPUNIT_TEST' ) ) {
+	$wgDBservers[] = $dockerSlaveDb;
+}
 
 $wgShowHostnames = true;
 

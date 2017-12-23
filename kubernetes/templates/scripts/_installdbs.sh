@@ -1,0 +1,28 @@
+{{- define "installdbs.sh" }}
+#!/bin/sh
+
+# Hide the current LocalSettings.php if it exists
+if [ -f /var/www/mediawiki/LocalSettings.php ]
+then
+    mv /var/www/mediawiki/LocalSettings.php /var/www/mediawiki/LocalSettings.php.docker.tmp
+fi
+
+# Install the base Mediawiki tables on the db server & remove the generated LocalSettings.php
+php /var/www/mediawiki/maintenance/install.php --dbuser root \
+    --dbpass {{ .Values.database.password }} \
+    --dbname $1 \
+    --dbserver {{ .Values.database.kind }}-svc \
+    --lang en \
+    --pass adminpass docker-$1 admin
+
+rm /var/www/mediawiki/LocalSettings.php
+
+# Move back the old LocalSettings if we had moved one!
+if [ -f /var/www/mediawiki/LocalSettings.php.docker.tmp ]
+then
+    mv /var/www/mediawiki/LocalSettings.php.docker.tmp /var/www/mediawiki/LocalSettings.php
+fi
+
+# Run update.php too
+php /var/www/mediawiki/maintenance/update.php --wiki $1 --quick
+{{- end }}

@@ -1,0 +1,48 @@
+# Database deployment
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-deploy
+spec:
+  replicas: {{ .Values.database.replicas }}
+  template:
+    metadata:
+      labels:
+        service_name: {{ .Values.database.kind }}
+    spec:
+      containers:
+        - name:  {{ .Values.database.kind }}
+          image: {{ .Values.database.kind }}:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.database.password }}
+          volumeMounts:
+            - name: {{ .Values.database.kind }}-data
+              mountPath: /var/lib/{{ .Values.database.kind }}
+
+      volumes:
+        - name: {{ .Values.database.kind }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.database.kind }}-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.database.kind }}-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.database.storage }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.database.kind }}-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: {{ .Values.database.port }}
+  selector:
+    service_name: {{ .Values.database.kind }}

@@ -1,0 +1,13 @@
+database:
+  replicas: 1
+  kind: mariadb
+  port: 3306
+  password: toor
+  storage: 100Mi
+mediawiki:
+  replicas: 1
+  phporhhvm: php
+  webserver: apache
+  dockerphpdev: ''
+  version: latest
+  vm_path:  /var/lib/mediawiki-dev/mediawiki

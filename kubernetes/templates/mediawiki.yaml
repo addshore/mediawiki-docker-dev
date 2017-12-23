@@ -1,0 +1,151 @@
+# Mediawiki deployment
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mediawiki-config
+data:
+  LocalSettings.php: |-
+    {{- include "LocalSettings.php" . | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hhvm-config
+data:
+  php.ini: |-
+    {{- include "php.ini" . | indent 4 }}
+  server.ini: |-
+    {{- include "server.ini" . | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scripts
+data:
+  install.sh: |-
+    {{- include "install.sh" . | indent 4 }}
+  wait-for-it.sh: |-
+    {{- include "wait-for-it.sh" . | indent 4 }}
+  installdbs.sh: |-
+    {{- include "installdbs.sh" . | indent 4 }}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mediawiki
+spec:
+  replicas: {{ .Values.mediawiki.replicas }}
+  template:
+    metadata:
+      labels:
+        service_name: mediawiki
+    spec:
+      containers:
+        - name: mediawiki
+          image: webdevops/{{ .Values.mediawiki.phporhhvm }}-{{ .Values.mediawiki.webserver }}{{ .Values.mediawiki.dockerphpdev }}:{{ .Values.mediawiki.version }}
+          ports:
+            - containerPort: 80
+          lifecycle:
+            postStart:
+              exec:
+                command: [ 'bash', '/bin/mediawiki/install.sh']
+          env:
+            - name: COMPOSER_CACHE_DIR
+              value: /cache/composer
+            - name: MW_INSTALL_PATH
+              value: /var/www/mediawiki
+            - name: PHP_DEBUGGER
+              value: xdebug
+            - name: PHP_IDE_CONFIG
+              value: serverName=docker
+            - name: VIRTUAL_HOST
+              value: '*.web.mw.localhost'
+            - name: WEB_DOCUMENT_ROOT
+              value: /var/www/mediawiki
+            - name: MW_DB
+              value: default
+          volumeMounts:
+            - name: mediawiki-sources
+              mountPath: /var/www/mediawiki
+            - name: mediawiki-config
+              mountPath: /etc/mediawiki
+              readOnly: true
+            - name: hhvm
+              mountPath: /etc/hhvm
+              readOnly: true
+            - name: mw-images
+              mountPath: /var/www/mediawiki/images/docker
+            - name: mw-vendor
+              mountPath: /var/www/mediawiki/vendor
+            - name: composer-cache
+              mountPath: /cache/composer
+            - name: scripts
+              mountPath: /bin/mediawiki
+      volumes:
+        - name: mediawiki-sources
+          hostPath:
+            path: /var/www/mediawiki
+        - name: mediawiki-config
+          configMap:
+            name: mediawiki-config
+        - name: hhvm
+          configMap:
+            name: hhvm-config
+        - name: mw-images
+          persistentVolumeClaim:
+            claimName: mw-images
+        - name: mw-vendor
+          persistentVolumeClaim:
+            claimName: mw-vendor
+        - name: composer-cache
+          persistentVolumeClaim:
+            claimName: composer-cache
+        - name: scripts
+          configMap:
+            name: scripts
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mw-images
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.database.storage }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mw-vendor
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.database.storage }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: composer-cache
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.database.storage }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    service_name: mediawiki

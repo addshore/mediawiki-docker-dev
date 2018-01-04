@@ -39,11 +39,15 @@ $dockerSlaveDb = [
 	'flags' => DBO_DEFAULT,
 	'load' => 1,
 ];
-$wgDBservers = [ $dockerMasterDb ];
 // Unit tests fail when run with replication, due to not having the temporary tables.
 // So for unit tests just run with the master.
 if ( !defined( 'MW_PHPUNIT_TEST' ) ) {
-	$wgDBservers[] = $dockerSlaveDb;
+	$wgDBservers = [ $dockerMasterDb, $dockerSlaveDb ];
+} else {
+	$wgDBserver = $dockerMasterDb['host'];
+	$wgDBuser = $dockerMasterDb['user'];
+	$wgDBpassword = $dockerMasterDb['password'];
+	$wgDBtype = $dockerMasterDb['type'];
 }
 
 $wgShowHostnames = true;

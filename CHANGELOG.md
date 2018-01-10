@@ -7,6 +7,7 @@ This file contains a brief overview of the Majorish changes to the environment.
 * Added `logs-tail` script to tail logs in the mediawiki log directory.
 * Renamed `phpunit` script to `phpunit-file`.
 * Added new `phpunit` which allows running phpunit for jobs etc. Example: `phpunit default --group=Database`
+* `bash` script will now open in the `/var/www/mediawiki` directory
 
 #### December 2017
 

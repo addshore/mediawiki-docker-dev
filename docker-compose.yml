@@ -39,7 +39,7 @@ services:
     environment:
      - PMA_USER:root
      - PMA_PASSWORD:toor
-     - PMA_HOST=db-master
+     - PMA_HOSTS=db-master,db-slave
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw.localhost
 

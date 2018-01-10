@@ -27,3 +27,9 @@ script:
   - curl -I -L 'http://secondwiki.web.mw.localhost:8080'
   # Again for the exit code to fail the build if needed (curl, why can't we have both?)
   - curl -s --fail --show-error 'http://secondwiki.web.mw.localhost:8080'
+  #### Phpmyadmin
+  - curl -I -L 'http://phpmyadmin.mw.localhost:8080'
+  - curl -s --fail --show-error 'http://phpmyadmin.mw.localhost:8080'
+  #### Graphite
+  - curl -I -L 'http://graphite.mw.localhost:8080'
+  - curl -s --fail --show-error 'http://graphite.mw.localhost:8080'

@@ -88,7 +88,7 @@ $wgShowDBErrorBacktrace = true;
 
 $wgDebugToolbar = false;
 $wgShowDebug = false;
-$wgDevelopmentWarnings = false;
+$wgDevelopmentWarnings = true;
 
 $wgEnableJavaScriptTest = true;
 

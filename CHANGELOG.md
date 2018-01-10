@@ -12,6 +12,7 @@ This file contains a brief overview of the Majorish changes to the environment.
 * `bash` script will now open in the `/var/www/mediawiki` directory
 * PhpMyAdmin now shows a drop down allowing you to select the db servers rather than specifying their name.
 * PhpMyAdmin now automatically shows blob data as text in results.
+* Mediawiki setting default change: `$wgDevelopmentWarnings = true;`
 
 #### December 2017
 

@@ -1,0 +1,6 @@
+#!/bin/sh
+# Usage: phpunit-file WIKINAME path/to/test/from/mediawiki/dir
+# Example: phpunit-file default tests/phpunit/includes/PageArchiveTest.php
+set -eu
+
+docker-compose exec "web" php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki $1 //var/www/mediawiki/${*:2}

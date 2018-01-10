@@ -137,4 +137,3 @@ $wgGroupPermissions['sysop']['editcontentmodel'] = true;
 ## Features
 
 $wgRCWatchCategoryMembership = true;
-

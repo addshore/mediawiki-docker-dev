@@ -2,6 +2,10 @@
 
 This file contains a brief overview of the Majorish changes to the environment.
 
+#### January 2018
+
+* Added `logs-tail` script to tail logs in the mediawiki log directory.
+
 #### December 2017
 
 ###### 22nd

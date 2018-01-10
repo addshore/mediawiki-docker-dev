@@ -1,0 +1,5 @@
+#!/bin/sh
+# Usage: logs-tail debug.log
+set -eu
+
+docker-compose exec "web" tail -f //var/log/mediawiki/$1

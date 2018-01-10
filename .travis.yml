@@ -6,6 +6,7 @@ services:
 addons:
   hosts:
     - default.web.mw.localhost
+    - secondwiki.web.mw.localhost
     - proxy.mw.localhost
     - phpmyadmin.mw.localhost
     - graphite.mw.localhost

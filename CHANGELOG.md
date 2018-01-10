@@ -11,6 +11,7 @@ This file contains a brief overview of the Majorish changes to the environment.
 * Added new `phpunit` which allows running phpunit for jobs etc. Example: `phpunit default --group=Database`
 * `bash` script will now open in the `/var/www/mediawiki` directory
 * PhpMyAdmin now shows a drop down allowing you to select the db servers rather than specifying their name.
+* PhpMyAdmin now automatically shows blob data as text in results.
 
 #### December 2017
 

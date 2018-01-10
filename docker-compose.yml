@@ -42,6 +42,8 @@ services:
      - PMA_HOSTS=db-master,db-slave
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw.localhost
+    volumes:
+      - ./config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
 
   web:
     image: webdevops/${PHPORHHVM}-${WEBSERVER}${DOCKERPHPDEV}:${RUNTIMEVERSION}

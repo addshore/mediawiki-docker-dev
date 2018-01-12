@@ -26,15 +26,15 @@ git clone https://github.com/addshore/mediawiki-docker-dev.git
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
 ```
-git clone https://gerrit.wikimedia.org/r/mediawiki/core ~/dev/git/gerrit/mediawiki
-git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ~/dev/git/gerrit/mediawiki/skins/Vector
+git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/mediawiki
+git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
 ```
 
 Or from [Github Mirror](https://github.com/wikimedia/mediawiki) (often quicker):
 
 ```
-git clone https://github.com/wikimedia/mediawiki.git ~/dev/git/gerrit/mediawiki
-git clone https://github.com/wikimedia/mediawiki-skins-Vector.git ~/dev/git/gerrit/mediawiki/skins/Vector
+git clone https://github.com/wikimedia/mediawiki.git /srv/dev/git/gerrit/mediawiki
+git clone https://github.com/wikimedia/mediawiki-skins-Vector.git /srv/dev/git/gerrit/mediawiki/skins/Vector
 
 # You can then set the remote to point back to gerrit:
 
@@ -53,7 +53,15 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
 
-#### 5) Launch the environment
+### 5) Configure the environment
+
+Note: If you cloned mediawiki into a directory other than `/srv/dev/git/gerrit/mediawiki` you will need to do this step, otherwise the defaults can likely be used.
+
+Copy the content of `default.env` from the `mediawiki-docker-dev` dir into a new file called `local.env`.
+
+Alter any settings that you want to change, for example the install location of MediaWiki, a directory to a local composer cache, or webserver or php version.
+
+#### 6) Launch the environment
 
 **Create and start the Docker containers:**
 

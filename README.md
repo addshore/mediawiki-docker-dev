@@ -6,7 +6,7 @@
 
 https://docs.docker.com/compose/install/
 
-######Unix notes
+###### Unix notes
 
 - You mostly want the docker-ce package not the docker package (please read the install instructions)
 - If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
@@ -28,18 +28,6 @@ From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawik
 ```
 git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/mediawiki
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
-```
-
-Or from [Github Mirror](https://github.com/wikimedia/mediawiki) (often quicker):
-
-```
-git clone https://github.com/wikimedia/mediawiki.git /srv/dev/git/gerrit/mediawiki
-git clone https://github.com/wikimedia/mediawiki-skins-Vector.git /srv/dev/git/gerrit/mediawiki/skins/Vector
-
-# You can then set the remote to point back to gerrit:
-
-git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/core
-git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 ```
 
 #### 4) Create a basic LocalSettings.php

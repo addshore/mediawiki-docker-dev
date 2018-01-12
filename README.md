@@ -1,7 +1,5 @@
 ## Instructions
 
-If you don't want to use the default port of 8080 and the default mediawiki path of ~/dev/git/gerrit/mediawiki then set `DOCKER_MW_PATH` or `DOCKER_MW_PORT` to something else in a `local.env` file.
-
 ### Install
 
 #### 1) Install Docker & Docker Compose
@@ -21,7 +19,9 @@ https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
-#### 3) Clone MediaWiki Core & the Vector Skin
+#### 3) Clone MediaWiki Core & the Vector Skin (default skin)
+
+You can start without the skin but you will find that your MediaWiki instlal doesn't look very nice.
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
@@ -51,6 +51,13 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 ```
 <?php
 require_once __DIR__ . '/.docker/LocalSettings.php';
+```
+
+When you come to change any MediaWiki settings this is the file you will want to be altering.
+
+For example after install you will probably find you want to load the default skin:
+```
+wfLoadSkin( 'Vector' );
 ```
 
 ### 5) Configure the environment

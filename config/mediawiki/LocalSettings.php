@@ -37,6 +37,8 @@ $dockerSlaveDb = [
 	'password' => 'toor',
 	'type' => "mysql",
 	'flags' => DBO_DEFAULT,
+	# Avoid switching to readonly too early (for example during update.php)
+	'max lag' => 60,
 	'load' => 1,
 ];
 // Unit tests fail when run with replication, due to not having the temporary tables.

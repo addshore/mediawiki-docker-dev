@@ -59,7 +59,6 @@ services:
      - XDEBUG_REMOTE_PORT=9000
      - XDEBUG_REMOTE_CONNECT_BACK=0
      - PHP_IDE_CONFIG=serverName=docker
-     - COMPOSER_CACHE_DIR=/cache/composer
     depends_on:
      - db-configure
     volumes:
@@ -69,9 +68,6 @@ services:
      - ./config/hhvm/server.ini:/etc/hhvm/server.ini:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker
-     - mw-vendor:/var/www/mediawiki/vendor
-     - "${COMPOSER_CACHE_PATH_OR_VOL}:/cache/composer"
-
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:
@@ -93,5 +89,3 @@ volumes:
   sql-data-slave:
   graphite-data:
   mw-images:
-  mw-vendor:
-  composer-cache:

@@ -10,6 +10,6 @@ echo "Creating tmp directory"
 docker-compose exec --user application "web" mkdir //var/www/mediawiki/images/docker/$1/tmp
 
 echo "Running install.php script"
-docker-compose exec --user application "web" bash //var/www/mediawiki/.docker/installdbs $1
+docker-compose exec --user root "web" bash //var/www/mediawiki/.docker/installdbs $1
 
 ./hosts-add $1.web.mw.localhost

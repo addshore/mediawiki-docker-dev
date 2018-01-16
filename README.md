@@ -30,7 +30,9 @@ git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/medi
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
 ```
 
-#### 4) Create a basic LocalSettings.php
+#### 4) Run `composer install` for MediaWiki
+
+#### 5) Create a basic LocalSettings.php
 
 The .docker/LocalSettings.php file will exist within the containers running Mediawiki.
 
@@ -40,7 +42,6 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 <?php
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
-
 When you come to change any MediaWiki settings this is the file you will want to be altering.
 
 For example after install you will probably find you want to load the default skin:
@@ -48,7 +49,7 @@ For example after install you will probably find you want to load the default sk
 wfLoadSkin( 'Vector' );
 ```
 
-### 5) Configure the environment
+### 6) Configure the environment
 
 Note: If you cloned mediawiki into a directory other than `/srv/dev/git/gerrit/mediawiki` you will need to do this step, otherwise the defaults can likely be used.
 
@@ -56,7 +57,7 @@ Copy the content of `default.env` from the `mediawiki-docker-dev` dir into a new
 
 Alter any settings that you want to change, for example the install location of MediaWiki, a directory to a local composer cache, or webserver or php version.
 
-#### 6) Launch the environment
+#### 7) Launch the environment
 
 **Create and start the Docker containers:**
 
@@ -181,4 +182,3 @@ xdbeug connecitons will then be sent to this IP address on port 9000.
    - Strict Warning: It is not safe to rely on the system's timezone settings. Please use the date.timezone setting, the TZ environment variable or the date_default_timezone_set() function.
  - Statsv endpoint
  - Setup awesome hosts file additions & removals
- - Should be able to run with no internet (so do something about composer install step))

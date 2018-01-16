@@ -4,6 +4,9 @@ This file contains a brief overview of the Majorish changes to the environment.
 
 #### January 2018
 
+###### 16th
+* Composer no longer runs as part of the `up` script
+
 ###### 10th
 
 * Added `logs-tail` script to tail logs in the mediawiki log directory.

@@ -42,7 +42,9 @@ git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/core
 git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 ```
 
-#### 4) Create a basic LocalSettings.php
+#### 4) Run `composer install` for MediaWiki
+
+#### 5) Create a basic LocalSettings.php
 
 The .docker/LocalSettings.php file will exist within the containers running Mediawiki.
 
@@ -53,7 +55,7 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
 
-#### 5) Launch the environment
+#### 6) Launch the environment
 
 **Create and start the Docker containers:**
 
@@ -178,4 +180,3 @@ xdbeug connecitons will then be sent to this IP address on port 9000.
    - Strict Warning: It is not safe to rely on the system's timezone settings. Please use the date.timezone setting, the TZ environment variable or the date_default_timezone_set() function.
  - Statsv endpoint
  - Setup awesome hosts file additions & removals
- - Should be able to run with no internet (so do something about composer install step))

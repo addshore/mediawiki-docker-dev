@@ -1,14 +1,12 @@
 ## Instructions
 
-If you don't want to use the default port of 8080 and the default mediawiki path of ~/dev/git/gerrit/mediawiki then set `DOCKER_MW_PATH` or `DOCKER_MW_PORT` to something else in a `local.env` file.
-
 ### Install
 
 #### 1) Install Docker & Docker Compose
 
 https://docs.docker.com/compose/install/
 
-######Unix notes
+###### Unix notes
 
 - You mostly want the docker-ce package not the docker package (please read the install instructions)
 - If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
@@ -21,25 +19,15 @@ https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
-#### 3) Clone MediaWiki Core & the Vector Skin
+#### 3) Clone MediaWiki Core & the Vector Skin (default skin)
+
+You can start without the skin but you will find that your MediaWiki instlal doesn't look very nice.
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
 ```
-git clone https://gerrit.wikimedia.org/r/mediawiki/core ~/dev/git/gerrit/mediawiki
-git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ~/dev/git/gerrit/mediawiki/skins/Vector
-```
-
-Or from [Github Mirror](https://github.com/wikimedia/mediawiki) (often quicker):
-
-```
-git clone https://github.com/wikimedia/mediawiki.git ~/dev/git/gerrit/mediawiki
-git clone https://github.com/wikimedia/mediawiki-skins-Vector.git ~/dev/git/gerrit/mediawiki/skins/Vector
-
-# You can then set the remote to point back to gerrit:
-
-git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/core
-git remote set-url origin https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/mediawiki
+git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
 ```
 
 #### 4) Run `composer install` for MediaWiki
@@ -54,8 +42,22 @@ Make a LocalSettings.php in the root of the Mediawiki repo containing the follow
 <?php
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
+When you come to change any MediaWiki settings this is the file you will want to be altering.
 
-#### 6) Launch the environment
+For example after install you will probably find you want to load the default skin:
+```
+wfLoadSkin( 'Vector' );
+```
+
+### 6) Configure the environment
+
+Note: If you cloned mediawiki into a directory other than `/srv/dev/git/gerrit/mediawiki` you will need to do this step, otherwise the defaults can likely be used.
+
+Copy the content of `default.env` from the `mediawiki-docker-dev` dir into a new file called `local.env`.
+
+Alter any settings that you want to change, for example the install location of MediaWiki, a directory to a local composer cache, or webserver or php version.
+
+#### 7) Launch the environment
 
 **Create and start the Docker containers:**
 

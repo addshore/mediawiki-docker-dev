@@ -68,6 +68,8 @@ services:
      - ./config/hhvm/server.ini:/etc/hhvm/server.ini:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker
+    working_dir: /var/www/mediawiki
+
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:
@@ -83,6 +85,8 @@ services:
       - "${DOCKER_MW_PORT}:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - web
 
 volumes:
   sql-data-master:

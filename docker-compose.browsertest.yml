@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  web:
+    # additional volumes (https://docs.docker.com/compose/extends/#adding-and-overriding-configuration)
+    volumes:
+      - "${SKIN_VECTOR_PATH}:/var/www/mediawiki/skins/Vector"
+      - "${EXT_ADVANCEDSEARCH_PATH}:/var/www/mediawiki/extensions/AdvancedSearch"
+      - "${EXT_CIRRUSSEARCH_PATH}:/var/www/mediawiki/extensions/CirrusSearch"
+      - "${EXT_ELASTICA_PATH}:/var/www/mediawiki/extensions/Elastica"
+      - "${EXT_EVENTLOGGING_PATH}:/var/www/mediawiki/extensions/EventLogging"
+    depends_on:
+      - elasticsearch
+
+  phpmyadmin:
+    image: hello-world
+
+  graphite-statsd:
+    image: hello-world
+
+  # to update indexes
+  # docker-compose ... run web php /var/www/mediawiki/extensions/CirrusSearch/maintenance/updateSearchIndexConfig.php
+  # docker-compose ... run web php /var/www/mediawiki/extensions/CirrusSearch/maintenance/forceSearchIndex.php
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+
+  seleniumtests:
+    image: "node:6"
+    environment:
+      - "MW_SERVER=http://web"
+      - "MW_SCRIPT_PATH=/mediawiki"
+      - "MEDIAWIKI_USER=selenium"
+      - "MEDIAWIKI_PASSWORD=test1234"
+    command: echo 'invoke me through ./browsertest'
+    working_dir: /app
+    volumes:
+      - "${DOCKER_MW_PATH}:/app"
+      - "${EXT_ADVANCEDSEARCH_PATH}:/app/extensions/AdvancedSearch"
+      - "${SELENIUM_LOG_PATH}:/app/log"
+    depends_on:
+      - selenium
+
+  selenium:
+    image: selenium/standalone-chrome
+    shm_size: '2gb'
+    depends_on:
+      - web

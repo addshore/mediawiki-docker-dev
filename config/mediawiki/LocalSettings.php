@@ -12,8 +12,12 @@ if ( defined( "MW_DB" ) ) {
     $dockerDb = MW_DB;
     $wgServer = "//$dockerDb.web.mw.localhost:80";
 } elseif( array_key_exists( 'SERVER_NAME', $_SERVER ) ) {
-    $dockerHostParts = explode( '.', $_SERVER['SERVER_NAME'] );
-    $dockerDb = $dockerHostParts[0];
+    if ( $_SERVER['SERVER_NAME'] === 'web' || $_SERVER['SERVER_NAME'] === 'web:80' ) {	// internal access from docker network (e.g. selenium server)
+        $dockerDb = 'default';
+    } else {
+        $dockerHostParts = explode( '.', $_SERVER['SERVER_NAME'] );
+        $dockerDb = $dockerHostParts[0];
+    }
     $wgServer = WebRequest::detectServer();
 } else {
     die( 'Unable to decide which site is being used.' );
@@ -139,3 +143,50 @@ $wgGroupPermissions['sysop']['editcontentmodel'] = true;
 ## Features
 
 $wgRCWatchCategoryMembership = true;
+
+## added for AdvancedSearch (not cleared as general purpose, yet)
+
+if ( isMounted( 'skins/Vector' ) ) {
+	wfLoadSkin( 'Vector' );
+}
+
+if ( isMounted( 'extensions/Elastica' ) ) {
+	wfLoadExtension( 'Elastica' );
+}
+
+if ( isMounted( 'extensions/CirrusSearch' ) ) {
+	// CirrusSearch depends on Elastica but this makes itself heard, not handling this here
+	require_once "$IP/extensions/CirrusSearch/CirrusSearch.php";
+	$wgCirrusSearchServers = array(
+		array(
+			'host' => 'elasticsearch',
+			'username' => 'elastic',
+			'password' => 'changeme'
+		)
+	);
+	$wgSearchType = 'CirrusSearch';
+}
+
+if ( isMounted( 'extensions/AdvancedSearch' ) ) {
+	wfLoadExtension( 'AdvancedSearch' );
+}
+
+if ( isMounted( 'extensions/EventLogging' ) ) {
+	wfLoadExtension( 'EventLogging' );
+	$wgEventLoggingBaseUri = 'http://localhost:8080/event.gif';
+	$wgEventLoggingFile = '/var/log/mediawiki/events.log';
+}
+
+/**
+ * Check if a filled folder is located at the given place (relative to MW_INSTALL_PATH)
+ *
+ * @tutorial Useful to detect dependencies that optionally get added as mounted folder
+ *
+ * @param string $dir
+ * @return bool
+ */
+function isMounted( $dir ) {
+	global $IP;
+	$path = "{$IP}/$dir";
+	return is_dir( $path ) && count( glob( $path . '/*' ) ) > 0;
+}

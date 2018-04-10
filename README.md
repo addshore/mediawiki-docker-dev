@@ -21,7 +21,7 @@ git clone https://github.com/addshore/mediawiki-docker-dev.git
 
 #### 3) Clone MediaWiki Core & the Vector Skin (default skin)
 
-You can start without the skin but you will find that your MediaWiki instlal doesn't look very nice.
+You can start without the skin but you will find that your MediaWiki install doesn't look very nice.
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
@@ -29,6 +29,8 @@ From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawik
 git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/mediawiki
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
 ```
+
+(You can clone your code to somewhere other than `/srv/dev/git/gerrit/mediawiki`. For example, `~/src/mediawiki` but you'll need to follow step 6 carefully.)
 
 #### 4) Run `composer install` for MediaWiki
 

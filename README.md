@@ -21,7 +21,7 @@ git clone https://github.com/addshore/mediawiki-docker-dev.git
 
 #### 3) Clone MediaWiki Core & the Vector Skin (default skin)
 
-You can start without the skin but you will find that your MediaWiki instlal doesn't look very nice.
+You can start without the skin but you will find that your MediaWiki install doesn't look very nice.
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
@@ -199,7 +199,7 @@ While using PHP you can use remote xdebug debugging.
 
 To do so you need to set IDELOCALHOST in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker.
 
-xdbeug connecitons will then be sent to this IP address on port 9000.
+xdebug connections will then be sent to this IP address on port 9000.
 
 ## TODO
 

@@ -30,6 +30,8 @@ git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/medi
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
 ```
 
+(You can clone your code to somewhere other than `/srv/dev/git/gerrit/mediawiki`. For example, `~/src/mediawiki` but you'll need to follow step 6 carefully.)
+
 #### 4) Run `composer install` for MediaWiki
 
 Either on your host machine or with Docker, inside the `/srv/dev/git/gerrit/mediawiki` directory:

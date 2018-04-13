@@ -165,7 +165,7 @@ mw-docker-dev hosts-sync
 ### PHPUnit
 
 ```
-mw-docker-dev phpunit --wiki default //var/www/mediawiki/extensions/FileImporter/tests/phpunit
+mw-docker-dev phpunit-file --wiki default //var/www/mediawiki/extensions/FileImporter/tests/phpunit
 ```
 
 ### QUnit

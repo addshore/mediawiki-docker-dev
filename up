@@ -46,7 +46,7 @@ rm .hosts
 ./hosts-add graphite.mw.localhost
 
 echo "Setting up log directory"
-docker-compose exec "web" mkdir //var/log/mediawiki
+docker-compose exec "web" mkdir -p //var/log/mediawiki
 docker-compose exec "web" chown application:application //var/log/mediawiki
 
 echo "Setting up images directory"

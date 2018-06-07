@@ -260,6 +260,12 @@ npm install
 npm run qunit
 ```
 
+### Linting WikibaseLexeme
+Run from the mediawiki-docker-dev directory:
+```
+docker-compose exec "web" bash -c "cd /var/www/mediawiki/extensions/WikibaseLexeme; composer --ansi test"
+```
+
 ## Access
 
 - [Default MediaWiki Site](http://default.web.mw.localhost:8080)

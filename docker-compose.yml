@@ -8,7 +8,9 @@ services:
       - MYSQL_ROOT_PASSWORD=toor
     volumes:
       - sql-data-master:/var/lib/mysql
-      - ./config/mysql/master:/etc/mysql/conf.d/
+      - ./config/mysql/master:/tmp/mwdd
+    entrypoint: "/tmp/mwdd/entrypoint.sh"
+    command: "mysqld"
 
   db-slave:
     image: ${DB}:latest
@@ -16,7 +18,9 @@ services:
       - MYSQL_ROOT_PASSWORD=toor
     volumes:
       - sql-data-slave:/var/lib/mysql
-      - ./config/mysql/slave:/etc/mysql/conf.d/
+      - ./config/mysql/slave:/tmp/mwdd
+    entrypoint: "/tmp/mwdd/entrypoint.sh"
+    command: "mysqld"
 
   db-configure:
     image: ${DB}:latest

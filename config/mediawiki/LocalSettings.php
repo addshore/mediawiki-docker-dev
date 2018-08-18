@@ -8,6 +8,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgAssumeProxiesUseDefaultProtocolPorts = false;
 
 ## Docker stuff
+if ( PHP_SAPI === 'cli' && !defined( 'MW_DB' ) ) {
+    define( 'MW_DB', 'default' );
+}
+
 if ( defined( "MW_DB" ) ) {
     $dockerDb = MW_DB;
     $wgServer = "//$dockerDb.web.mw.localhost:80";

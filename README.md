@@ -199,7 +199,7 @@ $ npm run qunit
 
 While using PHP you can use remote xdebug debugging.
 
-To do so you need to set IDELOCALHOST in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker.
+To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker. Note with Docker for Mac, you can use `IDELOCALHOST=host.docker.internal`.
 
 xdebug connections will then be sent to this IP address on port 9000.
 

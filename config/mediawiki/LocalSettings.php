@@ -34,21 +34,24 @@ $dockerMasterDb = [
 	'flags' => DBO_DEFAULT,
 	'load' => 0,
 ];
-$dockerSlaveDb = [
-	'host' => "db-slave",
-	'dbname' => $dockerDb,
-	'user' => 'root',
-	'password' => 'toor',
-	'type' => "mysql",
-	'flags' => DBO_DEFAULT,
-	# Avoid switching to readonly too early (for example during update.php)
-	'max lag' => 60,
-	'load' => 1,
-];
+//$dockerSlaveDb = [
+//	'host' => "db-slave",
+//	'dbname' => $dockerDb,
+//	'user' => 'root',
+//	'password' => 'toor',
+//	'type' => "mysql",
+//	'flags' => DBO_DEFAULT,
+//	# Avoid switching to readonly too early (for example during update.php)
+//	'max lag' => 60,
+//	'load' => 1,
+//];
 // Unit tests fail when run with replication, due to not having the temporary tables.
 // So for unit tests just run with the master.
 if ( !defined( 'MW_PHPUNIT_TEST' ) ) {
-	$wgDBservers = [ $dockerMasterDb, $dockerSlaveDb ];
+	$wgDBservers = [
+		$dockerMasterDb,
+		// $dockerSlaveDb
+	];
 } else {
 	$wgDBserver = $dockerMasterDb['host'];
 	$wgDBuser = $dockerMasterDb['user'];

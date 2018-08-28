@@ -7,10 +7,10 @@ echo "Waiting for mysql to get up"
 # Give 60 seconds for master and slave to come up
 # sleep 60
 /tmp/wait-for-it.sh  db-master:3306
-/tmp/wait-for-it.sh  db-slave:3306
+# /tmp/wait-for-it.sh  db-slave:3306
 # Double check
 /tmp/wait-for-it.sh  db-master:3306
-/tmp/wait-for-it.sh  db-slave:3306
+# /tmp/wait-for-it.sh  db-slave:3306
 
 echo "Create MySQL Servers (master / slave repl)"
 echo "-----------------"

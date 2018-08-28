@@ -12,38 +12,38 @@ services:
     entrypoint: "/tmp/mwdd/entrypoint.sh"
     command: "mysqld"
 
-  db-slave:
-    image: ${DB}:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=toor
-    volumes:
-      - sql-data-slave:/var/lib/mysql
-      - ./config/mysql/slave:/tmp/mwdd
-    entrypoint: "/tmp/mwdd/entrypoint.sh"
-    command: "mysqld"
+#  db-slave:
+#    image: ${DB}:latest
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=toor
+#    volumes:
+#      - sql-data-slave:/var/lib/mysql
+#      - ./config/mysql/slave:/tmp/mwdd
+#    entrypoint: "/tmp/mwdd/entrypoint.sh"
+#    command: "mysqld"
 
-  db-configure:
-    image: ${DB}:latest
-    environment:
-      - "MYSQL_SLAVE_PASSWORD=toor"
-      - "MYSQL_MASTER_PASSWORD=toor"
-      - "MYSQL_ROOT_PASSWORD=toor"
-      - "MYSQL_REPLICATION_USER=repl"
-      - "MYSQL_REPLICATION_PASSWORD=repl"
-    depends_on:
-     - db-master
-     - db-slave
-    volumes:
-      - ./scripts/mysql_connector.sh:/tmp/mysql_connector.sh
-      - ./scripts/wait-for-it.sh:/tmp/wait-for-it.sh
-    command: /bin/bash -x /tmp/mysql_connector.sh
+#  db-configure:
+#    image: ${DB}:latest
+#    environment:
+#      - "MYSQL_SLAVE_PASSWORD=toor"
+#      - "MYSQL_MASTER_PASSWORD=toor"
+#      - "MYSQL_ROOT_PASSWORD=toor"
+#      - "MYSQL_REPLICATION_USER=repl"
+#      - "MYSQL_REPLICATION_PASSWORD=repl"
+#    depends_on:
+#     - db-master
+#     - db-slave
+#    volumes:
+#      - ./scripts/mysql_connector.sh:/tmp/mysql_connector.sh
+#      - ./scripts/wait-for-it.sh:/tmp/wait-for-it.sh
+#    command: /bin/bash -x /tmp/mysql_connector.sh
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
      - PMA_USER:root
      - PMA_PASSWORD:toor
-     - PMA_HOSTS=db-master,db-slave
+     - PMA_HOSTS=db-master
      - PMA_ARBITRARY=1
      - VIRTUAL_HOST=phpmyadmin.mw.localhost
     volumes:
@@ -64,7 +64,7 @@ services:
      - XDEBUG_REMOTE_CONNECT_BACK=0
      - PHP_IDE_CONFIG=serverName=docker
     depends_on:
-     - db-configure
+     - db-master
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
@@ -90,6 +90,6 @@ services:
 
 volumes:
   sql-data-master:
-  sql-data-slave:
+#  sql-data-slave:
   graphite-data:
   mw-images:

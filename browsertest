@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+# create user needed for certain edit actions (only has effect on the first go)
+docker-compose -f docker-compose.yml -f docker-compose.browsertest.yml \
+	run --rm web php //var/www/mediawiki/maintenance/createAndPromote.php --wiki default --bureaucrat --sysop --bot selenium test1234 \
+	|| true
+
+docker-compose -f docker-compose.yml -f docker-compose.browsertest.yml \
+	run --rm seleniumtests node_modules/.bin/wdio tests/selenium/wdio.conf.js --mochaOpts.timeout=60000 --host selenium

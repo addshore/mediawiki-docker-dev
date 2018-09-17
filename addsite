@@ -4,12 +4,12 @@ set -eu
 echo "Adding new site: $1"
 
 echo "Creating images directory"
-docker-compose exec --user application "web" mkdir -p /var/www/mediawiki/images/docker/$1
+docker-compose exec --user application "web" mkdir -p //var/www/mediawiki/images/docker/$1
 
 echo "Creating tmp directory"
-docker-compose exec --user application "web" mkdir -p /var/www/mediawiki/images/docker/$1/tmp
+docker-compose exec --user application "web" mkdir -p //var/www/mediawiki/images/docker/$1/tmp
 
 echo "Running install.php script"
-docker-compose exec --user root "web" bash /var/www/mediawiki/.docker/installdbs $1
+docker-compose exec --user root "web" bash //var/www/mediawiki/.docker/installdbs $1
 
 ./hosts-add $1.web.mw.localhost

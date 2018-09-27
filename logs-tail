@@ -2,4 +2,20 @@
 # Usage: logs-tail debug.log
 set -eu
 
+if [ -z "${1:-}" ]; then
+	echo "Usage: logs-tail <file>"
+	echo ""
+	echo "Options:"
+	echo ""
+	echo "<file>"
+	echo "    File path relative to /var/log/mediawiki/,"
+	echo "    for example 'debug.log'."
+	echo ""
+	echo "Exampless:"
+	echo ""
+	echo "    $ logs-tail debug.log"
+	echo ""
+	exit 1
+fi
+
 docker-compose exec "web" tail -f //var/log/mediawiki/$1

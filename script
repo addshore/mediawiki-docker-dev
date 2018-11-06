@@ -1,0 +1,6 @@
+#!/bin/bash
+# Usage: script WIKINAME path-to-maintenance-script
+# Example: script default maintenance/update.php
+set -eu
+
+docker-compose exec "web" php //var/www/mediawiki/${*:2} --wiki $1

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Usage: phpunit-file WIKINAME path/to/test/from/mediawiki/dir
 # Example: phpunit-file default tests/phpunit/includes/PageArchiveTest.php
 set -eu

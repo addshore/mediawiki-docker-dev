@@ -3,4 +3,5 @@
 # Example: phpunit-file default tests/phpunit/includes/PageArchiveTest.php
 set -eu
 
-docker-compose exec "web" php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki $1 //var/www/mediawiki/${*:2}
+dir="$(dirname "$0")"
+"$dir/php" //var/www/mediawiki/tests/phpunit/phpunit.php --wiki $1 //var/www/mediawiki/${*:2}

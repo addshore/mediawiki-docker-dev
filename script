@@ -3,4 +3,5 @@
 # Example: script default maintenance/update.php
 set -eu
 
-docker-compose exec "web" php //var/www/mediawiki/${*:2} --wiki $1
+dir="$(dirname "$0")"
+"$dir/php" //var/www/mediawiki/${*:2} --wiki $1

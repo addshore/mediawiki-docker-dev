@@ -3,4 +3,5 @@
 # Example: phpunit default --group=Database
 set -eu
 
-docker-compose exec "web" php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki $@
+dir="$(dirname "$0")"
+"$dir/php" //var/www/mediawiki/tests/phpunit/phpunit.php --wiki $@

@@ -49,9 +49,9 @@ docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app 
 
 #### 5) Create a basic LocalSettings.php
 
-The .docker/LocalSettings.php file will exist within the containers running Mediawiki.
+A `.docker/LocalSettings.php` file exists within the containers running Mediawiki. Your `LocalSettings.php` file must load it.
 
-Make a LocalSettings.php in the root of the Mediawiki repo containing the following:
+Make a `LocalSettings.php` in the root of the MediaWiki repo containing the following:
 
 ```
 <?php

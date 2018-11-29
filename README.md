@@ -207,6 +207,12 @@ mw-docker-dev phpunit-file default extensions/FileImporter/tests/phpunit
 
 See also <https://www.mediawiki.org/wiki/Manual:PHP_unit_testing>
 
+### Maintenance Scripts
+
+```
+mw-docker-dev script default maintenance/update.php
+```
+
 ### QUnit
 
 To run the QUnit tests from the browser, use [Special:JavaScriptTest](http://default.web.mw.localhost:8080/index.php?title=Special:JavaScriptTest).
@@ -236,7 +242,7 @@ $ npm run qunit
 
 While using PHP you can use remote xdebug debugging.
 
-To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker. Note with Docker for Mac, you can use `IDELOCALHOST=host.docker.internal`.
+To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker. Note with Docker for Mac, you can use `IDELOCALHOST=host.docker.internal`. When running on linux, you can set this to `auto`, which will cause the IP to be auto-detected when the container is created. When the IP changes, you can run `update-env` to update the environment. This will automatically restart the `web` service. 
 
 xdebug connections will then be sent to this IP address on port 9000.
 

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Output a combined environment, for use in the .env file
+
+cat default.env 
+echo
+
+# source default.env so we can check $IDELOCALHOST below
+. local.env
+
+if [ -f local.env ]; then
+	cat local.env
+	echo
+
+	# source local.env so we can check $IDELOCALHOST below
+	. local.env
+fi
+
+# if desired, auto-detect the IP
+if [ "$IDELOCALHOST" == "auto" ]; then
+	ip=`ip route get 1 | head -1 | cut -d' ' -f7`
+	echo IDELOCALHOST="$ip"
+fi

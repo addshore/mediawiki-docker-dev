@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This script updates the .env file and restarts the given service so 
+# the new environment becomes available there. This is especially useful
+# for making the host's local IP address known inside the container as
+# $IDELOCALHOST.
+
+cd "$(dirname "$0")"
+
+service="${1:-web}"
+
+touch .env
+rm .env
+./cat-env > .env
+
+docker-compose rm -sf "$service"
+docker-compose up -d "$service"

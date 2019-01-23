@@ -114,7 +114,7 @@ The below documentation assumes this alias in examples, but each of these also w
 
 Create and start containers.
 
-This includes setting up a default wiki @ http://default.web.mw.localhost:8080 with an "admin" user that has password "adminpass".
+This includes setting up a default wiki @ http://default.web.mw.localhost:8080 with an "admin" user that has password "dockerpass".
 
 You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
 

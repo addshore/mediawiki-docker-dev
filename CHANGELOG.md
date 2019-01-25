@@ -2,9 +2,27 @@
 
 This file contains a brief overview of the Majorish changes to the environment.
 
+### 2019
+
+#### January 2019
+
+###### 25th
+
+* [Default admin password changed from "adminpass" to "dockerpass"](https://github.com/addshore/mediawiki-docker-dev/pull/79)
+
+###### 23rd
+
+* [default.env changes with extra documentation](https://github.com/addshore/mediawiki-docker-dev/pull/78)
+* ['mysql' script introduced allowing easy access to the database on CLI](https://github.com/addshore/mediawiki-docker-dev/pull/77)
+
+### 2018
+
+* Changes after Jan 2018 were missed (sorry). Changelog resumed at Jan 2019...
+
 #### January 2018
 
 ###### 16th
+
 * Composer no longer runs as part of the `up` script
 
 ###### 10th
@@ -16,6 +34,8 @@ This file contains a brief overview of the Majorish changes to the environment.
 * PhpMyAdmin now shows a drop down allowing you to select the db servers rather than specifying their name.
 * PhpMyAdmin now automatically shows blob data as text in results.
 * Mediawiki setting default change: `$wgDevelopmentWarnings = true;`
+
+### 2017
 
 #### December 2017
 

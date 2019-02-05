@@ -16,7 +16,7 @@ install:
   - echo -e '<?php\nrequire_once __DIR__ . "/.docker/LocalSettings.php";\n' > ~/mediawiki/LocalSettings.php
   - echo -e 'DOCKER_MW_PATH=~/mediawiki\nDOCKER_MW_PORT=8080\n' > local.env
 script:
-  - ./up
+  - ./create
   - cat .env
   #### Mediawiki
   # Once to show useful output

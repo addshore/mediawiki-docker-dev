@@ -3,8 +3,8 @@
 
 BASE_PATH=$(dirname $0)
 
-echo "Waiting for mysql to get up"
-# Give 60 seconds for master and slave to come up
+echo "Waiting for mysql to start"
+# Give 60 seconds for master and slave to start
 # sleep 60
 /tmp/wait-for-it.sh  db-master:3306
 /tmp/wait-for-it.sh  db-slave:3306

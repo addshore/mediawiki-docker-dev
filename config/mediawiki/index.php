@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is copied by ./up to web://var/www/index.php.
+ * This file is copied by ./create to web://var/www/index.php.
  *
  * This entry point allows MediaWiki to handle requests for "/".
  */

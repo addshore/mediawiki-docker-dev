@@ -72,14 +72,12 @@ Copy the content of `default.env` from the `mediawiki-docker-dev` dir into a new
 
 Alter any settings that you want to change, for example the install location of MediaWiki, a directory to a local composer cache, or webserver or php version.
 
-#### 7) Launch the environment
+#### 7) Create the environment
 
 **Create and start the Docker containers:**
 
-This includes setting up a default wiki @ http://default.web.mw.localhost:8080
-
 ```
-./up
+./create
 ```
 
 **Update your hosts file:**
@@ -100,7 +98,7 @@ need to use `sudo ./hosts-sync` instead if the file is not writable by the shell
 
 The below commands are shell scripts in the mediawiki-docker-dev directory.
 
-For example, the Up command can be invoked as `./up`, and the Bash command as `./bash`, etc.
+For example, the Up command can be invoked as `./create`, and the Bash command as `./bash`, etc.
 
 To easily invoke these while working in another directory (e.g. mediawiki/core, or an extension) you can add a small bash alias to your `bashrc` file. For example:
 
@@ -110,47 +108,47 @@ alias mw-docker-dev='_(){ (cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./
 
 The below documentation assumes this alias in examples, but each of these also works directly. Instead of `mw-docker-dev start` you would run `./start` from your Terminal tab for mw-docker-dev.
 
-### Up
+### Create
 
 Create and start containers.
 
-This includes setting up a default wiki @ http://default.web.mw.localhost:8080 with an "Admin" user that has password "dockerpass".
+This includes installing a default wiki at http://default.web.mw.localhost:8080 with an "Admin" user that has password "dockerpass".
 
-You can choose the spec of the system that the up command will set up by using a custom .env file called local.env and customizing the variables.
-
-```
-mw-docker-dev up
-```
-
-### Stop
-
-Shuts down the containers. Databases and other volumes persist.
+The spec of the system that this command will create is based on environment variables. The default spec resides in `default.env`. You can customize these variable from a file called `local.env`, which you may create in this directory.
 
 ```
-mw-docker-dev stop
+mw-docker-dev create
 ```
 
-### Start
+### Suspend
 
-Start (or restart) the containers, if things have already been created using `./up`.
-
-```
-mw-docker-dev start
-```
-
-### Down
-
-Stop and delete the containers. Also removes databases and volumes.
+Shut down the containers. Databases and other volumes persist. See also: [Resume](#Resume), [Destroy](#Destroy).
 
 ```
-mw-docker-dev down
+mw-docker-dev suspend
+```
+
+### Resume
+
+Start (or restart) the containers. See also: [Suspend](#Suspend).
+
+```
+mw-docker-dev resume
+```
+
+### Destroy
+
+Shut down the containers, and destroy them. Also deletes databases and volumes.
+
+```
+mw-docker-dev destroy
 ```
 
 ### Bash
 
 Run commands on the webserver.
 
-If the containers are running you can use `./bash` to open up an interactive shell on the webserver.
+If the containers are running you can use `./bash` to open an interactive shell on the webserver.
 
 This can be used to run PHPUnit tests, maintenance scripts, etc.
 

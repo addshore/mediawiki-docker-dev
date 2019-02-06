@@ -2,7 +2,19 @@
 
 This file contains a brief overview of the Majorish changes to the environment.
 
+Most recent changes are at the top.
+
 ### 2019
+
+#### February 2019
+
+###### 6th
+
+* [Command names changed](https://github.com/addshore/mediawiki-docker-dev/pull/81):
+  * renamed  up     -> create
+  * renamed  down   -> destroy
+  * renamed  start  -> resume
+  * renamed  stop   -> suspend
 
 #### January 2019
 

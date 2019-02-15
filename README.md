@@ -245,7 +245,7 @@ xdebug connections will then be sent to this IP address on port 9000.
 You can add additional services, or modify current services, by creating a `docker-compose.override.yml` file ([docs](https://docs.docker.com/compose/extends/)). For example, to add a Redis service, add these contents to `docker-compose.override.yml`:
 
 ``` yaml
-version: '2'
+version: '3'
 services:
   redis:
     image: redis
@@ -254,7 +254,7 @@ services:
 To modify a current service, for example to [try a different volume caching for macOS](https://docs.docker.com/docker-for-mac/osxfs-caching/) like `:delegated` instead of `:cached` ([file reference](https://docs.docker.com/compose/compose-file/#volumes)):
 
 ```yaml
-version: '2'
+version: '3'
 services:
   web:
     volumes:
@@ -262,6 +262,68 @@ services:
 ```
 
 Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.
+
+### Using VisualEditor and Parsoid
+
+Create a `docker-compose.override.yml` as documented above. In the override file, add:
+
+``` yaml
+version: '3'
+services:
+
+  parsoid:
+    image: thenets/parsoid:0.8.1
+    ports:
+      - "8000:8000"
+    environment:
+      - PARSOID_DOMAIN_mediawiki=http://default.web.mw.localhost/mediawiki/api.php
+      - PARSOID_LOGGING_LEVEL=debug
+    links:
+      - "web:default.web.mw.localhost"
+```
+
+In LocalSettings.php, add:
+
+``` php
+$wgVirtualRestConfig['modules']['parsoid'] = array(
+	'url' => 'http://parsoid:8000',
+	'domain' => 'mediawiki',
+);
+```
+
+### Using phpMyAdmin
+
+Create a `docker-compose.override.yml` as documented above. In the override file, add:
+
+``` yaml
+version: '3'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+     - PMA_USER:root
+     - PMA_PASSWORD:toor
+     - PMA_HOSTS=db-master,db-slave
+     - PMA_ARBITRARY=1
+     - VIRTUAL_HOST=phpmyadmin.mw.localhost
+    volumes:
+      - ./config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+```
+
+### Using grafana
+
+Create a `docker-compose.override.yml` as documented above. In the override file, add:
+
+``` yaml
+version: '3'
+services:
+  graphite-statsd:
+    image: hopsoft/graphite-statsd
+    environment:
+     - VIRTUAL_HOST=graphite.mw.localhost
+    volumes:
+     - graphite-data:/opt/graphite/storage
+```
 
 ## TODO
 

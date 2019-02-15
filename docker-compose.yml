@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -38,17 +38,6 @@ services:
       - ./scripts/wait-for-it.sh:/tmp/wait-for-it.sh
     command: /bin/bash -x /tmp/mysql_connector.sh
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-     - PMA_USER:root
-     - PMA_PASSWORD:toor
-     - PMA_HOSTS=db-master,db-slave
-     - PMA_ARBITRARY=1
-     - VIRTUAL_HOST=phpmyadmin.mw.localhost
-    volumes:
-      - ./config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
-
   web:
     image: webdevops/${PHPORHHVM}-${WEBSERVER}${DOCKERPHPDEV}:${RUNTIMEVERSION}
     environment:
@@ -74,12 +63,6 @@ services:
      - ./config/hhvm/server.ini:/etc/hhvm/server.ini:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker:delegated
-  graphite-statsd:
-    image: hopsoft/graphite-statsd
-    environment:
-     - VIRTUAL_HOST=graphite.mw.localhost
-    volumes:
-     - graphite-data:/opt/graphite/storage
 
   nginx-proxy:
     image: jwilder/nginx-proxy

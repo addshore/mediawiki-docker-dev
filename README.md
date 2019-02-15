@@ -236,6 +236,30 @@ To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your 
 
 xdebug connections will then be sent to this IP address on port 9000.
 
+## Overriding / Extending
+
+You can add additional services, or modify current services, by creating a `docker-compose.override.yml` file ([docs](https://docs.docker.com/compose/extends/)). For example, to add a Redis service, add these contents to `docker-compose.override.yml`:
+
+``` yaml
+version: '2'
+services:
+  redis:
+    image: redis
+```
+
+To modify a current service, for example to specify volume caching for macOS:
+
+``` yaml
+version: '2'
+services:
+  web:
+    volumes:
+      - "${DOCKER_MW_PATH}:/var/www/mediawiki:cached"
+```
+
+Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.
+
+
 ## TODO
 
  - FIX HHVM strict mode

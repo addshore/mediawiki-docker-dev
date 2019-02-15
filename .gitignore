@@ -1,5 +1,6 @@
 .idea
 local.env
+docker-compose.override.yml
 .env
 .hosts
 .hosts.tmp

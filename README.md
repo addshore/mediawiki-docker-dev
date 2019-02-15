@@ -263,7 +263,6 @@ services:
 
 Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.
 
-
 ## TODO
 
  - FIX HHVM strict mode

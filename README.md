@@ -7,6 +7,10 @@ Many aspect of the container, including the port and MediaWiki path, can be cust
 by creating a `local.env` in this directory, in which to override one or more variables
 from `default.env`.
 
+There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker 
+installed and want to skip the manual steps. Note that `INSTALL_DIR` is the parent directory where MediaWiki
+core will be downloaded, so in the example above you would end up with a codebase at `~/src/mediawiki`.
+
 ### Install
 
 #### 1) Install Docker & Docker Compose

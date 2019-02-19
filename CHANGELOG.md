@@ -8,6 +8,10 @@ Most recent changes are at the top.
 
 #### February 2019
 
+###### 19th
+
+* docker-compose.override.yml added to .gitignore
+
 ###### 6th
 
 * [Command names changed](https://github.com/addshore/mediawiki-docker-dev/pull/81):

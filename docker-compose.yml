@@ -63,6 +63,8 @@ services:
      - XDEBUG_REMOTE_PORT=9000
      - XDEBUG_REMOTE_CONNECT_BACK=0
      - PHP_IDE_CONFIG=serverName=docker
+     - PHP_UPLOAD_MAX_FILESIZE=1024M
+     - PHP_POST_MAX_SIZE=1024M
     depends_on:
      - db-configure
     volumes:
@@ -87,6 +89,10 @@ services:
       - "${DOCKER_MW_PORT}:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./config/nginx/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
+
+  redis:
+    image: redis
 
 volumes:
   sql-data-master:

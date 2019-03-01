@@ -6,6 +6,12 @@ Most recent changes are at the top.
 
 ### 2019
 
+#### March 2019
+
+###### 1st
+
+* Bumped default upload size for web host and proxy to 1024M
+
 #### February 2019
 
 ###### 19th

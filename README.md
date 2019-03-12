@@ -7,7 +7,7 @@ Many aspect of the container, including the port and MediaWiki path, can be cust
 by creating a `local.env` in this directory, in which to override one or more variables
 from `default.env`.
 
-There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker 
+There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker
 installed and want to skip the manual steps. Note that `INSTALL_DIR` is the parent directory where MediaWiki
 core will be downloaded, so in the example above you would end up with a codebase at `~/src/mediawiki`.
 
@@ -251,14 +251,14 @@ services:
     image: redis
 ```
 
-To modify a current service, for example to specify volume caching for macOS:
+To modify a current service, for example to [try a different volume caching for macOS](https://docs.docker.com/docker-for-mac/osxfs-caching/) like `:delegated` instead of `:cached` ([file reference](https://docs.docker.com/compose/compose-file/#volumes)):
 
-``` yaml
+```yaml
 version: '2'
 services:
   web:
     volumes:
-      - "${DOCKER_MW_PATH}:/var/www/mediawiki:cached"
+      - "${DOCKER_MW_PATH}:/var/www/mediawiki:delegated"
 ```
 
 Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.

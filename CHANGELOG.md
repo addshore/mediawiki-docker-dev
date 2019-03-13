@@ -8,6 +8,10 @@ Most recent changes are at the top.
 
 #### March 2019
 
+###### 13th
+
+* Added simple 'help' script / command to remind you of the other commands (useful if using a bash alias)
+
 ###### 1st
 
 * Bumped default upload size for web host and proxy to 1024M

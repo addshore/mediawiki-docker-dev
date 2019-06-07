@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  seleniumtests:
+    image: "node:6"
+    environment:
+      - "MW_SERVER=http://web"
+      - "MW_SCRIPT_PATH=/mediawiki"
+      - "MEDIAWIKI_USER=lil-seleni"
+      - "MEDIAWIKI_PASSWORD=test123456!"
+      - "MEDIAWIKI_SECRET_KEY=a5dca55190e1c3927e098c317dd74e85c7eced36f959275114773b188fbabdbc"
+      - NODE_DEBUG
+    command: echo 'invoke me through ./browsertest'
+    working_dir: /app
+    volumes:
+      - "${DOCKER_MW_PATH}:/app"
+      - "${EXT_WIKIBASE_PATH}:/app/extensions/Wikibase"
+      - "${EXT_WIKIBASELEXEME_PATH}:/app/extensions/WikibaseLexeme"
+      - "${SELENIUM_LOG_PATH}:/app/tests/selenium/log"
+    depends_on:
+      - selenium
+
+  selenium:
+    image: selenium/standalone-chrome
+    shm_size: '2gb'
+    depends_on:
+      - web

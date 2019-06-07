@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+# create user needed for certain edit actions (only has effect on the first go)
+docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.browsertest.yml \
+	run --rm web php //var/www/mediawiki/maintenance/createAndPromote.php --wiki default --bureaucrat --sysop --bot lil-seleni test123456! \
+	|| true
+
+docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.browsertest.yml \
+	run --rm seleniumtests node_modules/.bin/wdio tests/selenium/wdio.conf.js --waitforTimeout=60000 --mochaOpts.timeout=60000 --host selenium \
+	--spec /app/extensions/Wikibase/repo/tests/selenium/specs/Termbox.spec.js
+
+#--mochaOpts.grep 'can create lexeme with language item not bearing language code'

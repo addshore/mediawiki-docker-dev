@@ -4,3 +4,6 @@ set -eu
 echo "Containers are starting"
 
 docker-compose start
+
+HOSTS=`cat .hosts`
+docker-compose exec "web" sh -c "echo '$HOSTS' >> /etc/hosts"

@@ -74,6 +74,9 @@ services:
      - ./config/hhvm/server.ini:/etc/hhvm/server.ini:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker:delegated
+    extra_hosts:
+     - "default.web.mw.localhost:127.0.0.1"
+
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:

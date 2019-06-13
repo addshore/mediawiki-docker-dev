@@ -4,4 +4,7 @@ set -eu
 # Keep note of host names, so that users can use
 # ./hosts-sync to test their current state and
 # attempt to save it manually.
-echo "127.0.0.1 $1 # mediawiki-docker-dev" >> .hosts
+HOSTLINE="127.0.0.1 $1 # mediawiki-docker-dev"
+
+echo "$HOSTLINE" >> .hosts
+docker-compose exec "web" sh -c "echo '$HOSTLINE' >> /etc/hosts"

@@ -1,4 +1,6 @@
-## Instructions
+# Instructions
+
+## Installation
 
 By default the below steps will install MediaWiki at `~/dev/mediawiki`
 and start a server for <http://default.web.mw.localhost:8080>.
@@ -7,26 +9,28 @@ Many aspect of the container, including the port and MediaWiki path, can be cust
 by creating a `local.env` in this directory, in which to override one or more variables
 from `default.env`.
 
-There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker
-installed and want to skip the manual steps. Note that `INSTALL_DIR` is the parent directory where MediaWiki
-core will be downloaded, so in the example above you would end up with a codebase at `~/src/mediawiki`.
+### Semi-automatic Installation
 
-### Install
+There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker
+installed and want to skip the manual steps 2-6. Note that `INSTALL_DIR` is the parent directory where MediaWiki
+core will be downloaded, so in the example above, you would end up with a codebase at `~/src/mediawiki`.
+
+### Manual Installation
 
 #### 1) Install Docker & Docker Compose
 
-https://docs.docker.com/compose/install/
+[Docker Compose Installation](https://docs.docker.com/compose/install/)
 
-###### Unix notes
+##### Unix notes
 
-- Use the `docker-ce` package, not the `docker` package (read their install instructions)
+- Use the `docker-ce` package, not the `docker` package (read [Docker Inc.'s installation instructions](https://docs.docker.com/install/))
 - If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
-https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554
-   - This does not mean your containers will not run as root. These are different settings not really used currently by this dev setup.
+See [How can I use Docker without sudo](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554)
+  - This does not mean your containers will not run as root. These are different settings not really used currently by this dev setup.
 
 #### 2) Clone this repository
 
-```
+```bash
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
@@ -36,7 +40,7 @@ You can start without the skin but you will find that your MediaWiki install doe
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
-```
+```bash
 git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/mediawiki
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
 ```
@@ -47,7 +51,7 @@ git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/ger
 
 Either on your host machine or with Docker, inside the `/srv/dev/git/gerrit/mediawiki` directory:
 
-```
+```bash
 docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
 ```
 
@@ -57,18 +61,20 @@ A `.docker/LocalSettings.php` file exists within the containers running Mediawik
 
 Make a `LocalSettings.php` in the root of the MediaWiki repo containing the following:
 
-```
+```php
 <?php
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
+
 When you come to change any MediaWiki settings this is the file you will want to be altering.
 
 For example after install you will probably find you want to load the default skin:
-```
+
+```php
 wfLoadSkin( 'Vector' );
 ```
 
-### 6) Configure the environment
+#### 6) Configure the environment
 
 Note: If you cloned mediawiki into a directory other than `/srv/dev/git/gerrit/mediawiki` you will need to do this step, otherwise the defaults can likely be used.
 
@@ -80,15 +86,22 @@ Alter any settings that you want to change, for example the install location of 
 
 **Create and start the Docker containers:**
 
-```
+```bash
 ./create
+```
+
+**Note:**
+The script waits up to 60 secs (4 x 15 seconds) for the database containers to initialize and respond. In case the deployment takes longer than that on your system, please increase the default timeout value (line 139 in `scripts/wait-for-it.sh`).
+
+```bash
+TIMEOUT=${TIMEOUT:-15}
 ```
 
 **Update your hosts file:**
 
 Add the following to your `/etc/hosts` file:
 
-```
+```text
 127.0.0.1 default.web.mw.localhost # mediawiki-docker-dev
 127.0.0.1 proxy.mw.localhost # mediawiki-docker-dev
 127.0.0.1 phpmyadmin.mw.localhost # mediawiki-docker-dev
@@ -116,11 +129,11 @@ The below documentation assumes this alias in examples, but each of these also w
 
 Create and start containers.
 
-This includes installing a default wiki at http://default.web.mw.localhost:8080 with an "Admin" user that has password "dockerpass".
+This includes installing a default wiki at [http://default.web.mw.localhost:8080](http://default.web.mw.localhost:8080) with an "Admin" user that has password "dockerpass".
 
 The spec of the system that this command will create is based on environment variables. The default spec resides in `default.env`. You can customize these variable from a file called `local.env`, which you may create in this directory.
 
-```
+```bash
 mw-docker-dev create
 ```
 
@@ -128,7 +141,7 @@ mw-docker-dev create
 
 Shut down the containers. Databases and other volumes persist. See also: [Resume](#Resume), [Destroy](#Destroy).
 
-```
+```bash
 mw-docker-dev suspend
 ```
 
@@ -136,7 +149,7 @@ mw-docker-dev suspend
 
 Start (or restart) the containers. See also: [Suspend](#Suspend).
 
-```
+```bash
 mw-docker-dev resume
 ```
 
@@ -144,7 +157,7 @@ mw-docker-dev resume
 
 Shut down the containers, and destroy them. Also deletes databases and volumes.
 
-```
+```bash
 mw-docker-dev destroy
 ```
 
@@ -156,7 +169,7 @@ If the containers are running you can use `./bash` to open an interactive shell 
 
 This can be used to run PHPUnit tests, maintenance scripts, etc.
 
-```
+```bash
 mw-docker-dev bash
 ```
 
@@ -164,7 +177,7 @@ mw-docker-dev bash
 
 You can add a new site by subdomain name using the ./addsite command
 
-```
+```bash
 mw-docker-dev addsite enwiki
 ```
 
@@ -174,7 +187,7 @@ Check whether the hosts file contains all needed entries, and if not,
 shows which entries need to be added, and also tries to add them automatically
 if possible.
 
-```
+```bash
 mw-docker-dev hosts-sync
 ```
 
@@ -189,7 +202,7 @@ instructions. Just make sure you're on the web server when doing so.
 
 For example:
 
-```
+```bash
 $ mw-docker-dev bash
 
 root@web:/var/www/mediawiki# php maintenance/update.php
@@ -201,7 +214,7 @@ Be sure to set `default` (the wiki db), this is a multi-wiki environment.
 
 For example:
 
-```
+```bash
 mw-docker-dev phpunit-file default extensions/FileImporter/tests/phpunit
 ```
 
@@ -215,22 +228,22 @@ See also <https://www.mediawiki.org/wiki/Manual:JavaScript_unit_testing>.
 
 To run QUnit from the command-line, make sure you have [Node.js v4 or later](https://nodejs.org/) installed on the host, and set the following environment variables:
 
-```
+```bash
 export MW_SERVER='http://default.web.mw.localhost:8080'
 export MW_SCRIPT_PATH='/mediawiki'
 ```
 
-```
-$ cd ~/dev/mediawiki
-$ npm install
-$ npm run qunit
+```bash
+cd ~/dev/mediawiki
+npm install
+npm run qunit
 ```
 
 ## Access
 
- - [Default MediaWiki Site](http://default.web.mw.localhost:8080)
- - [Graphite](http://graphite.mw.localhost:8080)
- - [PhpMyAdmin](http://phpmyadmin.mw.localhost:8080)
+- [Default MediaWiki Site](http://default.web.mw.localhost:8080)
+- [Graphite](http://graphite.mw.localhost:8080)
+- [PhpMyAdmin](http://phpmyadmin.mw.localhost:8080)
 
 ## Debugging
 
@@ -244,7 +257,7 @@ xdebug connections will then be sent to this IP address on port 9000.
 
 You can add additional services, or modify current services, by creating a `docker-compose.override.yml` file ([docs](https://docs.docker.com/compose/extends/)). For example, to add a Redis service, add these contents to `docker-compose.override.yml`:
 
-``` yaml
+```yaml
 version: '2'
 services:
   redis:
@@ -263,10 +276,9 @@ services:
 
 Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.
 
-
 ## TODO
 
- - FIX HHVM strict mode
-   - Strict Warning: It is not safe to rely on the system's timezone settings. Please use the date.timezone setting, the TZ environment variable or the date_default_timezone_set() function.
- - Statsv endpoint
- - Setup awesome hosts file additions & removals
+- FIX HHVM strict mode
+  - Strict Warning: It is not safe to rely on the system's timezone settings. Please use the date.timezone setting, the TZ environment variable or the date_default_timezone_set() function.
+- Statsv endpoint
+- Setup awesome hosts file additions & removals

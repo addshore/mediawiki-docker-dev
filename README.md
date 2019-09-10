@@ -91,10 +91,10 @@ Alter any settings that you want to change, for example the install location of 
 ```
 
 **Note:**
-The script waits up to 60 secs (4 x 15 seconds) for the database containers to initialize and respond. In case the deployment takes longer than that on your system, please increase the default timeout value (line 139 in `scripts/wait-for-it.sh`).
+The script waits up to 120 secs (4 x 30 seconds) for the database containers to initialize and respond. In case the deployment takes longer than that on your system, please increase the default timeout value (line 139 in `scripts/wait-for-it.sh`).
 
 ```bash
-TIMEOUT=${TIMEOUT:-15}
+TIMEOUT=${TIMEOUT:-30}
 ```
 
 **Update your hosts file:**

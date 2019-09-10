@@ -2,10 +2,13 @@
 set -eu
 
 mkdir -p "$INSTALL_DIR"
+[[ ! -d $HOME/.composer ]] && mkdir $HOME/.composer
+
 git clone https://gerrit.wikimedia.org/r/mediawiki/core "$INSTALL_DIR"/mediawiki
 git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "$INSTALL_DIR"/mediawiki/skins/Vector
+
 cd "$INSTALL_DIR"/mediawiki
-docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
+docker run -it --rm --user $(id -u):$(id -g) -v $HOME/.composer:/tmp -v $(pwd):/app composer install
 touch LocalSettings.php
 cat > LocalSettings.php <<EOL
 <?php

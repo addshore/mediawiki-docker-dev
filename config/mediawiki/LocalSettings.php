@@ -73,6 +73,7 @@ $wgUploadDirectory = "{$IP}/images/docker/{$dockerDb}";
 $wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerDb}";
 
 $wgTmpDirectory = "{$wgUploadDirectory}/tmp";
+$wgCacheDirectory = "{$wgUploadDirectory}/cache";
 
 $wgStatsdServer = "graphite-statsd";
 

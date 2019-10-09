@@ -9,6 +9,9 @@ docker-compose exec --user application "web" mkdir -p //var/www/mediawiki/images
 echo "Creating tmp directory"
 docker-compose exec --user application "web" mkdir -p //var/www/mediawiki/images/docker/$1/tmp
 
+echo "Creating cache directory"
+docker-compose exec --user application "web" mkdir -p //var/www/mediawiki/images/docker/$1/cache
+
 echo "Running install.php script"
 docker-compose exec --user root "web" bash //var/www/mediawiki/.docker/installdbs $1
 

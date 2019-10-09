@@ -49,10 +49,22 @@ git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/ger
 
 #### 4) Run `composer install` for MediaWiki
 
-Either on your host machine or with Docker, inside the `/srv/dev/git/gerrit/mediawiki` directory:
+Either on your host machine inside the `/srv/dev/git/gerrit/mediawiki` directory (you need [composer locally](https://getcomposer.org/download/)):
+
+```bash
+composer install
+```
+
+or with Docker on Linux,
 
 ```bash
 docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
+```
+
+or with Docker on Windows,
+
+```bash
+docker run -it --rm -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
 ```
 
 #### 5) Create a basic LocalSettings.php

@@ -61,10 +61,16 @@ or with Docker on Linux,
 docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
 ```
 
-or with Docker on Windows,
+or with Docker on Windows with bash,
 
 ```bash
-docker run -it --rm -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
+docker run -it --rm -v /$HOME/.composer:/tmp -v /$PWD:/app docker.io/composer install
+```
+
+or with Docker on Windows with cmd,
+
+```cmd
+docker run -it --rm -v %HOMEDRIVE%%HOMEPATH%\.composer:/tmp -v %CD%:/app docker.io/composer install
 ```
 
 #### 5) Create a basic LocalSettings.php

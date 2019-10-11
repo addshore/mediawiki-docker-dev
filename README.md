@@ -299,7 +299,5 @@ Note that the other volumes for the `web` service will be merged, so you don't n
 
 ## TODO
 
-- FIX HHVM strict mode
-  - Strict Warning: It is not safe to rely on the system's timezone settings. Please use the date.timezone setting, the TZ environment variable or the date_default_timezone_set() function.
 - Statsv endpoint
 - Setup awesome hosts file additions & removals

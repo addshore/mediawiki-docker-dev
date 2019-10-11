@@ -18,13 +18,6 @@ touch local.env
 cat local.env >> .env
 echo >> .env
 
-# Switch -dev for php vs hhvm (as there is no -dev) for hhvm
-if grep -q PHPORHHVM=hhvm .env; then
-   echo "DOCKERPHPDEV=" >> .env
-else
-   echo "DOCKERPHPDEV=-dev" >> .env
-fi
-
 # Start Containers
 echo "Containers are starting"
 docker-compose up -d

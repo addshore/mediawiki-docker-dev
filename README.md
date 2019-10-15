@@ -100,6 +100,9 @@ Copy the content of `default.env` from the `mediawiki-docker-dev` dir into a new
 
 Alter any settings that you want to change, for example the install location of MediaWiki, a directory to a local composer cache, or webserver or php version.
 
+Under section `# Location of the MediaWiki repo on your machine` set the **full** path to the mediawiki you cloned from gerrit.
+Under section `# PHP Runtime version` set the php version that your mediawiki needs to work with. Setting `RUNTIMEVERSION` to `'latest'` doesn't always work. You might want to specify the php version exactly, e.g. `RUNTIMEVERSION=7.3`.
+
 #### 7) Create the environment
 
 **Create and start the Docker containers:**

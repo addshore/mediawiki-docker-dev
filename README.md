@@ -297,7 +297,16 @@ services:
 
 Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.
 
+## Troubleshooting
+
+### Windows
+
+**/usr/bin/env: ‘bash\r’: No such file or directory**
+
+https://stackoverflow.com/questions/29045140/env-bash-r-no-such-file-or-directory
+
 ## TODO
 
 - Statsv endpoint
 - Setup awesome hosts file additions & removals
+

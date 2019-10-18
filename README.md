@@ -260,7 +260,10 @@ npm install
 npm run qunit
 ```
 
-### Linting WikibaseLexeme
+### Composer commands (linting and tests etc.)
+
+The example below runs linting on the WikibaseLexeme extension using a composer command.
+
 Run from the mediawiki-docker-dev directory:
 ```
 docker-compose exec "web" bash -c "cd /var/www/mediawiki/extensions/WikibaseLexeme; composer --ansi test"

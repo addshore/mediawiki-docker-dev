@@ -283,7 +283,7 @@ To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your 
 
 xdebug connections will then be sent to this IP address on port 9000.
 
-Verify in php.ini that `xdebug_remote_host` is set to the value of `IDELOCALHOST` and `xdebug_remote_port` is 9000.
+Verify in php.ini that `xdebug_remote_host` is set to the value of `IDELOCALHOST` and `xdebug_remote_port` is 9000. (You may need to destroy and create your containers)
 
 If using Visual Studio Code editor, add the following to your `launch.json`.
 

@@ -79,7 +79,7 @@ $wgStatsdServer = "graphite-statsd";
 
 ## Dev & Debug
 
-$dockerLogDirectory = "/var/log/mediawiki/";
+$dockerLogDirectory = "/var/log/mediawiki";
 $wgDebugLogFile = "$dockerLogDirectory/debug.log";
 
 ini_set( 'xdebug.var_display_max_depth', -1 );

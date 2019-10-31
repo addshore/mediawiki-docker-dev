@@ -6,6 +6,22 @@ Most recent changes are at the top.
 
 ### 2019
 
+#### October 2019
+
+* installdbs now run as application user https://github.com/addshore/mediawiki-docker-dev/commit/ac153fe87c4c3e84eddb2d39558661e6ebe1d8fd
+* HHVM support removed (it never really worked anyway)
+* Readme updates
+
+
+#### September 2019
+
+* Default config for wgCacheDirectory https://github.com/addshore/mediawiki-docker-dev/commit/90422f2a80c4bcf6bcf1d97c1d2f17d63961f5b2
+ * Also create said directory https://github.com/addshore/mediawiki-docker-dev/commit/f5a5c484ce3c7170c0080b9c6efe02a52e504c98
+* Increase wait-for-it from 15 to 30 seconds https://github.com/addshore/mediawiki-docker-dev/commit/149dfe532abfa5b76214e35c6fc0b842fe93ba88
+* Ensure $HOME/.composer exists https://github.com/addshore/mediawiki-docker-dev/commit/3d5128657ffab3ab0136b382ac7784610a7dfe48
+* Readme updates
+
+
 #### March 2019
 
 ###### 13th

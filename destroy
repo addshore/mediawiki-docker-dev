@@ -4,4 +4,6 @@ set -eu
 echo "Containers and volumes are being destroyed"
 docker-compose down -v
 
+# Touch before removing to avoid error if it doesn't exist
+touch .hosts
 rm .hosts

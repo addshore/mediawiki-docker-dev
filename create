@@ -27,6 +27,7 @@ docker cp config/mediawiki/index.php "$(docker-compose ps -q web)"://var/www/ind
 docker-compose exec "web" chown application:application //var/www/index.php
 
 echo "Waiting for the db servers to finish starting"
+echo "Sometimes this can take some time..."
 docker-compose exec "web" //srv/wait-for-it.sh db-master:3306
 docker-compose exec "web" //srv/wait-for-it.sh db-slave:3306
 

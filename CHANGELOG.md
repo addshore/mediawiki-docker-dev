@@ -8,11 +8,11 @@ Most recent changes are at the top.
 
 #### November 2019
 
-* XDEBUG_REMOTE_AUTOSTART changes
+* XDEBUG_REMOTE_AUTOSTART changes [commit](https://github.com/addshore/mediawiki-docker-dev/commit/135c51e5ceca511bfd0952723221ad3c8d596ceb)
   * Default values is now 0 (was 1)
   * XDEBUG_REMOTE_AUTOSTART can now be set from your local.env file
   * This results in speed ups when not debugging, as PHP doesnt try to connect back to the debugger on every request.
-* Extend nginx proxy timeouts from 60s to 120s, as while debugging some web requests can take a long time.
+* Extend nginx proxy timeouts from 60s to 120s, as while debugging some web requests can take a long time. [commit](https://github.com/addshore/mediawiki-docker-dev/commit/a65c50589992934263df51aa65f6bf70d64d3ee4)
 
 #### October 2019
 

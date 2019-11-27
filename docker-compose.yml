@@ -88,6 +88,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./config/nginx/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
+      - ./config/nginx/timeouts.conf:/etc/nginx/conf.d/timeouts.conf:ro
 
   redis:
     image: redis

@@ -12,6 +12,7 @@ Most recent changes are at the top.
   * Default values is now 0 (was 1)
   * XDEBUG_REMOTE_AUTOSTART can now be set from your local.env file
   * This results in speed ups when not debugging, as PHP doesnt try to connect back to the debugger on every request.
+* Extend nginx proxy timeouts from 60s to 120s, as while debugging some web requests can take a long time.
 
 #### October 2019
 

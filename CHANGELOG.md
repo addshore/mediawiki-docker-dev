@@ -6,6 +6,13 @@ Most recent changes are at the top.
 
 ### 2019
 
+#### November 2019
+
+* XDEBUG_REMOTE_AUTOSTART changes
+  * Default values is now 0 (was 1)
+  * XDEBUG_REMOTE_AUTOSTART can now be set from your local.env file
+  * This results in speed ups when not debugging, as PHP doesnt try to connect back to the debugger on every request.
+
 #### October 2019
 
 * Default wait-for-it time set to 120 seconds
@@ -17,7 +24,7 @@ Most recent changes are at the top.
 #### September 2019
 
 * Default config for wgCacheDirectory [commit](https://github.com/addshore/mediawiki-docker-dev/commit/90422f2a80c4bcf6bcf1d97c1d2f17d63961f5b2)
- * Also create said directory [commit](https://github.com/addshore/mediawiki-docker-dev/commit/f5a5c484ce3c7170c0080b9c6efe02a52e504c98)
+  * Also create said directory [commit](https://github.com/addshore/mediawiki-docker-dev/commit/f5a5c484ce3c7170c0080b9c6efe02a52e504c98)
 * Default wait-for-it time set to 30 seconds [commit](https://github.com/addshore/mediawiki-docker-dev/commit/149dfe532abfa5b76214e35c6fc0b842fe93ba88)
 * Ensure $HOME/.composer exists [commit](https://github.com/addshore/mediawiki-docker-dev/commit/3d5128657ffab3ab0136b382ac7784610a7dfe48)
 * Readme updates

@@ -6,6 +6,10 @@ Most recent changes are at the top.
 
 ### 2019
 
+#### December 2019
+
+* Add "script" command for running maintenance scripts.
+
 #### November 2019
 
 * XDEBUG_REMOTE_AUTOSTART changes [commit](https://github.com/addshore/mediawiki-docker-dev/commit/135c51e5ceca511bfd0952723221ad3c8d596ceb)

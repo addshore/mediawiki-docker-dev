@@ -9,10 +9,10 @@ git clone --depth 1 https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "$INST
 
 cd "$INSTALL_DIR"/mediawiki
 docker run -it --rm --user $(id -u):$(id -g) -v $HOME/.composer:/tmp -v $(pwd):/app composer install --ignore-platform-reqs
-touch LocalSettings.php
-cat > LocalSettings.php <<EOL
+touch "$INSTALL_DIR"/mediawiki/LocalSettings.php
+cat > "$INSTALL_DIR"/mediawiki/LocalSettings.php <<EOL
 <?php
 require_once __DIR__ . '/.docker/LocalSettings.php';
 wfLoadSkin( 'Vector' );
 EOL
-chmod 777 LocalSettings.php
+chmod 777 "$INSTALL_DIR"/mediawiki/LocalSettings.php

@@ -2,7 +2,7 @@
 
 ## Installation
 
-By default the below steps will install MediaWiki at `~/dev/mediawiki`
+By default the below steps will install MediaWiki at `~/src/mediawiki`
 and start a server for <http://default.web.mw.localhost:8080>.
 
 Many aspect of the container, including the port and MediaWiki path, can be customised
@@ -255,7 +255,7 @@ export MW_SCRIPT_PATH='/mediawiki'
 ```
 
 ```bash
-cd ~/dev/mediawiki
+cd ~/src/mediawiki
 npm install
 npm run qunit
 ```

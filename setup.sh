@@ -15,4 +15,3 @@ cat > LocalSettings.php <<EOL
 require_once __DIR__ . '/.docker/LocalSettings.php';
 wfLoadSkin( 'Vector' );
 EOL
-chmod 777 LocalSettings.php

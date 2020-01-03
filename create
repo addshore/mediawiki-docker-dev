@@ -22,6 +22,10 @@ echo >> .env
 echo "Containers are starting"
 docker-compose up -d
 
+# Change owners
+docker-compose exec "web" chown application:application //var/www/mediawiki
+docker-compose exec "web" chown application:application //var/www/mediawiki/LocalSettings.php
+
 # Add document root index file (NOTE: docker-compose lacks a "cp" command)
 docker cp config/mediawiki/index.php "$(docker-compose ps -q web)"://var/www/index.php
 docker-compose exec "web" chown application:application //var/www/index.php

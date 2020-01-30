@@ -6,7 +6,7 @@ By default the below steps will install MediaWiki at `~/src/mediawiki`
 and start a server for <http://default.web.mw.localhost:8080>.
 
 Many aspect of the container, including the port and MediaWiki path, can be customised
-by creating a `local.env` in this directory, in which to override one or more variables
+by creating a `local.env` in the root directory of this project, in which to override one or more variables
 from `default.env`.
 
 ### Semi-automatic Installation

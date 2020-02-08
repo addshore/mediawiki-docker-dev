@@ -318,6 +318,23 @@ Note that the other volumes for the `web` service will be merged, so you don't n
 
 ## Troubleshooting
 
+### MediaWiki
+
+**Error: 145 Table './default/searchindex' is marked as crashed and should be repaired (db-master)**
+
+For example when running unit tests you might see:
+
+```
+Wikimedia\Rdbms\DBQueryError from line 1626 of /var/www/mediawiki/includes/libs/rdbms/database/Database.php: A database query error has occurred. Did you forget to run your application's database schema updater after upgrading?
+Query: CREATE TEMPORARY  TABLE `unittest_searchindex` (LIKE `searchindex`)
+Function: Wikimedia\Rdbms\DatabaseMysqlBase::duplicateTableStructure
+Error: 145 Table './default/searchindex' is marked as crashed and should be repaired (db-master)
+```
+
+Running the following maintenance script will fix the issue:
+
+```php ./maintenance/rebuildtextindex.php --wiki default```
+
 ### Windows
 
 **/usr/bin/env: ‘bash\r’: No such file or directory**

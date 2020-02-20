@@ -202,6 +202,16 @@ You can add a new site by subdomain name using the ./addsite command
 mw-docker-dev addsite enwiki
 ```
 
+> #### Important Note:
+> 
+> Due to issues with hostname resolution within the docker instance, MediaWiki cannot resolve paths for files and pages between sites.
+> In order to bypass this issue, add the following line to your `LocalSettings.php`:
+>
+>```php
+> define('MW_DEV_ENV', 'docker');
+>```
+> Keep in mind that this will prevent mediawiki from contacting other instances to normalize pagenames, including external ones.
+
 ### Hosts file sync
 
 Check whether the hosts file contains all needed entries, and if not,

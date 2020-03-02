@@ -8,4 +8,4 @@ cd "$dir"
 
 # todo: once docker-compose supports the -w options, set the working dir
 # to /var/www/mediawiki (or take that from .env).
-docker-compose exec "web" php "$@"
+docker-compose exec -T "web" php "$@"

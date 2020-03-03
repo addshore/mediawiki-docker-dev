@@ -3,4 +3,4 @@ set -eu
 
 echo "Containers are starting"
 
-docker-compose start
+docker-compose -f docker-compose.yml -f docker-compose.override-sites.yml up -d

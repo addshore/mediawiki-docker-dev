@@ -20,7 +20,7 @@ echo >> .env
 
 # Start Containers
 echo "Containers are starting"
-docker-compose up -d
+docker-compose -f docker-compose.yml -f docker-compose.override-sites.yml up -d
 
 # Change owners
 docker-compose exec "web" chown application:application //var/www/mediawiki

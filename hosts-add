@@ -5,3 +5,10 @@ set -eu
 # ./hosts-sync to test their current state and
 # attempt to save it manually.
 echo "127.0.0.1 $1 # mediawiki-docker-dev" >> .hosts
+
+DOCKER_COMPOSE_OVERRIDES='docker-compose.override-sites.yml'
+if [ ! -f "$DOCKER_COMPOSE_OVERRIDES" ]; then
+    cp docker-compose.override-sites.initial.yml $DOCKER_COMPOSE_OVERRIDES
+fi
+
+echo "     - \"$1:\${IDELOCALHOST}\"" >> $DOCKER_COMPOSE_OVERRIDES

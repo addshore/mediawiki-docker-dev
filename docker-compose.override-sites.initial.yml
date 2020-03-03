@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  web:
+    extra_hosts:
+     - "default.web.mw.localhost:${IDELOCALHOST}"

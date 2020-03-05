@@ -6,6 +6,8 @@ services:
     image: ${DB}:latest
     environment:
       - MYSQL_ROOT_PASSWORD=toor
+    ports:
+      - "${DOCKER_DB_PORT}:3306"
     volumes:
       - sql-data-master:/var/lib/mysql
       - ./config/mysql/master:/tmp/mwdd

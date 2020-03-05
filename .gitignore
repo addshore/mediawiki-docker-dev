@@ -5,3 +5,4 @@ docker-compose.override.yml
 .hosts
 .hosts.tmp
 .hosts.tmp.bak
+*.iml

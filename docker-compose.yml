@@ -6,7 +6,6 @@ services:
     image: defreitas/dns-proxy-server
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/resolv.conf:/etc/resolv.conf
     hostname: dps.mw.localhost
     networks:
       dps:

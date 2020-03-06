@@ -118,9 +118,30 @@ The script waits up to 120 secs (4 x 30 seconds) for the database containers to 
 TIMEOUT=${TIMEOUT:-30}
 ```
 
-**Update your hosts file:**
+### Name resolution inside the docker network
 
-Add the following to your `/etc/hosts` file:
+This setup includes an instance of [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/), a DNS Proxy server which takes care of container name resolution inside the docker network. All wikis at `*.web.mw.localhost` will resolve to the nginx-proxy container's IP address. The web container's name is `mediawiki.mw.localhost` and all other containers can be reached from each other via their corresponding host names:
+ - `dps.mw.localhost`
+ - `db-master.mw.localhost`
+ - `db-slave.mw.localhost`
+ - `phpmyadmin.mw.localhost`
+ - `graphite.mw.localhost`
+ - `proxy.mw.localhost`
+ - `redis.mw.localhost`
+
+ 
+
+### Name resolution from the docker host
+
+The DPS container can also serve as your system's primary DNS server and thus allow for name resolution of all docker containers from the host system. To enable it, uncomment the line
+
+```text
+      # - /etc/resolv.conf:/etc/resolv.conf
+```
+
+in the docker-compose.yml file. DPS will then modify your `resolv.conf` so that you can point your browser to all the container host names listed above.
+
+Without such container name resolution on the host system, you will need the following entries in your `/etc/hosts` file, in order to reach the containers' web services via nginx-proxy on the port set in `${DOCKER_MW_PORT}`.  
 
 ```text
 127.0.0.1 default.web.mw.localhost # mediawiki-docker-dev
@@ -129,7 +150,7 @@ Add the following to your `/etc/hosts` file:
 127.0.0.1 graphite.mw.localhost # mediawiki-docker-dev
 ```
 
-You can also use the `./hosts-sync` script to try and update it automatically if possible. You may
+You can also use the `./hosts-sync` script to try and update your `/etc/hosts` file automatically, if possible. You may
 need to use `sudo ./hosts-sync` instead if the file is not writable by the shell user.
 
 ## Commands

@@ -6,6 +6,8 @@ services:
     image: defreitas/dns-proxy-server
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # enable this to allow name resolution from the docker host
+      # - /etc/resolv.conf:/etc/resolv.conf
     hostname: dps.mw.localhost
     networks:
       dps:

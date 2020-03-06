@@ -4,6 +4,14 @@ This file contains a brief overview of the Majorish changes to the environment.
 
 Most recent changes are at the top.
 
+### 2020
+
+#### March 2020
+
+* DNS service has been added to the internal network (using defreitas/dns-proxy-server) [commit](https://github.com/addshore/mediawiki-docker-dev/commit/40dc10be5bdd4f716cab5dd8388da78faa29098b):
+  * silvanwmde/nginx-proxy docker image will be used until [this PR](https://github.com/nginx-proxy/nginx-proxy/pull/1353) makes it into the "official" docker image
+  * MediaWiki (and other services) can now resolve the *.mw.lcoalhost domains internally to the correct services
+
 ### 2019
 
 #### December 2019

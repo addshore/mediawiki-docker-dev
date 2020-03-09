@@ -129,8 +129,6 @@ This setup includes an instance of [DPS](http://mageddo.github.io/dns-proxy-serv
  - `proxy.mw.localhost`
  - `redis.mw.localhost`
 
- 
-
 ### Name resolution from the docker host
 
 The DPS container can also serve as your system's primary DNS server and thus allow for name resolution of all docker containers from the host system. To enable it, uncomment the line
@@ -222,16 +220,6 @@ You can add a new site by subdomain name using the ./addsite command
 ```bash
 mw-docker-dev addsite enwiki
 ```
-
-> #### Important Note:
-> 
-> Due to issues with hostname resolution within the docker instance, MediaWiki cannot resolve paths for files and pages between sites.
-> In order to bypass this issue, add the following line to your `LocalSettings.php`:
->
->```php
-> define('MW_DEV_ENV', 'docker');
->```
-> Keep in mind that this will prevent mediawiki from contacting other instances to normalize pagenames, including external ones.
 
 ### Hosts file sync
 

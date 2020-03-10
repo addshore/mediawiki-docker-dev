@@ -144,11 +144,16 @@ You can use the `./hosts-sync` script to try and update it automatically if poss
 
 ##### Option b) Via DPS
 
-Alternatively, you can use DPS as your system's primary DNS server to resolve the docker container host names. That feature is disabled by default - to enable simply uncomment the following line in `docker-compose.yml`:
+Alternatively, you can use DPS to resolve the container names from your host system. By default, this feature is disabled. To enable it, add a `dps` section to your `docker-compose.override.yml` file or create it as follows:
 ```text
-      # - /etc/resolv.conf:/etc/resolv.conf
+version: '2.2'
+
+services:
+  dps:
+    volumes:
+      - /etc/resolv.conf:/etc/resolv.conf
 ```
-No changes to the `/etc/hosts` file are needed in that case.
+This will allow DPS to modify your `/etc/resolv.conf` and set itself as your system's primary DNS server. No changes to the `/etc/hosts` file are needed in that case.
 
 ## Commands
 

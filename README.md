@@ -118,19 +118,42 @@ The script waits up to 120 secs (4 x 30 seconds) for the database containers to 
 TIMEOUT=${TIMEOUT:-30}
 ```
 
-**Update your hosts file:**
+#### 8) Configure name resolution
+
+For host name resolution of the containers inside the docker network, this setup includes [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/), a DNS Proxy server. All wikis at `*.web.mw.localhost` will automatically resolve to the nginx-proxy container's IP address. The web container's name is `mediawiki.mw.localhost` and all other containers can be reached from each other via their corresponding host names, defined in `docker-compose.yml`:
+ - `dps.mw.localhost`
+ - `db-master.mw.localhost`
+ - `db-slave.mw.localhost`
+ - `phpmyadmin.mw.localhost`
+ - `graphite.mw.localhost`
+ - `proxy.mw.localhost`
+ - `redis.mw.localhost`
+
+In order to access the containers by name from your docker host system, there are two different ways:
+
+##### Option a) Via /etc/hosts
 
 Add the following to your `/etc/hosts` file:
-
 ```text
 127.0.0.1 default.web.mw.localhost # mediawiki-docker-dev
 127.0.0.1 proxy.mw.localhost # mediawiki-docker-dev
 127.0.0.1 phpmyadmin.mw.localhost # mediawiki-docker-dev
 127.0.0.1 graphite.mw.localhost # mediawiki-docker-dev
 ```
+You can use the `./hosts-sync` script to try and update it automatically if possible. You may need to use `sudo ./hosts-sync` instead, if the file is not writable by the shell user.
 
-You can also use the `./hosts-sync` script to try and update it automatically if possible. You may
-need to use `sudo ./hosts-sync` instead if the file is not writable by the shell user.
+##### Option b) Via DPS
+
+Alternatively, you can use DPS to resolve the container names from your host system. By default, this feature is disabled. To enable it, add a `dps` section to your `docker-compose.override.yml` file or create it as follows:
+```text
+version: '2.2'
+
+services:
+  dps:
+    volumes:
+      - /etc/resolv.conf:/etc/resolv.conf
+```
+This will allow DPS to modify your `/etc/resolv.conf` and set itself as your system's primary DNS server. No changes to the `/etc/hosts` file are needed in that case.
 
 ## Commands
 
@@ -201,16 +224,6 @@ You can add a new site by subdomain name using the ./addsite command
 ```bash
 mw-docker-dev addsite enwiki
 ```
-
-> #### Important Note:
-> 
-> Due to issues with hostname resolution within the docker instance, MediaWiki cannot resolve paths for files and pages between sites.
-> In order to bypass this issue, add the following line to your `LocalSettings.php`:
->
->```php
-> define('MW_DEV_ENV', 'docker');
->```
-> Keep in mind that this will prevent mediawiki from contacting other instances to normalize pagenames, including external ones.
 
 ### Hosts file sync
 

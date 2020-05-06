@@ -144,3 +144,6 @@ $wgGroupPermissions['sysop']['editcontentmodel'] = true;
 ## Features
 
 $wgRCWatchCategoryMembership = true;
+
+## PHP Location
+$wgPhpCli = '/usr/local/bin/php';

@@ -302,7 +302,7 @@ docker-compose exec "web" bash -c "cd /var/www/mediawiki/extensions/WikibaseLexe
 
 While using PHP you can use remote xdebug debugging.
 
-To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker. Note with Docker for Mac, you can use `IDELOCALHOST=host.docker.internal`.
+To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker.
 
 xdebug connections will then be sent to this IP address on port 9000.
 
@@ -314,6 +314,13 @@ If using Visual Studio Code editor, add the following to your `launch.json`.
 "pathMappings": {
     "/var/www/mediawiki": "${workspaceFolder}"
 }
+```
+
+**CLI**
+
+For debugging CLI commands from the container try running the following before you run your script:
+```
+export XDEBUG_CONFIG="remote_host=${XDEBUG_REMOTE_HOST}"
 ```
 
 ## Overriding / Extending
@@ -357,6 +364,15 @@ Error: 145 Table './default/searchindex' is marked as crashed and should be repa
 Running the following maintenance script will fix the issue:
 
 ```php ./maintenance/rebuildtextindex.php --wiki default```
+
+### host.docker.internal
+
+This no longer seemed to work since a custom internal DNS service is used.
+
+In order to easily find out the IP of your host machine try:
+```
+ docker run --rm -it busybox nslookup host.docker.internal
+```
 
 ### Windows
 

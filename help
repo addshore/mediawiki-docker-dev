@@ -1,3 +1,0 @@
-#!/bin/sh
-
-echo "Commands are: create, destroy, resume, suspend, addsite, mysql, phpunit, phpunit-file"

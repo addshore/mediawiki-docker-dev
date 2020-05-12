@@ -106,17 +106,6 @@ services:
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker:delegated
-  graphite-statsd:
-    image: hopsoft/graphite-statsd
-    environment:
-     - VIRTUAL_HOST=graphite.mw.localhost
-    hostname: graphite.mw.localhost
-    dns:
-      - 172.0.0.10
-    networks:
-      - dps
-    volumes:
-     - graphite-data:/opt/graphite/storage
 
   nginx-proxy:
     # TODO: replace with jwilder/nginx-proxy, once updated

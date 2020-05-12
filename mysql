@@ -1,9 +1,0 @@
-#!/bin/bash
-set -eu
-
-echo "Running MySQL client"
-
-host=$1
-shift
-
-docker-compose exec "$host" mysql --user=root --password=toor "$@"

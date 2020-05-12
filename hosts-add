@@ -1,7 +1,0 @@
-#!/bin/sh
-set -eu
-
-# Keep note of host names, so that users can use
-# ./hosts-sync to test their current state and
-# attempt to save it manually.
-echo "127.0.0.1 $1 # mediawiki-docker-dev" >> .hosts

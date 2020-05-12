@@ -1,6 +1,0 @@
-#!/bin/sh
-# Usage: phpunit WIKINAME --group=Database
-# Example: phpunit default --group=Database
-set -eu
-
-docker-compose exec "web" php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki $@

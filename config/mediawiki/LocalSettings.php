@@ -75,7 +75,10 @@ $wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerDb}";
 $wgTmpDirectory = "{$wgUploadDirectory}/tmp";
 $wgCacheDirectory = "{$wgUploadDirectory}/cache";
 
-$wgStatsdServer = "graphite-statsd";
+// gethostbyname would return the IP if the service was running.
+if(gethostbyname('graphite-statsd') !== 'graphite-statsd') {
+	$wgStatsdServer = "graphite-statsd";
+}
 
 ## Dev & Debug
 

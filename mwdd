@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#echo $@
+
+php control/app.php $@
+
+#docker-compose --project-directory . -p mediawiki-docker-dev -f docker-compose/control.yml exec mwdd-control php control/app.php $@

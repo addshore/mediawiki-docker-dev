@@ -26,11 +26,11 @@ class AddSite extends Command
 		$site = $input->getArgument( 'site' );
 		$output->writeln("Adding new site: " . $site);
 
-		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site, '--user application' );
-		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/tmp', '--user application' );
-		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/cache', '--user application' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/tmp' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/cache' );
 
-		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'bash //var/www/mediawiki/.docker/installdbs ' . $site, '--user application' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'bash //var/www/mediawiki/.docker/installdbs ' . $site );
 
 		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ 'host' => $site . '.web.mw.localhost' ]), $output );
 		return 0;

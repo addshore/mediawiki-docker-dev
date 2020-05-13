@@ -12,8 +12,8 @@ class Base {
 	public const SERVICES = [
 		self::SRV_DPS,
 		self::SRV_DB_MASTER,
-		self::SRV_MEDIAWIKI,
 		self::SRV_NGINX_PROXY,
+		self::SRV_MEDIAWIKI,
 	];
 
 }

@@ -28,6 +28,7 @@ services:
 
   mediawiki:
     image: webdevops/php-${WEBSERVER}-dev:${RUNTIMEVERSION}
+    user: "${UID}:${GID}"
     environment:
      - WEB_DOCUMENT_ROOT=/var/www
      # Used by various maintenance scripts to find MediaWiki.
@@ -50,13 +51,12 @@ services:
       - mw.localhost
     networks:
       - dps
-    depends_on:
-     - db-configure
     volumes:
      - "${DOCKER_MW_PATH}:/var/www/mediawiki:cached"
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker:delegated
+     - mw-logs:/var/log/mediawiki:delegated
 
   nginx-proxy:
     # TODO: replace with jwilder/nginx-proxy, once updated
@@ -81,6 +81,7 @@ services:
 
 volumes:
   sql-data-master:
+  mw-logs:
   mw-images:
 
 networks:

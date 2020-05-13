@@ -19,6 +19,7 @@ class Docker {
 			$homeComposerMntString = "-v " . getenv('HOME') . '/.composer' . ":/tmp";
 		}
 
+		// This runs with the running user id, which is good and means no chown is needed...
 		$shell = self::D . " run -it --rm --user $(id -u):$(id -g) ${homeComposerMntString} -v ${dir}:/app install --ignore-platform-reqs";
 		passthru( $shell );
 	}

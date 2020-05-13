@@ -16,6 +16,10 @@ if ( $_SERVER['PHP_SELF'] !== 'control/app.php' ) {
 
 $application = new \Symfony\Component\Console\Application('mwdd');
 
+$application->add(new \Addshore\Mwdd\Command\Base\Create());
+$application->add(new \Addshore\Mwdd\Command\Base\Suspend());
+$application->add(new \Addshore\Mwdd\Command\Base\Resume());
+
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
 

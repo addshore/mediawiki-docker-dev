@@ -2,10 +2,8 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Base;
-use Addshore\Mwdd\Shell\Docker;
+use Addshore\Mwdd\DockerCompose\Legacy;
 use Addshore\Mwdd\Shell\DockerCompose;
-use M1\Env\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,15 +24,15 @@ class AddSite extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$site = $input->getArgument( 'site' );
-		echo "Adding new site: " . $site . PHP_EOL;
+		$output->writeln("Adding new site: " . $site);
 
-		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/www/mediawiki/images/docker/' . $site, '--user application' );
-		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/tmp', '--user application' );
-		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/cache', '--user application' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site, '--user application' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/tmp', '--user application' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/cache', '--user application' );
 
-		(new DockerCompose())->exec( Base::SRV_WEB, 'bash //var/www/mediawiki/.docker/installdbs ' . $site, '--user application' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'bash //var/www/mediawiki/.docker/installdbs ' . $site, '--user application' );
 
-		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ $site . '.web.mw.localhost' ]), $output );
+		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ 'host' => $site . '.web.mw.localhost' ]), $output );
 		return 0;
 	}
 

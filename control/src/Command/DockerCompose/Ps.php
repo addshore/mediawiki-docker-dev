@@ -14,6 +14,7 @@ class Ps extends Command
 
 	protected function configure()
 	{
+		$this->setDescription('Runs docker-compose ps in the correct context.');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

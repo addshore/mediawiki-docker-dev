@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Base;
+use Addshore\Mwdd\DockerCompose\Legacy;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,7 +22,7 @@ class LogsTail extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$log = $input->getArgument('log');
-		(new DockerCompose())->exec( Base::SRV_WEB, "tail -f /var/log/mediawiki/${log}");
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, "tail -f /var/log/mediawiki/${log}");
 		return 0;
 	}
 }

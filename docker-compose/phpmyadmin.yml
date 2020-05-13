@@ -1,0 +1,18 @@
+version: '2.2'
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_USER:root
+      - PMA_PASSWORD:toor
+      - PMA_HOSTS=db-master,db-replica
+      - PMA_ARBITRARY=1
+      - VIRTUAL_HOST=phpmyadmin.mw.localhost
+    hostname: phpmyadmin.mw.localhost
+    dns:
+      - 172.0.0.10
+    networks:
+      - dps
+    volumes:
+      - ./config/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php

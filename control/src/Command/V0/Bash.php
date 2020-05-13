@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Base;
+use Addshore\Mwdd\DockerCompose\Legacy;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +21,7 @@ class Bash extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		(new DockerCompose())->exec( Base::SRV_WEB, 'sh -c "cd /var/www/mediawiki;bash"' );
+		(new DockerCompose())->exec( Legacy::SRV_MEDIAWIKI, 'sh -c "cd /var/www/mediawiki;bash"' );
 		return 0;
 	}
 }

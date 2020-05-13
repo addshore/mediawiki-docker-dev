@@ -25,35 +25,49 @@ if ( defined( "MW_DB" ) ) {
 
 ## Database settings
 $wgDBname = $dockerDb;
-$dockerMasterDb = [
-	'host' => "db-master",
-	'dbname' => $dockerDb,
-	'user' => 'root',
-	'password' => 'toor',
-	'type' => "mysql",
-	'flags' => DBO_DEFAULT,
-	'load' => 0,
+
+// Configure a replica DB if it is running and we are not in unit tests
+$dockerUseReplica = (
+	gethostbyname('db-replica') !== 'db-replica' &&
+	!defined( 'MW_PHPUNIT_TEST' )
+);
+
+$wgDBservers = [
+	[
+		'host' => "db-master",
+		'dbname' => $dockerDb,
+		'user' => 'root',
+		'password' => 'toor',
+		'type' => "mysql",
+		'flags' => DBO_DEFAULT,
+		'load' => $dockerUseReplica ? 0 : 1,
+	],
 ];
-$dockerSlaveDb = [
-	'host' => "db-slave",
-	'dbname' => $dockerDb,
-	'user' => 'root',
-	'password' => 'toor',
-	'type' => "mysql",
-	'flags' => DBO_DEFAULT,
-	# Avoid switching to readonly too early (for example during update.php)
-	'max lag' => 60,
-	'load' => 1,
-];
-// Unit tests fail when run with replication, due to not having the temporary tables.
-// So for unit tests just run with the master.
-if ( !defined( 'MW_PHPUNIT_TEST' ) ) {
-	$wgDBservers = [ $dockerMasterDb, $dockerSlaveDb ];
-} else {
-	$wgDBserver = $dockerMasterDb['host'];
-	$wgDBuser = $dockerMasterDb['user'];
-	$wgDBpassword = $dockerMasterDb['password'];
-	$wgDBtype = $dockerMasterDb['type'];
+if($dockerUseReplica ) {
+	$wgDBservers[] = [
+		'host' => "db-replica",
+		'dbname' => $dockerDb,
+		'user' => 'root',
+		'password' => 'toor',
+		'type' => "mysql",
+		'flags' => DBO_DEFAULT,
+		# Avoid switching to readonly too early (for example during update.php)
+		'max lag' => 60,
+		'load' => 1,
+	];
+}
+
+// If a redis service is running, then configure an object cache (but don't use it)
+if(gethostbyname('redis') !== 'redis') {
+	$wgObjectCaches['redis'] = [
+		'class' => 'RedisBagOStuff',
+		'servers' => [ 'redis:6379' ],
+	];
+}
+
+// Configure a statsd server if it is running
+if(gethostbyname('graphite-statsd') !== 'graphite-statsd') {
+	$wgStatsdServer = "graphite-statsd";
 }
 
 $wgShowHostnames = true;
@@ -74,11 +88,6 @@ $wgUploadPath = "{$wgScriptPath}/images/docker/{$dockerDb}";
 
 $wgTmpDirectory = "{$wgUploadDirectory}/tmp";
 $wgCacheDirectory = "{$wgUploadDirectory}/cache";
-
-// gethostbyname would return the IP if the service was running.
-if(gethostbyname('graphite-statsd') !== 'graphite-statsd') {
-	$wgStatsdServer = "graphite-statsd";
-}
 
 ## Dev & Debug
 

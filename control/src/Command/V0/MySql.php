@@ -24,7 +24,12 @@ class MySql extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		// Backcompat as the host name changed...
 		$host = $input->getArgument('host');
+		if($host === 'db-slave') {
+			$host = 'db-replica';
+		}
+
 		// TODO grab user and password from docker-compose or env vars?
 		(new DockerCompose())->exec( $host, 'mysql --user=root --password=toor' );
 		return 0;

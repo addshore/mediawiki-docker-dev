@@ -1,7 +1,11 @@
 #!/usr/bin/env php
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require __DIR__.'/vendor/autoload.php';
+
 define('MWDD_DIR', dirname( __DIR__ ));
 
 if ( $_SERVER['PHP_SELF'] !== 'control/app.php' ) {
@@ -10,10 +14,9 @@ if ( $_SERVER['PHP_SELF'] !== 'control/app.php' ) {
     die();
 }
 
-use Symfony\Component\Console\Application;
+$application = new \Symfony\Component\Console\Application('mwdd');
 
-$application = new Application('mwdd');
-
+$application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
 
 $application->add(new \Addshore\Mwdd\Command\Control\Up());

@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Base;
+use Addshore\Mwdd\DockerCompose\Legacy;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +21,7 @@ class Resume extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		(new DockerCompose())->start( Base::SERVICES);
+		(new DockerCompose())->start( Legacy::SERVICES);
 		return 0;
 	}
 }

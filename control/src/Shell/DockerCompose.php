@@ -66,6 +66,11 @@ class DockerCompose {
 		passthru( $shell );
 	}
 
+	public function raw( string $rawCommand ) {
+		$shell = $this->cmd . " ${rawCommand}";
+		passthru( $shell );
+	}
+
 
 }
 

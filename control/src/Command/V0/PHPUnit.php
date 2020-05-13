@@ -2,6 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
+use Addshore\Mwdd\DockerCompose\Base;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,7 +27,7 @@ class PHPUnit extends Command
 	{
 		$phpunitArgs = $input->getArgument('phpunitArgs');
 		$argsString = implode( ' ', $phpunitArgs );
-		(new DockerCompose())->exec( 'web', 'php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki ' . $argsString );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki ' . $argsString );
 		return 0;
 	}
 }

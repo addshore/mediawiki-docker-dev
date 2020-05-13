@@ -17,13 +17,13 @@ class Destroy extends Command
 
 	protected function configure()
 	{
-		$this->setDescription('Shut down the containers, and destroy them. Also deletes databases and volumes.');
-		$this->setHelp('Shut down the containers, and destroy them. Also deletes databases and volumes.');
+		$this->setDescription('Shut down all containers, and destroy them. Also deletes databases and volumes.');
+		$this->setHelp('Shut down all containers, and destroy them. Also deletes databases and volumes.');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		echo "Containers and volumes are being destroyed\n";
+		echo "Containers and volumes are being destroyed (including control)\n";
 		(new DockerCompose())->downWithVolumes();
 
 		if(file_exists(MWDD_DIR . '/.hosts')) {

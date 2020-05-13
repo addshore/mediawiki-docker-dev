@@ -2,6 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
+use Addshore\Mwdd\DockerCompose\Base;
 use Addshore\Mwdd\Shell\Docker;
 use Addshore\Mwdd\Shell\DockerCompose;
 use M1\Env\Parser;
@@ -38,24 +39,24 @@ class Create extends Command
 
 		# Start containers
 		echo "Containers starting\n";
-		(new DockerCompose())->upDetached();
+		(new DockerCompose())->upDetached( Base::SERVICES );
 
 		# Change owners
-		(new DockerCompose())->exec( 'web', 'chown application:application //var/www/mediawiki' );
-		(new DockerCompose())->exec( 'web', 'application:application //var/www/mediawiki/LocalSettings.php' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'chown application:application //var/www/mediawiki' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'application:application //var/www/mediawiki/LocalSettings.php' );
 
 		# Add document root index file (NOTE: docker-compose lacks a "cp" command)
 		(new Docker())->cp(
 			'config/mediawiki/index.php',
-			(new DockerCompose())->psQ('web') . '://var/www/index.php'
+			(new DockerCompose())->psQ(Base::SRV_WEB) . '://var/www/index.php'
 		);
-		(new DockerCompose())->exec( 'web', 'chown application:application //var/www/index.php' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'chown application:application //var/www/index.php' );
 
 		# Wait for the db servers
 		echo "Waiting for the db servers\n";
 		echo "Sometimes this can take some time...\n";
-		(new DockerCompose())->exec( 'web', '//srv/wait-for-it.sh db-master:3306' );
-		(new DockerCompose())->exec( 'web', '//srv/wait-for-it.sh db-slave:3306' );
+		(new DockerCompose())->exec( Base::SRV_WEB, '//srv/wait-for-it.sh db-master:3306' );
+		(new DockerCompose())->exec( Base::SRV_WEB, '//srv/wait-for-it.sh db-slave:3306' );
 
 		# Reset local hosts file
 		if(file_exists(MWDD_DIR . '/.hosts')) {
@@ -67,11 +68,11 @@ class Create extends Command
 		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ 'graphite.mw.localhost' ]), $output );
 
 		echo "Setting up log directory\n";
-		(new DockerCompose())->exec( 'web', 'mkdir -p //var/log/mediawiki' );
-		(new DockerCompose())->exec( 'web', 'chown application:application //var/log/mediawiki' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/log/mediawiki' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'chown application:application //var/log/mediawiki' );
 
 		echo "Setting up images directory\n";
-		(new DockerCompose())->exec( 'web', 'chown application:application //var/www/mediawiki/images/docker' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'chown application:application //var/www/mediawiki/images/docker' );
 
 		$this->getApplication()->find('v0:add-site')->run( new ArrayInput([ 'default' ]), $output );
 

@@ -14,6 +14,12 @@ use Symfony\Component\Console\Application;
 
 $application = new Application('mwdd');
 
+$application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
+
+$application->add(new \Addshore\Mwdd\Command\Control\Up());
+$application->add(new \Addshore\Mwdd\Command\Control\Stop());
+$application->add(new \Addshore\Mwdd\Command\Control\Bash());
+
 $application->add(new \Addshore\Mwdd\Command\V0\Suspend());
 $application->add(new \Addshore\Mwdd\Command\V0\Resume());
 $application->add(new \Addshore\Mwdd\Command\V0\Bash());

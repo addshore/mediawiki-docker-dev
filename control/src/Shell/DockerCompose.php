@@ -4,37 +4,66 @@ namespace Addshore\Mwdd\Shell;
 
 class DockerCompose {
 
-	private const DC = "docker-compose --project-directory . -p mediawiki-docker-dev";
+	private $cmd;
 
-	public function upDetached() {
-		$shell = self::DC . " up -d";
+	public function __construct() {
+		$cmd = "docker-compose --project-directory .";
+		foreach( $this->getAllYmlFiles() as $file ) {
+			$cmd .= " -f ${file}";
+		}
+		$this->cmd = $cmd;
+	}
+
+	/**
+	 * @return string[] of files for example "docker-compose/foo.yml"
+	 */
+	private function getAllYmlFiles () : array {
+		$files = array_diff(scandir('docker-compose'), array('.', '..'));
+		array_walk( $files, function( &$value ) {
+			$value = 'docker-compose/' . $value;
+		} );
+		return $files;
+	}
+
+	/**
+	 * @param string[] $services
+	 * @param bool $build Should the --build flag be passed?
+	 */
+	public function upDetached( array $services, $build = false ) {
+		$buildString = $build ? ' --build' : '';
+		$shell = $this->cmd . " up -d ${buildString} " . implode( ' ', $services );
 		passthru( $shell );
 	}
 
 	public function downWithVolumes() {
-		$shell = self::DC . " down -v";
+		$shell = $this->cmd . " down -v";
 		passthru( $shell );
 	}
 
-	public function stop() {
-		$shell = self::DC . " stop";
+	public function stop( array $services ) {
+		$shell = $this->cmd . " stop " . implode( ' ', $services );
 		passthru( $shell );
 	}
 
-	public function start() {
-		$shell = self::DC . " start";
+	public function start( array $services ) {
+		$shell = $this->cmd . " start " . implode( ' ', $services );;
 		passthru( $shell );
 	}
 
 	public function exec( string $service, $command, $extraArgString = '' ) {
-		$shell = self::DC . " exec ${extraArgString} \"${service}\" ${command}";
+		$shell = $this->cmd . " exec ${extraArgString} \"${service}\" ${command}";
 		passthru( $shell );
 	}
 
 	public function psQ( string $service ) {
-		$shell = self::DC . " ps -q ${service}";
+		$shell = $this->cmd . " ps -q ${service}";
 		$output = shell_exec( $shell );
 		return trim( $output );
+	}
+
+	public function ps() {
+		$shell = $this->cmd . " ps";
+		passthru( $shell );
 	}
 
 

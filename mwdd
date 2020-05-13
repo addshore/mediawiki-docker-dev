@@ -2,6 +2,16 @@
 
 #echo $@
 
-#php control/app.php $@
+php control/app.php $@
 
-docker-compose --project-directory . -p mediawiki-docker-dev -f docker-compose/control.yml exec mwdd-control php control/app.php $@
+# TODO the user here needs access to run docker in the container...!
+#docker-compose \
+#    --project-directory . \
+#    -p mediawiki-docker-dev \
+#    -f docker-compose/control.yml \
+#    exec \
+#    --user $(id -u):$(id -g) \
+#    mwdd-control \
+#    php control/app.php $@
+
+#docker-compose --project-directory . -p mediawiki-docker-dev -f docker-compose/control.yml exec mwdd-control php control/app.php $@

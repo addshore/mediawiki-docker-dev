@@ -11,5 +11,17 @@ class Docker {
 		passthru( $shell );
 	}
 
+	public function runComposerInstall( string $dir ) {
+		// TODO should this method be somewhere else?
+		$homeComposerMntString = "";
+		if( file_exists( getenv('HOME') . '/.composer' ) ) {
+			// Note: this relies on the fact that the COMPOSER_HOME value is set to /tmp in the image by default.
+			$homeComposerMntString = "-v " . getenv('HOME') . '/.composer' . ":/tmp";
+		}
+
+		$shell = self::D . " run -it --rm --user $(id -u):$(id -g) ${homeComposerMntString} -v ${dir}:/app install --ignore-platform-reqs";
+		passthru( $shell );
+	}
+
 }
 

@@ -2,6 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
+use Addshore\Mwdd\DockerCompose\Base;
 use Addshore\Mwdd\Shell\Docker;
 use Addshore\Mwdd\Shell\DockerCompose;
 use M1\Env\Parser;
@@ -27,11 +28,11 @@ class AddSite extends Command
 		$site = $input->getArgument( 'site' );
 		echo "Adding new site: " . $site . PHP_EOL;
 
-		(new DockerCompose())->exec( 'web', 'mkdir -p //var/www/mediawiki/images/docker/' . $site, '--user application' );
-		(new DockerCompose())->exec( 'web', 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/tmp', '--user application' );
-		(new DockerCompose())->exec( 'web', 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/cache', '--user application' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/www/mediawiki/images/docker/' . $site, '--user application' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/tmp', '--user application' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'mkdir -p //var/www/mediawiki/images/docker/' . $site . '/cache', '--user application' );
 
-		(new DockerCompose())->exec( 'web', 'bash //var/www/mediawiki/.docker/installdbs ' . $site, '--user application' );
+		(new DockerCompose())->exec( Base::SRV_WEB, 'bash //var/www/mediawiki/.docker/installdbs ' . $site, '--user application' );
 
 		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ $site . '.web.mw.localhost' ]), $output );
 		return 0;

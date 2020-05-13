@@ -16,22 +16,16 @@ class DockerCompose {
 		$this->cmd = $cmd;
 	}
 
-	/**
-	 * The .env file must exist to run docker-compose commands without it screaming WARNING for no env vars..
-	 * This would often be a problem on first initialization
-	 */
-	private function ensureDotEnv() {
-		$dotEnv = new DotEnv();
-		if(!$dotEnv->exists()) {
-			$dotEnv->updateFromDefaultAndLocal();
-		}
-	}
 
 	/**
 	 * @param string $fullCommand including docker-compose
 	 */
 	private function passthruDc( string $fullCommand ) {
-		$this->ensureDotEnv();
+		/**
+		 * The .env file must exist to run docker-compose commands without it screaming WARNING for no env vars..
+		 * This would often be a problem on first initialization
+		 */
+		(new DotEnv())->ensure();
 		passthru( $fullCommand );
 	}
 

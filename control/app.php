@@ -29,6 +29,8 @@ define('MWDD_DIR', dirname( __DIR__ ));
 
 $application = new \Symfony\Component\Console\Application('mwdd');
 
+$application->add(new \Addshore\Mwdd\Command\Mediawiki\GetCode());
+
 $application->add(new \Addshore\Mwdd\Command\Base\Create());
 $application->add(new \Addshore\Mwdd\Command\Base\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Base\Resume());

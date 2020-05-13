@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Files;
 
-class InstallDir {
+class MediawikiCoreDir {
 
 	private $dir;
 

@@ -19,8 +19,8 @@ then
             --project-directory . \
             -p mediawiki-docker-dev \
             -f docker-compose/control.yml \
-            up -d \
-            mwdd-control
+            up -d --build \
+            control
     fi
 
     # Then run the command
@@ -31,6 +31,6 @@ then
         -p mediawiki-docker-dev \
         -f docker-compose/control.yml \
         exec \
-        mwdd-control \
+        control \
         php control/app.php $@
 fi

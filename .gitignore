@@ -6,3 +6,4 @@ docker-compose.override.yml
 .hosts.tmp
 .hosts.tmp.bak
 *.iml
+vendor

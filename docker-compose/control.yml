@@ -1,8 +1,10 @@
 version: '2.2'
 
 services:
-  mwdd-control:
+  control:
     build: ./control
+    # The image tag should be updated whenever new composer dependencies are added...
+    image: mwdd-control:2020-05-13-19-44
     volumes:
       - ./:/mwdd
       - /var/run/docker.sock:/var/run/docker.sock

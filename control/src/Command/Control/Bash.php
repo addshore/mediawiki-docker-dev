@@ -15,8 +15,8 @@ class Bash extends Command
 
 	protected function configure()
 	{
-		$this->setDescription('Runs bash in the Control container.');
-		$this->setHelp('Runs bash in the Control container.');
+		$this->setDescription('Runs bash in the control container (if running).');
+		$this->setHidden(true);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

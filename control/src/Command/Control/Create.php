@@ -8,14 +8,15 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Up extends Command
+class Create extends Command
 {
 
-	protected static $defaultName = 'ctrl:up';
+	protected static $defaultName = 'ctrl:create';
 
 	protected function configure()
 	{
-		$this->addOption( 'build' );
+		$this->setDescription('Creates the control container (building if needed).');
+		$this->setHidden(true);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

@@ -5,51 +5,61 @@
 By default the below steps will install MediaWiki at `~/src/mediawiki`
 and start a server for <http://default.web.mw.localhost:8080>.
 
-Many aspect of the container, including the port and MediaWiki path, can be customised
+Many aspects of the container, including the port and MediaWiki path, can be customised
 by creating a `local.env` in the root directory of this project, in which to override one or more variables
 from `default.env`.
 
-### Semi-automatic Installation
-
-There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker
-installed and want to skip the manual steps 2-6. Note that `INSTALL_DIR` is the parent directory where MediaWiki
-core will be downloaded, so in the example above, you would end up with a codebase at `~/src/mediawiki`.
-
-### Manual Installation
+### Requirements
 
 #### 1) Install Docker & Docker Compose
 
-[Docker Compose Installation](https://docs.docker.com/compose/install/)
+[Get Docker](https://docs.docker.com/install/)
 
 ##### Unix notes
 
-- Use the `docker-ce` package, not the `docker` package (read [Docker Inc.'s installation instructions](https://docs.docker.com/install/))
+- Use the `docker-ce` package, not the `docker` package.
 - If you want to avoid logging in as root or sudo commands, you will have to add your user to the docker group:
 See [How can I use Docker without sudo](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo#477554)
-  - This does not mean your containers will not run as root. These are different settings not really used currently by this dev setup.
+  - This does not mean your containers will not run as root.
 
-#### 2) Clone this repository
+#### 2) Install Docker Compose
+
+[Docker Compose Installation](https://docs.docker.com/compose/install/)
+
+#### 3) Install git
+
+[Getting Started Installing Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+#### 4) Install PHP CLI
+
+[Installation and Configuration](https://www.php.net/manual/en/install.php)
+
+#### 5) Clone this repository
 
 ```bash
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
-#### 3) Clone MediaWiki core & the Vector skin
+### Semi-automatic Setup
 
-You can start without the skin but you will find that your MediaWiki install doesn't look very nice.
+There is a setup script that you can run with `DOCKER_MW_PATH=~/src/mediawiki ./setup` once you have the prerequisites.
+Note that `DOCKER_MW_PATH` is the directory MediaWiki will be downloaded to.
+So in the example above, you would end up with a codebase at `~/src/mediawiki`.
+
+### Manual Setup
+
+#### 1) Clone MediaWiki core & the Vector skin
 
 From [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core):
 
 ```bash
-git clone https://gerrit.wikimedia.org/r/mediawiki/core /srv/dev/git/gerrit/mediawiki
-git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/gerrit/mediawiki/skins/Vector
+git clone https://gerrit.wikimedia.org/r/mediawiki/core ~/src/mediawiki
+git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ~/src/mediawiki/skins/Vector
 ```
 
-(You can clone your code to somewhere other than `/srv/dev/git/gerrit/mediawiki`. For example, `~/src/mediawiki` but you'll need to follow step 6 carefully.)
+#### 2) Run `composer install` for MediaWiki
 
-#### 4) Run `composer install` for MediaWiki
-
-Either on your host machine inside the `/srv/dev/git/gerrit/mediawiki` directory (you need [composer locally](https://getcomposer.org/download/)):
+Either on your host machine inside the `~/src/mediawiki` directory (you need [composer locally](https://getcomposer.org/download/)):
 
 ```bash
 composer install
@@ -73,9 +83,10 @@ or with Docker on Windows with cmd,
 docker run -it --rm -v %HOMEDRIVE%%HOMEPATH%\.composer:/tmp -v %CD%:/app docker.io/composer install
 ```
 
-#### 5) Create a basic LocalSettings.php
+#### 3) Create a basic LocalSettings.php
 
-A `.docker/LocalSettings.php` file exists within the containers running Mediawiki. Your `LocalSettings.php` file must load it.
+A `.docker/LocalSettings.php` file exists within the containers running MediaWiki.
+Your `LocalSettings.php` file must load it.
 
 Make a `LocalSettings.php` in the root of the MediaWiki repo containing the following:
 
@@ -84,7 +95,7 @@ Make a `LocalSettings.php` in the root of the MediaWiki repo containing the foll
 require_once __DIR__ . '/.docker/LocalSettings.php';
 ```
 
-When you come to change any MediaWiki settings this is the file you will want to be altering.
+When you come to change any MediaWiki settings this `LocalSettings.php` is the file you will want to be altering.
 
 For example after install you will probably find you want to load the default skin:
 
@@ -92,44 +103,43 @@ For example after install you will probably find you want to load the default sk
 wfLoadSkin( 'Vector' );
 ```
 
-#### 6) Configure the environment
-
-Note: If you cloned mediawiki into a directory other than `/srv/dev/git/gerrit/mediawiki` you will need to do this step, otherwise the defaults can likely be used.
+### Configuration
 
 Copy the content of `default.env` from the `mediawiki-docker-dev` dir into a new file called `local.env`.
 
-Alter any settings that you want to change, for example the install location of MediaWiki, a directory to a local composer cache, or webserver or php version.
+```bash
+cp default.env local.env
+```
 
-Under section `# Location of the MediaWiki repo on your machine` set the **full** path to the mediawiki you cloned from gerrit.
+Alter any settings that you want to change, for example, the install directory of MediaWiki.
+
+```bash
+sed 's/\/srv\/dev\/git\/gerrit\/mediawiki/~\/src\/mediawiki/g' local.env > local.env
+```
+
+Under section `# Location of the MediaWiki repo on your machine` set the **full** path to the mediawiki you cloned from Gerrit.
 Under section `# PHP Runtime version` set the php version that your mediawiki needs to work with. Setting `RUNTIMEVERSION` to `'latest'` doesn't always work. You might want to specify the php version exactly, e.g. `RUNTIMEVERSION=7.3`.
 
-#### 7) Create the environment
+### Create the base environment
 
-**Create and start the Docker containers:**
+TBA details about the options of doing everything locally with php or via docker-compose..
 
+**Create the base environment:**
+
+By default the mwdd commands will run using php on the host:
 ```bash
-./create
+./mwdd base:create
 ```
 
-**Note:**
-The script waits up to 120 secs (4 x 30 seconds) for the database containers to initialize and respond. In case the deployment takes longer than that on your system, please increase the default timeout value (line 139 in `scripts/wait-for-it.sh`).
+There is an experimental version that would run everything in docker containers, but it doesn't fully work yet.
 
 ```bash
-TIMEOUT=${TIMEOUT:-30}
+MWDD_ENV=dc ./mwdd base:create
 ```
 
-#### 8) Configure name resolution
+#### Configure name resolution
 
-For host name resolution of the containers inside the docker network, this setup includes [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/), a DNS Proxy server. All wikis at `*.web.mw.localhost` will automatically resolve to the nginx-proxy container's IP address. The web container's name is `mediawiki.mw.localhost` and all other containers can be reached from each other via their corresponding host names, defined in `docker-compose.yml`:
- - `dps.mw.localhost`
- - `db-master.mw.localhost`
- - `db-slave.mw.localhost`
- - `phpmyadmin.mw.localhost`
- - `graphite.mw.localhost`
- - `proxy.mw.localhost`
- - `redis.mw.localhost`
-
-In order to access the containers by name from your docker host system, there are two different ways:
+In order to access the services by name from your docker host system, there are two options:
 
 ##### Option a) Via /etc/hosts
 
@@ -140,11 +150,14 @@ Add the following to your `/etc/hosts` file:
 127.0.0.1 phpmyadmin.mw.localhost # mediawiki-docker-dev
 127.0.0.1 graphite.mw.localhost # mediawiki-docker-dev
 ```
-You can use the `./hosts-sync` script to try and update it automatically if possible. You may need to use `sudo ./hosts-sync` instead, if the file is not writable by the shell user.
+You can use the `./hosts-sync` script to try and update it automatically if possible.
+You may need to use `sudo ./hosts-sync` instead, if the file is not writable by your shell user.
 
-##### Option b) Via DPS
+##### Option b) Via [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/)
 
-Alternatively, you can use DPS to resolve the container names from your host system. By default, this feature is disabled. To enable it, add a `dps` section to your `docker-compose.override.yml` file or create it as follows:
+You can use DPS to resolve the container names from your host system.
+By default, this feature is disabled.
+To enable it, create  a `base.override.yml` file with the following content:
 ```text
 version: '2.2'
 
@@ -153,9 +166,17 @@ services:
     volumes:
       - /etc/resolv.conf:/etc/resolv.conf
 ```
-This will allow DPS to modify your `/etc/resolv.conf` and set itself as your system's primary DNS server. No changes to the `/etc/hosts` file are needed in that case.
+This will allow DPS to modify your `/etc/resolv.conf` and set itself as your system's primary DNS server.
+No changes to the `/etc/hosts` file are needed in this case.
 
-## Commands
+### Advanced interactions with the environment
+
+TBA content
+
+# TODO fix everything below here
+
+# This is all still for the "old" setup
+
 
 The below commands are shell scripts in the mediawiki-docker-dev directory.
 

@@ -3,9 +3,7 @@
 namespace Addshore\Mwdd\Command\Base;
 
 use Addshore\Mwdd\DockerCompose\Base;
-use Addshore\Mwdd\DockerCompose\Legacy;
 use Addshore\Mwdd\Files\DotEnv;
-use Addshore\Mwdd\Files\MediawikiDir;
 use Addshore\Mwdd\Shell\Docker;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Addshore\Mwdd\Shell\Id;
@@ -48,7 +46,7 @@ EOT
 		# Chown some things...
 		# TODO should this be in the entrypoint? YES!
 		(new DockerCompose())->exec(
-			Legacy::SRV_MEDIAWIKI,
+			Base::SRV_MEDIAWIKI,
 			'chown ' . (new Id())->ug() . ' //var/log/mediawiki //var/www/mediawiki/images/docker',
 			'--user root'
 		);

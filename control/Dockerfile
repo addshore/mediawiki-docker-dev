@@ -10,9 +10,10 @@ FROM php:7.2-cli
 # Just install docker-compose which will allow the control app to interact with the docker setup
 RUN apt-get update && \
 apt-get install -y \
-    docker-compose \
     # TODO does the container really need git? I mean it doesn't even need docker-compose really...
-    git
+    git && \
+curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+chmod +x /usr/local/bin/docker-compose
 
 COPY --from=composer /app/vendor /mwdd-vendor
 

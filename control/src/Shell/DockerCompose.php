@@ -7,7 +7,7 @@ class DockerCompose {
 	private $cmd;
 
 	public function __construct() {
-		$cmd = "docker-compose --project-directory .";
+		$cmd = "docker-compose --project-directory . -p mediawiki-docker-dev";
 		foreach( $this->getAllYmlFiles() as $file ) {
 			$cmd .= " -f ${file}";
 		}

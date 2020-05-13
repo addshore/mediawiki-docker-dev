@@ -4,9 +4,13 @@ FROM php:7.2-cli
 RUN apt-get update && \
 apt-get install -y \
     docker-compose \
+    # TODO does the container really need git? I mean it doesn' even need docker-compose really...
     git
 
-# Run the container, and keep it running etc, but doing nothing
-# TODO does this even give us any kind of performance gain? or should the container just not be running?
+RUN echo "tail -f /dev/null" >> /idle.sh
+
 WORKDIR /mwdd
+
+# We don't need anything to be running, just for the container to be setup and running
+# this needs to be running as mwdd uses docker-compose exec... (I couldn't make run work...)
 ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -1,17 +1,36 @@
 #!/bin/bash
 
-#echo $@
+# Allow the user to force and env, but default to php for now..
+MWDD_ENV=${MWDD_ENV:-"php"}
 
-php control/app.php $@
+# ### PHP only version....
+if [[ $MWDD_ENV == "php" ]]
+then
+    php control/app.php $@
+fi
 
-# TODO the user here needs access to run docker in the container...!
-#docker-compose \
-#    --project-directory . \
-#    -p mediawiki-docker-dev \
-#    -f docker-compose/control.yml \
-#    exec \
-#    --user $(id -u):$(id -g) \
-#    mwdd-control \
-#    php control/app.php $@
+# ### Run everything in docker.. via docker-compose
+if [[ $MWDD_ENV == "dc" ]]
+then
+    # If control container is not already running, then we need to run up
+    CONTROL_CONTAINER_ID=$(docker-compose --project-directory . -p mediawiki-docker-dev -f docker-compose/control.yml ps --services --filter "status=running")
+    if [ -z "$CONTROL_CONTAINER_ID" ]; then
+        docker-compose \
+            --project-directory . \
+            -p mediawiki-docker-dev \
+            -f docker-compose/control.yml \
+            up -d \
+            mwdd-control
+    fi
 
-#docker-compose --project-directory . -p mediawiki-docker-dev -f docker-compose/control.yml exec mwdd-control php control/app.php $@
+    # Then run the command
+    # This currently runs as root
+    # We could pass in the uid and gid, but then by default it would not be able to access the docker socket unless we also tweaked more things
+    docker-compose \
+        --project-directory . \
+        -p mediawiki-docker-dev \
+        -f docker-compose/control.yml \
+        exec \
+        mwdd-control \
+        php control/app.php $@
+fi

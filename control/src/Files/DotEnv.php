@@ -19,17 +19,22 @@ class DotEnv {
 	 */
 	public function updateFromDefaultAndLocal() {
 		$defaultEnv = (new Parser(file_get_contents(self::DEFAULT)));
-		$localEnv = (new Parser(file_get_contents(self::LOCAL)));
 
-		$combinesLines = array_merge(
-			$defaultEnv->lines,
-			$localEnv->lines
-		);
+		// Sometimes users will not have specified a local env file just yet...
+		if(file_exists(self::LOCAL)) {
+			$localEnv = (new Parser(file_get_contents(self::LOCAL)));
+			$finalEnvLines = array_merge(
+				$defaultEnv->lines,
+				$localEnv->lines
+			);
+		} else {
+			$finalEnvLines = $defaultEnv->lines;
+		}
 
-		$combinesLines = $this->swapOutValues( $combinesLines );
+		$finalEnvLines = $this->swapOutValues( $finalEnvLines );
 
 		$finalLines = '';
-		foreach( $combinesLines as $key => $line ) {
+		foreach( $finalEnvLines as $key => $line ) {
 			$finalLines .= $key . '=' . "${line}" . PHP_EOL;
 		}
 

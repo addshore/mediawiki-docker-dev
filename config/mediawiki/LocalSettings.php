@@ -26,11 +26,13 @@ if ( defined( "MW_DB" ) ) {
 ## Database settings
 $wgDBname = $dockerDb;
 
-// Configure a replica DB if it is running and we are not in unit tests
-$dockerUseReplica = (
-	gethostbyname('db-replica') !== 'db-replica' &&
-	!defined( 'MW_PHPUNIT_TEST' )
-);
+// Decide on which services are available?
+$mwddServices = [
+	// Configure a replica DB if it is running and we are not in unit tests
+	'db-replica' => gethostbyname('db-replica') !== 'db-replica' && !defined( 'MW_PHPUNIT_TEST' ),
+	'redis' => gethostbyname('redis') !== 'redis',
+	'graphite-statsd' => gethostbyname('graphite-statsd') !== 'graphite-statsd',
+];
 
 $wgDBservers = [
 	[
@@ -40,10 +42,10 @@ $wgDBservers = [
 		'password' => 'toor',
 		'type' => "mysql",
 		'flags' => DBO_DEFAULT,
-		'load' => $dockerUseReplica ? 0 : 1,
+		'load' => $mwddServices['db-replica'] ? 0 : 1,
 	],
 ];
-if($dockerUseReplica ) {
+if($mwddServices['db-replica'] ) {
 	$wgDBservers[] = [
 		'host' => "db-replica",
 		'dbname' => $dockerDb,
@@ -69,6 +71,10 @@ if(gethostbyname('redis') !== 'redis') {
 if(gethostbyname('graphite-statsd') !== 'graphite-statsd') {
 	$wgStatsdServer = "graphite-statsd";
 }
+
+require_once __DIR__ . '/MwddSpecialPage.php';
+$wgSpecialPages['Mwdd'] = MwddSpecial::class;
+$wgExtensionMessagesFiles['Mwdd'] = __DIR__ . '/special-aliases.php';
 
 $wgShowHostnames = true;
 

@@ -20,8 +20,13 @@ $application->add(new \Addshore\Mwdd\Command\Base\Create());
 $application->add(new \Addshore\Mwdd\Command\Base\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Base\Resume());
 
+$application->add(new \Addshore\Mwdd\Command\Redis\Create());
+$application->add(new \Addshore\Mwdd\Command\Redis\Suspend());
+$application->add(new \Addshore\Mwdd\Command\Redis\Resume());
+
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
+$application->add(new \Addshore\Mwdd\Command\DockerCompose\Logs());
 
 $application->add(new \Addshore\Mwdd\Command\Control\Up());
 $application->add(new \Addshore\Mwdd\Command\Control\Stop());

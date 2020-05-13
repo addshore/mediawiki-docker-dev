@@ -2,6 +2,7 @@
 <?php
 
 require __DIR__.'/vendor/autoload.php';
+define('MWDD_DIR', dirname( __DIR__ ));
 
 if ( $_SERVER['PHP_SELF'] !== 'control/app.php' ) {
     echo "You are running the control app from the wrong context.\n";
@@ -21,6 +22,10 @@ $application->add(new \Addshore\Mwdd\Command\V0\PHPUnit());
 $application->add(new \Addshore\Mwdd\Command\V0\PHPUnitFile());
 $application->add(new \Addshore\Mwdd\Command\V0\Script());
 $application->add(new \Addshore\Mwdd\Command\V0\LogsTail());
+$application->add(new \Addshore\Mwdd\Command\V0\HostsAdd());
+$application->add(new \Addshore\Mwdd\Command\V0\Create());
+$application->add(new \Addshore\Mwdd\Command\V0\Destroy());
+$application->add(new \Addshore\Mwdd\Command\V0\AddSite());
 $application->add(new \Addshore\Mwdd\Command\V0\HostsAdd());
 
 $application->run();

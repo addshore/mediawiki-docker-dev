@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Commands;
+use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,6 +26,7 @@ class MySql extends Command
 	{
 		$host = $input->getArgument('host');
 		// TODO grab user and password from docker-compose or env vars?
-		(new Commands())->exec( $host, 'mysql --user=root --password=toor' );
+		(new DockerCompose())->exec( $host, 'mysql --user=root --password=toor' );
+		return 0;
 	}
 }

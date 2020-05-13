@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Commands;
+use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,6 +27,7 @@ class PHPUnitFile extends Command
 	{
 		$wiki = $input->getArgument('wiki');
 		$path = $input->getArgument('path');
-		(new Commands())->exec( 'web', "php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki ${wiki} //var/www/mediawiki/"  . $path );
+		(new DockerCompose())->exec( 'web', "php //var/www/mediawiki/tests/phpunit/phpunit.php --wiki ${wiki} //var/www/mediawiki/"  . $path );
+		return 0;
 	}
 }

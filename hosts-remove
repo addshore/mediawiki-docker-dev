@@ -26,8 +26,6 @@ else
     SEDFILE=/usr/bin/sed
 fi
 
-# TODO escalate / warn if file not accessible by current user
-
 # Remove all of the lines we have added
 $GREPFILE -v mediawiki-docker-dev $HOSTSFILE > ./.hosts.tmp
 # Remove any excess whitespace

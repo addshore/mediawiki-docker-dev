@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\DockerCompose\Commands;
+use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +23,7 @@ class Script extends Command
 	{
 		$wiki = $input->getArgument('wiki');
 		$script = $input->getArgument('script');
-		(new Commands())->exec( 'web', "php //var/www/mediawiki/${script} --wiki ${wiki}");
+		(new DockerCompose())->exec( 'web', "php //var/www/mediawiki/${script} --wiki ${wiki}");
+		return 0;
 	}
 }

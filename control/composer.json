@@ -1,6 +1,7 @@
 {
     "require": {
-        "symfony/console": "^5.0"
+        "symfony/console": "^5.0",
+        "m1/env": "^2.2"
     },
     "autoload": {
         "psr-4": {

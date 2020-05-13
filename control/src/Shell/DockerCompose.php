@@ -2,6 +2,8 @@
 
 namespace Addshore\Mwdd\Shell;
 
+use Addshore\Mwdd\Files\DotEnv;
+
 class DockerCompose {
 
 	private $cmd;
@@ -12,6 +14,25 @@ class DockerCompose {
 			$cmd .= " -f ${file}";
 		}
 		$this->cmd = $cmd;
+	}
+
+	/**
+	 * The .env file must exist to run docker-compose commands without it screaming WARNING for no env vars..
+	 * This would often be a problem on first initialization
+	 */
+	private function ensureDotEnv() {
+		$dotEnv = new DotEnv();
+		if(!$dotEnv->exists()) {
+			$dotEnv->updateFromDefaultAndLocal();
+		}
+	}
+
+	/**
+	 * @param string $fullCommand including docker-compose
+	 */
+	private function passthruDc( string $fullCommand ) {
+		$this->ensureDotEnv();
+		passthru( $fullCommand );
 	}
 
 	/**
@@ -32,27 +53,27 @@ class DockerCompose {
 	public function upDetached( array $services, $build = false ) {
 		$buildString = $build ? ' --build' : '';
 		$shell = $this->cmd . " up -d ${buildString} " . implode( ' ', $services );
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function downWithVolumes() {
 		$shell = $this->cmd . " down -v";
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function stop( array $services ) {
 		$shell = $this->cmd . " stop " . implode( ' ', $services );
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function start( array $services ) {
 		$shell = $this->cmd . " start " . implode( ' ', $services );;
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function exec( string $service, $command, $extraArgString = '' ) {
 		$shell = $this->cmd . " exec ${extraArgString} \"${service}\" ${command}";
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function psQ( string $service ) {
@@ -63,17 +84,17 @@ class DockerCompose {
 
 	public function ps() {
 		$shell = $this->cmd . " ps";
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function logsTail( string $service ) {
 		$shell = $this->cmd . " logs --tail=25 -f ${service}";
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 	public function raw( string $rawCommand ) {
 		$shell = $this->cmd . " ${rawCommand}";
-		passthru( $shell );
+		$this->passthruDc( $shell );
 	}
 
 

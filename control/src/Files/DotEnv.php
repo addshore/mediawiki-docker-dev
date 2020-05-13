@@ -10,6 +10,10 @@ class DotEnv {
 	private const DEFAULT = MWDD_DIR . '/default.env';
 	private const LOCAL = MWDD_DIR . '/local.env';
 
+	public function exists() : bool {
+		return file_exists(self::FILE);
+	}
+
 	/**
 	 * Combines the default.env and local.env files for the environment into a single .env file
 	 */

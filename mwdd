@@ -15,6 +15,7 @@ then
     # If control container is not already running, then we need to run up
     CONTROL_CONTAINER_ID=$(docker-compose --project-directory . -p mediawiki-docker-dev -f docker-compose/control.yml ps --services --filter "status=running")
     if [ -z "$CONTROL_CONTAINER_ID" ]; then
+
         docker-compose \
             --project-directory . \
             -p mediawiki-docker-dev \

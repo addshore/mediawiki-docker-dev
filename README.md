@@ -175,6 +175,40 @@ TBA content
 
 #### Other Services
 
+You can check the states of various services provided by this environment at:
+
+http://default.web.mw.localhost:8080/mediawiki/index.php?title=Special:Mwdd
+
+##### Redis
+
+Redis can be used for MediaWiki caching
+
+```bash
+./mwdd redis:create
+```
+
+A redis [object cache](https://www.mediawiki.org/wiki/Manual:$wgObjectCaches) will automatically be created, but will not automaticaly be used by MediaWiki.
+```php
+$wgObjectCaches['redis'] = [
+	'class' => 'RedisBagOStuff',
+	'servers' => [ 'redis:6379' ],
+];
+```
+
+You might want to consider using it as the [main cache](https://www.mediawiki.org/wiki/Manual:$wgSessionCacheType):
+
+```php
+$wgMainCacheType = 'redis';
+```
+
+You might consider running redis-cli to see the data stored in redis:
+```bash
+./mwdd redis:cli
+
+127.0.0.1:6379> KEYS *
+(empty list or set)
+```
+
 ##### DB Replication
 
 ```bash

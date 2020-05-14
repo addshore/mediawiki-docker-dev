@@ -41,6 +41,7 @@ $application->add(new \Addshore\Mwdd\Command\DbReplica\MySql());
 $application->add(new \Addshore\Mwdd\Command\Redis\Create());
 $application->add(new \Addshore\Mwdd\Command\Redis\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Redis\Resume());
+$application->add(new \Addshore\Mwdd\Command\Redis\Cli());
 
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());

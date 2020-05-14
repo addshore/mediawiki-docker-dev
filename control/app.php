@@ -33,6 +33,11 @@ $application->add(new \Addshore\Mwdd\Command\Base\Create());
 $application->add(new \Addshore\Mwdd\Command\Base\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Base\Resume());
 
+$application->add(new \Addshore\Mwdd\Command\DbReplica\Create());
+$application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());
+$application->add(new \Addshore\Mwdd\Command\DbReplica\Resume());
+$application->add(new \Addshore\Mwdd\Command\DbReplica\MySql());
+
 $application->add(new \Addshore\Mwdd\Command\Redis\Create());
 $application->add(new \Addshore\Mwdd\Command\Redis\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Redis\Resume());
@@ -40,6 +45,7 @@ $application->add(new \Addshore\Mwdd\Command\Redis\Resume());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Logs());
+$application->add(new \Addshore\Mwdd\Command\DockerCompose\Destroy());
 
 $application->add(new \Addshore\Mwdd\Command\Control\Create());
 $application->add(new \Addshore\Mwdd\Command\Control\Suspend());

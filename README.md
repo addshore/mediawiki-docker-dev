@@ -131,7 +131,7 @@ By default the mwdd commands will run using php on the host:
 ./mwdd base:create
 ```
 
-There is an experimental version that would run everything in docker containers, but it doesn't fully work yet.
+There is an experimental version that would run everything in docker containers, but it doesn't fully work yet (in development).
 
 ```bash
 MWDD_ENV=dc ./mwdd base:create
@@ -172,6 +172,16 @@ No changes to the `/etc/hosts` file are needed in this case.
 ### Advanced interactions with the environment
 
 TBA content
+
+#### Other Services
+
+##### DB Replication
+
+```bash
+./mwdd db:replica:create
+```
+
+MediaWiki will automatically start reading from the second DB server.
 
 # TODO fix everything below here
 

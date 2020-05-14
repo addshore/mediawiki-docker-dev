@@ -51,8 +51,8 @@ EOT
 			'--user root'
 		);
 
-		# Wait for the db servers
-		$output->writeln('Waiting for the db servers');
+		# Wait for the db server
+		$output->writeln('Waiting for the db server');
 		$output->writeln('Sometimes this can take some time...');
 		(new DockerCompose())->exec( Base::SRV_MEDIAWIKI, '//srv/wait-for-it.sh db-master:3306' );
 

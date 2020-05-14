@@ -26,6 +26,23 @@ services:
     entrypoint: "/tmp/mwdd/entrypoint.sh"
     command: "mysqld"
 
+  db-configure:
+    image: ${DB}:latest
+    environment:
+      - "MYSQL_REPLICA_PASSWORD=toor"
+      - "MYSQL_MASTER_PASSWORD=toor"
+      - "MYSQL_ROOT_PASSWORD=toor"
+      - "MYSQL_REPLICATION_USER=repl"
+      - "MYSQL_REPLICATION_PASSWORD=repl"
+    depends_on:
+      - db-master
+    networks:
+      - dps
+    volumes:
+      - ./scripts:/mwdd-scripts
+      - sql-data-configure:/mwdd-connector
+    command: /bin/bash -x /mwdd-scripts/mysql_connector_master.sh
+
   mediawiki:
     image: webdevops/php-${WEBSERVER}-dev:${RUNTIMEVERSION}
     user: "${UID}:${GID}"
@@ -81,6 +98,7 @@ services:
 
 volumes:
   sql-data-master:
+  sql-data-configure:
   mw-logs:
   mw-images:
 

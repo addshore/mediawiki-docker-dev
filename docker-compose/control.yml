@@ -2,6 +2,7 @@ version: '2.2'
 
 services:
   control:
+    scale: 0
     build: ./control
     # The image tag should be updated whenever new composer dependencies are added...
     image: mwdd-control:2020-05-13-19-44

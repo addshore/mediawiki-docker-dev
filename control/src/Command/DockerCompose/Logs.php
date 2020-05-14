@@ -17,14 +17,16 @@ class Logs extends Command
 	{
 		$this->setDescription('Tails service logs.');
 		$this->addArgument( 'service' );
+		$this->addArgument( 'lines', null, '', 25 );
 
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$service = $input->getArgument('service');
+		$lines = $input->getArgument('lines');
 
-		(new DockerCompose())->logsTail( $service );
+		(new DockerCompose())->logsTail( $service, $lines );
 		return 0;
 	}
 }

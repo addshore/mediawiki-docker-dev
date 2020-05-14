@@ -25,7 +25,7 @@ USAGE
 wait_for()
 {
     if [[ $TIMEOUT -gt 0 ]]; then
-        echoerr "$cmdname: waiting $TIMEOUT seconds for $HOST:$PORT"
+        echoerr "$cmdname: waiting for $HOST:$PORT with a timeout of $TIMEOUT seconds"
     else
         echoerr "$cmdname: waiting for $HOST:$PORT without a timeout"
     fi

@@ -1,18 +1,22 @@
 #!/bin/bash
-# Modified from http://tarunlalwani.com/post/mysql-master-replica-using-docker/
+# Modified from https://tarunlalwani.com/post/mysql-master-slave-using-docker/
 
-echo "Waiting for mysql to start"
-# Give 60 seconds for master and replica to start
-# sleep 60
-/tmp/wait-for-it.sh  db-master:3306
-/tmp/wait-for-it.sh  db-replica:3306
+position_file=/mwdd-connector/master_position
+file_file=/mwdd-connector/master_file
+
+# Only save the data if the files don't already exist
+# They might have been created during another container startup
+if [ ! -e "$position_file" ]; then
+    echo "Position file doesnt exist, can't start replication"
+    exit 1
+fi
+
+echo "Waiting for mysql replica to start"
+/mwdd-scripts/wait-for-it.sh  db-master:3306
+/mwdd-scripts/wait-for-it.sh  db-replica:3306
 # Double check
-/tmp/wait-for-it.sh  db-master:3306
-/tmp/wait-for-it.sh  db-replica:3306
-
-echo "Create MySQL Servers (master / replica repl)"
-echo "-----------------"
-
+/mwdd-scripts/wait-for-it.sh  db-master:3306
+/mwdd-scripts/wait-for-it.sh  db-replica:3306
 
 echo "* Create replication user"
 
@@ -26,8 +30,10 @@ mysql --host db-master -uroot -p$MYSQL_MASTER_PASSWORD -AN -e 'flush privileges;
 
 echo "* Set MySQL01 as master on MySQL02"
 
-MYSQL01_Position=$(eval "mysql --host db-master -uroot -p$MYSQL_MASTER_PASSWORD -e 'show master status \G' | grep Position | sed -n -e 's/^.*: //p'")
-MYSQL01_File=$(eval "mysql --host db-master -uroot -p$MYSQL_MASTER_PASSWORD -e 'show master status \G'     | grep File     | sed -n -e 's/^.*: //p'")
+# Grab the position that should have been set from the first step of db-configure when the master was created
+MYSQL01_Position=$(<$position_file)
+MYSQL01_File=$(<$file_file)
+
 MASTER_IP=$(eval "getent hosts db-master|awk '{print \$1}'")
 echo $MASTER_IP
 mysql --host db-replica -uroot -p$MYSQL_REPLICA_PASSWORD -AN -e "CHANGE MASTER TO master_host='db-master', master_port=3306, \

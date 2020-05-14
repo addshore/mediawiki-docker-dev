@@ -76,6 +76,11 @@ class DockerCompose {
 		$this->passthruDc( $shell );
 	}
 
+	public function runDetatched( string $service, $command, $extraArgString = '' ) {
+		$shell = $this->cmd . " run -d ${extraArgString} \"${service}\" ${command}";
+		$this->passthruDc( $shell );
+	}
+
 	public function psQ( string $service ) {
 		$shell = $this->cmd . " ps -q ${service}";
 		$output = shell_exec( $shell );
@@ -87,8 +92,8 @@ class DockerCompose {
 		$this->passthruDc( $shell );
 	}
 
-	public function logsTail( string $service ) {
-		$shell = $this->cmd . " logs --tail=25 -f ${service}";
+	public function logsTail( string $service, int $lines = 25 ) {
+		$shell = $this->cmd . " logs --tail=${lines} -f ${service}";
 		$this->passthruDc( $shell );
 	}
 

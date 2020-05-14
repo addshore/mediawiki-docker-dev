@@ -38,6 +38,10 @@ $application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Resume());
 $application->add(new \Addshore\Mwdd\Command\DbReplica\MySql());
 
+$application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Create());
+$application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Suspend());
+$application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Resume());
+
 $application->add(new \Addshore\Mwdd\Command\Redis\Create());
 $application->add(new \Addshore\Mwdd\Command\Redis\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Redis\Resume());

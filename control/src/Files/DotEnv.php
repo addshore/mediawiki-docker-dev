@@ -14,6 +14,14 @@ class DotEnv {
 		return file_exists(self::FILE);
 	}
 
+	public function getValue(string $key) : ?string {
+		if(!$this->exists()) {
+			$this->updateFromDefaultAndLocal();
+		}
+		$dotEnv = (new Parser(file_get_contents(self::FILE)));
+		return $dotEnv->getContent($key);
+	}
+
 	/**
 	 * Combines the default.env and local.env files for the environment into a single .env file
 	 */

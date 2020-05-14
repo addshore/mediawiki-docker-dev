@@ -120,6 +120,18 @@ sed 's/\/srv\/dev\/git\/gerrit\/mediawiki/~\/src\/mediawiki/g' local.env > local
 Under section `# Location of the MediaWiki repo on your machine` set the **full** path to the mediawiki you cloned from Gerrit.
 Under section `# PHP Runtime version` set the php version that your mediawiki needs to work with. Setting `RUNTIMEVERSION` to `'latest'` doesn't always work. You might want to specify the php version exactly, e.g. `RUNTIMEVERSION=7.3`.
 
+### Alias for your pleasure
+
+Create an alias like this so that you can run the command from anywhere.
+
+```bash
+alias mwdd='_(){ (export MWDD_S_DIR=$(pwd);cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./mwdd $@) ;}; _'
+```
+
+[Maybe you want to create a permenent alias](https://askubuntu.com/a/17538/1066974).
+
+The MWDD_S_DIR variable is used by the environment to determine the context you might want to run commands in.
+
 ### Create the base environment
 
 TBA details about the options of doing everything locally with php or via docker-compose..

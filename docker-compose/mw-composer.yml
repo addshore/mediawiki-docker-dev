@@ -13,5 +13,5 @@ services:
     volumes:
       # Only mount code and config, don't mount logs or image
       # TODO is this bit of config even needed?
-      - "${DOCKER_MW_PATH}:/app"
+      - "${DOCKER_MW_PATH}:/app:cached"
       - ./config/mediawiki:/app/.docker:ro

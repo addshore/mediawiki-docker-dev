@@ -3,6 +3,7 @@
 namespace Addshore\Mwdd\Command\MediaWiki;
 
 use Addshore\Mwdd\DockerCompose\MwComposer;
+use Addshore\Mwdd\DockerCompose\MwFresh;
 use Addshore\Mwdd\Files\DotEnv;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
@@ -10,27 +11,26 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Composer extends Command
+class Fresh extends Command
 {
 
-	protected static $defaultName = 'mw:composer';
+	protected static $defaultName = 'mw:fresh';
 
 	protected function configure()
 	{
-		$this->setDescription('Runs composer for mediawiki or a subdirectory (when using the alias)');
+		$this->setDescription('Runs fresh for MediaWiki or a subdirectory (when using the alias)');
+		$this->addUsage('npm install');
+		$this->addUsage('npm run selenium');
 		$this->setHelp( <<< EOT
-Runs the composer command in a container within the MediaWiki context.
+Runs 'fresh', a node js running environment, within the MediaWiki context.
+See: https://github.com/wikimedia/fresh
+
 By default this will run in the MediaWiki core directory.
 
 If you are using the recommended mwdd alias this command will try to run composer in the context of the directory you run the command from.
 This is only relevant when said directory is within the mediawiki core directory.
-
-Commands that rely on other applications, such as git, will NOT work as expected.
-An example of this would be the Wikibase phpcs-modified script.
 EOT
 		);
-		$this->addUsage('version');
-		$this->addUsage('update --ignore-platform-reqs');
 
 		$this->addArgument('args', InputArgument::IS_ARRAY );
 	}
@@ -60,11 +60,19 @@ EOT
 		// The service must be created in order to be able to use docker run
 		// TODO don't always run this...
 		$output->writeln("MWDD: Sorry that this is a bit slow to run (need to think of a nice fix) as it runs up each time");
-		(new DockerCompose())->upDetached(MwComposer::SERVICES);
+		$output->writeln("MWDD: Fresh also seems to be a bit buggy currently and sometimes freeze? maybe?");
+		(new DockerCompose())->upDetached(MwFresh::SERVICES);
+
+
+		// TODO needs addslashes a little for " ?
+		if(strstr(implode( ' ', $args ), '"')) {
+			$output->writeln('MWDD: WARNING, Your arguments have a " in them, I currently predict something will go wrong.');
+		}
 
 		(new DockerCompose())->run(
-			MwComposer::SRV_COMPOSER,
-			"composer " . implode( ' ', $args ),
+			MwFresh::SRV_FRESH,
+			// TODO needs addslashes a little for " ?
+			'-c "' . implode( ' ', $args ) . '"',
 			'--rm --workdir=/app/' . $pathInsideMwPath
 		);
 		return 0;

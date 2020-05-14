@@ -1,0 +1,19 @@
+version: '2.2'
+
+# Service wrapper around what is provided by fresh
+# https://github.com/wikimedia/fresh/blob/master/bin/fresh-node10
+
+services:
+  mw-fresh:
+    image: docker-registry.wikimedia.org/releng/node10-test-browser:0.6.1
+    user: "${UID}:${GID}"
+    entrypoint: /bin/sh
+    command: -c "echo started"
+    working_dir: /app
+    networks:
+      - dps
+    volumes:
+      # Only mount code and config, don't mount logs or image
+      # TODO is this bit of config even needed?
+      - "${DOCKER_MW_PATH}:/app:cached"
+      - ./config/mediawiki:/app/.docker:ro

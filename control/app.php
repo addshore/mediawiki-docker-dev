@@ -35,6 +35,7 @@ $application->add(new \Addshore\Mwdd\Command\Base\Resume());
 
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\PHPUnit());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Composer());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Fresh());
 
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Create());
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());

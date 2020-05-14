@@ -1,0 +1,17 @@
+version: '2.2'
+
+# This service only exists to be able to run composer in its own container against the mediawiki code..
+# docker-compose doesnt allow a container to be run unless a service has already been creased, so we need this...
+
+services:
+  mw-composer:
+    image: composer
+    # Run as the host user as this might create files...
+    user: "${UID}:${GID}"
+    networks:
+      - dps
+    volumes:
+      # Only mount code and config, don't mount logs or image
+      # TODO is this bit of config even needed?
+      - "${DOCKER_MW_PATH}:/app"
+      - ./config/mediawiki:/app/.docker:ro

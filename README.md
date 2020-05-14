@@ -173,6 +173,23 @@ No changes to the `/etc/hosts` file are needed in this case.
 
 TBA content
 
+#### Tools
+
+##### MediaWiki PhpUnit
+
+```bash
+./mwdd mw:phpunit tests/phpunit/includes/StatusTest.php
+```
+
+##### MediaWiki Composer
+
+```bash
+./mwdd mw:composer info
+```
+
+ - Currently a bit slow (currently runs up each time).
+ - Also needs to use a locally stored composer package cache!
+
 #### Other Services
 
 You can check the states of various services provided by this environment at:

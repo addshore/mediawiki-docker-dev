@@ -71,13 +71,22 @@ class DockerCompose {
 		$this->passthruDc( $shell );
 	}
 
+	// Command in an already running container
 	public function exec( string $service, $command, $extraArgString = '' ) {
 		$shell = $this->cmd . " exec ${extraArgString} \"${service}\" ${command}";
 		$this->passthruDc( $shell );
 	}
 
+	// Command in a new container
+	public function run( string $service, $command, $extraArgString = '' ) {
+		$shell = $this->cmd . " run ${extraArgString} \"${service}\" ${command}";
+		$this->passthruDc( $shell );
+	}
+
+	// Command in a new container
 	public function runDetatched( string $service, $command, $extraArgString = '' ) {
 		$shell = $this->cmd . " run -d ${extraArgString} \"${service}\" ${command}";
+		// TODO should this actually passthru, given it is detached??
 		$this->passthruDc( $shell );
 	}
 

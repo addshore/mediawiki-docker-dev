@@ -10,6 +10,8 @@ services:
     user: "${UID}:${GID}"
     networks:
       - dps
+    dns:
+      - 172.0.0.10
     volumes:
       # Only mount code and config, don't mount logs or image
       # TODO is this bit of config even needed?

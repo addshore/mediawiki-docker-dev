@@ -12,6 +12,14 @@ services:
     working_dir: /app
     networks:
       - dps
+    dns:
+      - 172.0.0.10
+    environment:
+      # https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_MediaWiki-Docker_using_Fresh#Environment_variables
+      - MW_SERVER=http://default.web.mw.localhost:${DOCKER_MW_PORT}
+      - MW_SCRIPT_PATH=/mediawiki
+      - MEDIAWIKI_USER=Admin
+      - MEDIAWIKI_PASSWORD=dockerpass
     volumes:
       # Only mount code and config, don't mount logs or image
       # TODO is this bit of config even needed?

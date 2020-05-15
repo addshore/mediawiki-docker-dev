@@ -17,15 +17,16 @@ class Bash extends Command
 	{
 		$this->setDescription('Run a shell on one of the service containers');
 		$this->addArgument( 'service' );
+		$this->addArgument( 'shell', InputArgument::OPTIONAL, '', 'bash' );
 
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$service = $input->getArgument('service');
+		$shell = $input->getArgument('shell');
 
-		// TODO pick bash or sh?
-		(new DockerCompose())->exec( $service, "sh" );
+		(new DockerCompose())->exec( $service, $shell );
 		return 0;
 	}
 }

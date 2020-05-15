@@ -40,13 +40,28 @@ See [How can I use Docker without sudo](https://askubuntu.com/questions/477551/h
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
-### Semi-automatic Setup
+### Alias for your pleasure (highly recommended)
 
-There is a setup script that you can run with `DOCKER_MW_PATH=~/src/mediawiki ./setup` once you have the prerequisites.
-Note that `DOCKER_MW_PATH` is the directory MediaWiki will be downloaded to.
-So in the example above, you would end up with a codebase at `~/src/mediawiki`.
+Create an alias like this so that you can run the command from anywhere.
 
-### Manual Setup
+```bash
+alias mwdd='_(){ (export MWDD_S_DIR=$(pwd);cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./mwdd $@) ;}; _'
+```
+
+[Maybe you want to create a permanent alias](https://askubuntu.com/a/17538/1066974).
+
+The MWDD_S_DIR variable is used by the environment to determine the context you might want to run commands in.
+
+### Automatic Code fetch
+
+There is a setup script that you can run to fetch MediaWiki code once you have the prerequisites.
+```bash
+mwdd mw:getCode
+```
+
+This will pull the code from Gerrit, and do a composer install.
+
+### Manual Code fetch
 
 #### 1) Clone MediaWiki core & the Vector skin
 
@@ -120,18 +135,6 @@ sed 's/\/srv\/dev\/git\/gerrit\/mediawiki/~\/src\/mediawiki/g' local.env > local
 Under section `# Location of the MediaWiki repo on your machine` set the **full** path to the mediawiki you cloned from Gerrit.
 Under section `# PHP Runtime version` set the php version that your mediawiki needs to work with. Setting `RUNTIMEVERSION` to `'latest'` doesn't always work. You might want to specify the php version exactly, e.g. `RUNTIMEVERSION=7.3`.
 
-### Alias for your pleasure
-
-Create an alias like this so that you can run the command from anywhere.
-
-```bash
-alias mwdd='_(){ (export MWDD_S_DIR=$(pwd);cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./mwdd $@) ;}; _'
-```
-
-[Maybe you want to create a permenent alias](https://askubuntu.com/a/17538/1066974).
-
-The MWDD_S_DIR variable is used by the environment to determine the context you might want to run commands in.
-
 ### Create the base environment
 
 TBA details about the options of doing everything locally with php or via docker-compose..
@@ -155,17 +158,14 @@ In order to access the services by name from your docker host system, there are 
 
 ##### Option a) Via /etc/hosts
 
-Add the following to your `/etc/hosts` file:
-```text
-127.0.0.1 default.web.mw.localhost # mediawiki-docker-dev
-127.0.0.1 proxy.mw.localhost # mediawiki-docker-dev
-127.0.0.1 phpmyadmin.mw.localhost # mediawiki-docker-dev
-127.0.0.1 graphite.mw.localhost # mediawiki-docker-dev
-```
 You can use the `./hosts-sync` script to try and update it automatically if possible.
 You may need to use `sudo ./hosts-sync` instead, if the file is not writable by your shell user.
 
+Or you will need to manually add the services from the `.hosts` file into your machine `hosts` file.
+
 ##### Option b) Via [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/)
+
+**NOTE: untested in v1....**
 
 You can use DPS to resolve the container names from your host system.
 By default, this feature is disabled.
@@ -179,7 +179,6 @@ services:
       - /etc/resolv.conf:/etc/resolv.conf
 ```
 This will allow DPS to modify your `/etc/resolv.conf` and set itself as your system's primary DNS server.
-No changes to the `/etc/hosts` file are needed in this case.
 
 ### Advanced interactions with the environment
 

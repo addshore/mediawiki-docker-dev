@@ -33,6 +33,7 @@ $application->add(new \Addshore\Mwdd\Command\Base\Create());
 $application->add(new \Addshore\Mwdd\Command\Base\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Base\Resume());
 
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\GetCode());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\PHPUnit());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Composer());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Fresh());

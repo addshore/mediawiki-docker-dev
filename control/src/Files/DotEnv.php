@@ -10,12 +10,27 @@ class DotEnv {
 	private const DEFAULT = MWDD_DIR . '/default.env';
 	private const LOCAL = MWDD_DIR . '/local.env';
 
+	private $forceFresh;
+
+	public function __construct( bool $forceFresh = false ) {
+		$this->forceFresh = $forceFresh;
+	}
+
+	private function useForceFreshFlag() {
+		if( $this->forceFresh ){
+			// Avoid keeping on getting fresh .env file
+			$this->forceFresh = false;
+			return true;
+		}
+		return false;
+	}
+
 	public function exists() : bool {
 		return file_exists(self::FILE);
 	}
 
 	public function getValue(string $key) : ?string {
-		if(!$this->exists()) {
+		if($this->useForceFreshFlag() || !$this->exists()) {
 			$this->updateFromDefaultAndLocal();
 		}
 		$dotEnv = (new Parser(file_get_contents(self::FILE)));

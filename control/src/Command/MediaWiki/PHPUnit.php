@@ -16,6 +16,8 @@ class PHPUnit extends Command
 
 	protected function configure()
 	{
+		$this->setDescription('Runs the MediaWiki phpunit.php');
+
 		$this->addArgument('testPath', InputOption::VALUE_REQUIRED );
 		$this->addOption('wiki', 'w', InputOption::VALUE_OPTIONAL, 'The wiki to run the tests for', 'default');
 		$this->addOption('args', 'a', InputOption::VALUE_OPTIONAL, 'String of extra arguments to pass to phpunit.php', '');

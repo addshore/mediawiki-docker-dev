@@ -20,7 +20,7 @@ class HostsAdd extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$host = $input->getArgument( 'host' );
-		(new DotHosts())->addHost( '127.0.01', $host );
+		(new DotHosts())->addHost( '127.0.0.1', $host );
 		return 0;
 	}
 }

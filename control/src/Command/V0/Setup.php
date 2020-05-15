@@ -2,7 +2,7 @@
 
 namespace Addshore\Mwdd\Command\V0;
 
-use Addshore\Mwdd\Files\InstallDir;
+use Addshore\Mwdd\Files\MediaWikiDir;
 use Addshore\Mwdd\Shell\Docker;
 use Addshore\Mwdd\Shell\Git;
 use Symfony\Component\Console\Command\Command;
@@ -19,11 +19,10 @@ class Setup extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$dir = $input->getArgument( 'dir' );
-		$installDir = new InstallDir( $dir );
-		$mwDir = $dir . '/mediawiki';
+		$mwDir = new MediaWikiDir( $dir . '/mediawiki' );
 
 		// Clone the minimum needed code
-		$installDir->ensurePresent();
+		$mwDir->ensurePresent();
 		( new Git() )->clone( 'https://gerrit.wikimedia.org/r/mediawiki/core', $mwDir );
 		( new Git() )->clone( 'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector',
 			$dir

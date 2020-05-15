@@ -16,7 +16,7 @@ class Logs extends Command
 	protected function configure()
 	{
 		$this->setDescription('Tails service logs.');
-		$this->addArgument( 'service' );
+		$this->addArgument( 'service', InputArgument::REQUIRED );
 		$this->addArgument( 'lines', null, '', 25 );
 
 	}

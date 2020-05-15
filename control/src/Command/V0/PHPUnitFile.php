@@ -18,6 +18,7 @@ class PHPUnitFile extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->addArgument('wiki' );
 		$this->addArgument('path' );
 		$this->ignoreValidationErrors();

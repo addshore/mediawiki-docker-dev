@@ -14,6 +14,7 @@ class HostsAdd extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->addArgument( 'host' );
 	}
 

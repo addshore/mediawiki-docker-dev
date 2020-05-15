@@ -14,6 +14,7 @@ class Setup extends Command {
 	protected static $defaultName = 'v0:setup';
 
 	protected function configure() {
+		$this->setHidden(true);
 		$this->addArgument( 'dir' );
 	}
 

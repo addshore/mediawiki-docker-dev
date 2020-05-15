@@ -15,6 +15,7 @@ class Script extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->addArgument('wiki' );
 		$this->addArgument('script' );
 		$this->ignoreValidationErrors();

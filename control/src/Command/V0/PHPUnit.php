@@ -19,6 +19,7 @@ class PHPUnit extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->addArgument('phpunitArgs', InputArgument::IS_ARRAY );
 		$this->ignoreValidationErrors();
 	}

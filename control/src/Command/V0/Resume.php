@@ -15,6 +15,7 @@ class Resume extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->setDescription('Restarts an already setup development system.');
 		$this->setHelp('Restarts an already setup development system.');
 	}

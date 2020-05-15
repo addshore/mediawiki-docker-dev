@@ -37,6 +37,9 @@ $application->add(new \Addshore\Mwdd\Command\MediaWiki\GetCode());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\PHPUnit());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Composer());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Fresh());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\LogsTail());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Bash());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Maint());
 
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Create());
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());

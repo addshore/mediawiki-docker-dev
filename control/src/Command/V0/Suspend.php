@@ -15,6 +15,7 @@ class Suspend extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->setDescription('Suspends an already running development system.');
 		$this->setHelp('Suspends an already running development system.');
 	}

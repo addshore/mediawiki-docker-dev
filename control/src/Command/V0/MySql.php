@@ -14,6 +14,7 @@ class MySql extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->setDescription('Runs mysql cli in the specified mysql service.');
 		$this->setHelp('Runs mysql cli in the specified mysql service.');
 		$this->addArgument('host');

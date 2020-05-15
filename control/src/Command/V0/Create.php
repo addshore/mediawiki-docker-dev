@@ -21,6 +21,7 @@ class Create extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->setDescription('Create and start the containers, installing a default site.');
 		$this->setHelp('Create and start the containers, installing a default site.');
 	}

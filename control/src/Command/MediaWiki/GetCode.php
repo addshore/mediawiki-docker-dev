@@ -24,6 +24,9 @@ class GetCode extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$mwPath = (new DotEnv())->getValue('DOCKER_MW_PATH');
 
+		$output->writeln("MWDD: this code path has not fully been tested yet, and might have issues...");
+		$output->writeln("MWDD: you can always fallback to the documented manual setup in the README.md");
+
 		$output->writeln("Your currently configured MediaWiki path is: " . $mwPath);
 		$helper = $this->getHelper('question');
 		$question = new ConfirmationQuestion('Would you like to fetch code there??', false);

@@ -16,6 +16,7 @@ class AddSite extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->setDescription('Adds a new site to the setup.');
 		$this->setHelp('Adds a new site to the setup.');
 		$this->addArgument( 'site' );

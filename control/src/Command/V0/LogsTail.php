@@ -15,6 +15,7 @@ class LogsTail extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->addArgument('log' );
 		$this->ignoreValidationErrors();
 	}

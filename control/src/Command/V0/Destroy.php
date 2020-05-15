@@ -14,6 +14,7 @@ class Destroy extends Command
 
 	protected function configure()
 	{
+		$this->setHidden(true);
 		$this->setDescription('Shut down all containers, and destroy them. Also deletes databases and volumes.');
 		$this->setHelp('Shut down all containers, and destroy them. Also deletes databases and volumes.');
 	}

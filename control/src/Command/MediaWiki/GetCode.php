@@ -36,15 +36,12 @@ class GetCode extends Command {
 			return 0;
 		}
 
-		// TODO is this shell conversion needed elsewhere.. YES (to get rid of ~)?
-		$dir = trim(shell_exec('realpath ' . $mwPath));
-		$mwDir = new MediaWikiDir( $dir );
+		$mwDir = new MediaWikiDir( $mwPath );
 
 		// Clone the minimum needed code
-		$mwDir->ensurePresent();
 		( new Git() )->clone( 'https://gerrit.wikimedia.org/r/mediawiki/core', $mwDir );
 		( new Git() )->clone( 'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector',
-			$dir
+			$mwDir
 			. '/mediawiki/skins/Vector' );
 
 		// Run composer install (not as part of compose)

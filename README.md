@@ -37,7 +37,7 @@ See [How can I use Docker without sudo](https://askubuntu.com/questions/477551/h
 #### 5) Clone this repository
 
 ```bash
-git clone https://github.com/addshore/mediawiki-docker-dev.git
+    git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
 **TODO also you need to composer install in the control directory currently.**

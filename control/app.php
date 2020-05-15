@@ -41,6 +41,7 @@ $application->add(new \Addshore\Mwdd\Command\MediaWiki\LogsTail());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Bash());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Maint());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Quibble());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\InstallSite());
 
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Create());
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());

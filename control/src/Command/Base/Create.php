@@ -62,7 +62,7 @@ EOT
 		}
 		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ 'host' => 'proxy.mw.localhost' ]), $output );
 
-		$this->getApplication()->find('v0:addsite')->run( new ArrayInput([ 'site' => 'default' ]), $output );
+		$this->getApplication()->find('mw:installsite')->run( new ArrayInput([ 'site' => 'default' ]), $output );
 
 		$output->writeln('Your development environment is running');
 		$output->writeln('You may need to update your hosts file (see .hosts and hosts-sync files)!!');

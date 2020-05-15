@@ -1,0 +1,22 @@
+version: '2.2'
+
+# Service wrapper around what is provided by fresh
+# https://github.com/wikimedia/fresh/blob/master/bin/fresh-node10
+
+services:
+  mw-quibble:
+    image: docker-registry.wikimedia.org/releng/quibble-stretch-php72:latest
+# Commented out as quibble shouldn't be writing to /src?
+#    user: "${UID}:${GID}"
+    entrypoint: /bin/sh
+    command: -c "echo started"
+    working_dir: /src
+    networks:
+      - dps
+    dns:
+      - 172.0.0.10
+    volumes:
+      # Only mount code and config, don't mount logs or image
+      # TODO is this bit of config even needed?
+      - "${DOCKER_MW_PATH}:/workspace/src:cached"
+      - ./config/mediawiki:/workspace/src/.docker:ro

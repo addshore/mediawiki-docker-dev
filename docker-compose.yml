@@ -154,6 +154,11 @@ services:
     volumes:
       - "${DOCKER_MW_PATH}:/workspace/src:cached"
       - ./config/mediawiki:/workspace/src/.docker:ro
+    environment:
+      - MW_SERVER=http://default.web.mw.localhost:${DOCKER_MW_PORT}
+      - MW_SCRIPT_PATH=/mediawiki
+      - MEDIAWIKI_USER=Admin
+      - MEDIAWIKI_PASSWORD=dockerpass
     dns:
       - 172.0.0.10
     networks:

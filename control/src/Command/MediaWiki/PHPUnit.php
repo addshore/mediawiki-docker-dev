@@ -21,9 +21,10 @@ class PHPUnit extends Command
 		$this->addArgument('testPath', InputOption::VALUE_REQUIRED );
 		$this->addOption('wiki', 'w', InputOption::VALUE_OPTIONAL, 'The wiki to run the tests for', 'default');
 		$this->addOption('args', 'a', InputOption::VALUE_OPTIONAL, 'String of extra arguments to pass to phpunit.php', '');
-//		$this->addOption('debug', 'd', InputOption::VALUE_OPTIONAL, 'Enable debugger');
+		$this->addOption('debug', 'd', InputOption::VALUE_OPTIONAL, 'Enable debugger');
 
 		$this->addUsage('tests/phpunit/includes/StatusTest.php');
+		$this->addUsage('-d=1 tests/phpunit/includes/StatusTest.php');
 		$this->addUsage('tests/phpunit/includes/StatusTest.php --wiki otherwiki');
 		$this->addUsage('extensions/Wikibase/lib/tests/phpunit/Store/Sql/TermSqlIndexTest.php');
 	}
@@ -37,14 +38,13 @@ class PHPUnit extends Command
 		}
 		$wiki = $input->getOption('wiki');
 		$args = $input->getOption('args');
-//		$debugPrefix = '';
-//		if($input->hasOption('debug')) {
-//			$debugPrefix = 'export XDEBUG_CONFIG=\'remote_host=${XDEBUG_REMOTE_HOST}\' ';
-//		}
-		// TODO allow passing in the optional debug prefix...
+		$debugPrefix = '';
+		if($input->getOption('debug')) {
+			$debugPrefix = 'XDEBUG_CONFIG=\"remote_host=${XDEBUG_REMOTE_HOST}\" ';
+		}
 		(new DockerCompose())->exec(
 			Base::SRV_MEDIAWIKI,
-			"sh -c \"php //var/www/mediawiki/tests/phpunit/phpunit.php ${args} --wiki ${wiki} //var/www/mediawiki/${path}\""
+			"sh -c \"${debugPrefix}php //var/www/mediawiki/tests/phpunit/phpunit.php ${args} --wiki ${wiki} //var/www/mediawiki/${path}\""
 		);
 		return 0;
 	}

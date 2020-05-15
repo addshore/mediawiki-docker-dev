@@ -42,7 +42,7 @@ class GetCode extends Command {
 		( new Git() )->clone( 'https://gerrit.wikimedia.org/r/mediawiki/core', $mwDir );
 		( new Git() )->clone( 'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector',
 			$mwDir
-			. '/mediawiki/skins/Vector' );
+			. '/skins/Vector' );
 
 		// Run composer install (not as part of compose)
 		( new Docker() )->runComposerInstall( $mwDir );

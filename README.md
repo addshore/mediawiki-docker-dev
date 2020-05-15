@@ -40,12 +40,15 @@ See [How can I use Docker without sudo](https://askubuntu.com/questions/477551/h
 git clone https://github.com/addshore/mediawiki-docker-dev.git
 ```
 
+**TODO also you need to composer install in the control directory currently.**
+**TODO also you need to copy default.env into a local.env file!**
+
 ### Alias for your pleasure (highly recommended)
 
 Create an alias like this so that you can run the command from anywhere.
 
 ```bash
-alias mwdd='_(){ (export MWDD_S_DIR=$(pwd);cd /$GITPATH/github/addshore/mediawiki-docker-dev; ./mwdd $@) ;}; _'
+alias mwdd='_(){ (export MWDD_S_DIR=$(pwd);cd ~/mwdd; ./mwdd $@) ;}; _'
 ```
 
 [Maybe you want to create a permanent alias](https://askubuntu.com/a/17538/1066974).

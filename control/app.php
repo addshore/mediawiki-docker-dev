@@ -40,6 +40,7 @@ $application->add(new \Addshore\Mwdd\Command\MediaWiki\Fresh());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\LogsTail());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Bash());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Maint());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Quibble());
 
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Create());
 $application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());
@@ -50,6 +51,10 @@ $application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Create());
 $application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Suspend());
 $application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Resume());
 
+$application->add(new \Addshore\Mwdd\Command\Statsd\Create());
+$application->add(new \Addshore\Mwdd\Command\Statsd\Suspend());
+$application->add(new \Addshore\Mwdd\Command\Statsd\Resume());
+
 $application->add(new \Addshore\Mwdd\Command\Redis\Create());
 $application->add(new \Addshore\Mwdd\Command\Redis\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Redis\Resume());
@@ -59,6 +64,7 @@ $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Logs());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Destroy());
+$application->add(new \Addshore\Mwdd\Command\DockerCompose\Bash());
 
 $application->add(new \Addshore\Mwdd\Command\Control\Create());
 $application->add(new \Addshore\Mwdd\Command\Control\Suspend());

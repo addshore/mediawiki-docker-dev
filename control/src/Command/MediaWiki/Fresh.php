@@ -40,6 +40,7 @@ EOT
 		// Try to run in the correct directory to run the command in
 		// TODO reuse this code somewhere....
 		$shortcutEnv = getenv('MWDD_S_DIR');
+		$pathInsideMwPath = '';
 		if($shortcutEnv) {
 			$mwPath = (new DotEnv())->getValue('DOCKER_MW_PATH');
 			// Trim /'s from the start and end, and ~ if used as the MW path base
@@ -51,8 +52,6 @@ EOT
 				$splitOnMwPath = explode( $mwPath, $shortcutEnv );
 				$pathInsideMwPath = $splitOnMwPath[1];
 			}
-		} else {
-			$pathInsideMwPath = '';
 		}
 
 		$args = $input->getArgument('args');

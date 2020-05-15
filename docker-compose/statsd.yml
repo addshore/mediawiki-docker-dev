@@ -1,0 +1,17 @@
+version: '2.2'
+
+services:
+  graphite-statsd:
+    image: hopsoft/graphite-statsd
+    environment:
+      - VIRTUAL_HOST=graphite.mw.localhost
+    hostname: graphite.mw.localhost
+    dns:
+      - 172.0.0.10
+    networks:
+      - dps
+    volumes:
+      - graphite-statsd-data:/opt/graphite/storage
+
+volumes:
+  graphite-statsd-data:

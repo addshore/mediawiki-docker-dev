@@ -189,6 +189,8 @@ TBA content
 
 #### Tools
 
+Your best bet is to look at the help output of the command to find tools...
+
 ##### MediaWiki PhpUnit
 
 ```bash
@@ -203,6 +205,12 @@ TBA content
 
  - Currently a bit slow (currently runs up each time).
  - Also needs to use a locally stored composer package cache!
+
+##### MediaWiki Fresh
+
+```bash
+./mwdd mw:fresh npm ci
+```
 
 #### Other Services
 
@@ -247,6 +255,16 @@ You might consider running redis-cli to see the data stored in redis:
 ```
 
 MediaWiki will automatically start reading from the second DB server.
+
+##### Graphite & Statsd
+
+
+```bash
+./mwdd statsd:create
+```
+
+When this service is running $wgStatsdServer will automaticaly be configred to point to it.
+
 
 # TODO fix everything below here
 

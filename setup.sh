@@ -4,11 +4,11 @@ set -eu
 mkdir -p "$INSTALL_DIR"
 [[ ! -d $HOME/.composer ]] && mkdir $HOME/.composer
 
-git clone --depth 1 https://gerrit.wikimedia.org/r/mediawiki/core "$INSTALL_DIR"/mediawiki
-git clone --depth 1 https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "$INSTALL_DIR"/mediawiki/skins/Vector
-
 
 DOCKER_MW_PATH="$INSTALL_DIR"/mediawiki
+
+git clone --depth 1 https://gerrit.wikimedia.org/r/mediawiki/core "$DOCKER_MW_PATH"
+git clone --depth 1 https://gerrit.wikimedia.org/r/mediawiki/skins/Vector "$DOCKER_MW_PATH"/skins/Vector
 
 echo "DOCKER_MW_PATH=$DOCKER_MW_PATH" >> local.env
 

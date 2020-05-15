@@ -147,6 +147,18 @@ services:
     networks:
       - dps
 
+  quibble:
+    image: docker-registry.wikimedia.org/releng/quibble-stretch-php72:latest
+    entrypoint: /bin/sh
+    command: -c "echo started"
+    volumes:
+      - "${DOCKER_MW_PATH}:/workspace/src:cached"
+      - ./config/mediawiki:/workspace/src/.docker:ro
+    dns:
+      - 172.0.0.10
+    networks:
+      - dps
+
 volumes:
   sql-data-master:
   sql-data-slave:

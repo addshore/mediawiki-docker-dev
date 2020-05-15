@@ -47,7 +47,7 @@ EOT
 		# TODO should this be in the entrypoint? YES!
 		(new DockerCompose())->exec(
 			Base::SRV_MEDIAWIKI,
-			'chown ' . (new Id())->ug() . ' //var/log/mediawiki //var/www/mediawiki/images/docker',
+			'chmod 777 //var/log/mediawiki //var/www/mediawiki/images/docker',
 			'--user root'
 		);
 

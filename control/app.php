@@ -52,6 +52,10 @@ $application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Create());
 $application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Suspend());
 $application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Resume());
 
+$application->add(new \Addshore\Mwdd\Command\Adminer\Create());
+$application->add(new \Addshore\Mwdd\Command\Adminer\Suspend());
+$application->add(new \Addshore\Mwdd\Command\Adminer\Resume());
+
 $application->add(new \Addshore\Mwdd\Command\Statsd\Create());
 $application->add(new \Addshore\Mwdd\Command\Statsd\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Statsd\Resume());

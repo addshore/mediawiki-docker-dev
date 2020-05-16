@@ -1,0 +1,12 @@
+version: '2.2'
+
+services:
+  adminer:
+    image: adminer
+    environment:
+      - VIRTUAL_HOST=adminer.mw.localhost
+    hostname: adminer.mw.localhost
+    dns:
+      - 172.0.0.10
+    networks:
+      - dps

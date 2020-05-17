@@ -23,6 +23,7 @@ class Destroy extends Command
 		$output->writeln("Containers and volumes are being destroyed.");
 		(new DockerCompose())->downWithVolumesAndOrphans();
 
+		// This is not related to the destroy functionality, but this is nice to clean this up here...
 		if(file_exists(MWDD_DIR . '/.hosts')) {
 			unlink( MWDD_DIR . '/.hosts' );
 		}

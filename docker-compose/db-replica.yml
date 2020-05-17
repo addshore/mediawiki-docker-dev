@@ -6,15 +6,35 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=toor
     hostname: db-replica.mw.localhost
+    depends_on:
+      - db-master
     dns:
       - 172.0.0.10
     networks:
       - dps
     volumes:
       - sql-data-replica:/var/lib/mysql
-      - ./config/mysql/replica:/tmp/mwdd
-    entrypoint: "/tmp/mwdd/entrypoint.sh"
+      - ./config/mysql/replica:/mwdd-custom
+    entrypoint: "/mwdd-custom/entrypoint.sh"
     command: "mysqld"
+
+  db-replica-configure-replication:
+    image: ${DB}:latest
+    environment:
+      - "MYSQL_REPLICA_PASSWORD=toor"
+      - "MYSQL_MASTER_PASSWORD=toor"
+      - "MYSQL_ROOT_PASSWORD=toor"
+      - "MYSQL_REPLICATION_USER=repl"
+      - "MYSQL_REPLICATION_PASSWORD=repl"
+    depends_on:
+      - db-replica
+    networks:
+      - dps
+    volumes:
+      - ./config/wait-for-it.sh:/wait-for-it.sh:ro
+      - ./config/mysql/replica:/mwdd-custom
+      - db-data-configure-replication:/mwdd-connector
+    command: /bin/bash -x /mwdd-custom/mysql_connector_replica.sh
 
 volumes:
   sql-data-replica:

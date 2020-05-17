@@ -1,20 +1,26 @@
 #!/bin/sh
 
+# Make sure the master db is ready
+//srv/wait-for-it.sh db-master:3306
+
 # Hide the current LocalSettings.php if it exists
-if [ -f /var/www/mediawiki/LocalSettings.php ]
+if [ -f /app/LocalSettings.php ]
 then
-    mv /var/www/mediawiki/LocalSettings.php /var/www/mediawiki/LocalSettings.php.docker.tmp
+    mv /app/LocalSettings.php /app/LocalSettings.php.docker.tmp
 fi
 
 # Install the base Mediawiki tables on the db server & remove the generated LocalSettings.php
-php /var/www/mediawiki/maintenance/install.php --dbuser root --dbpass toor --dbname $1 --dbserver db-master --lang en --pass dockerpass docker-$1 admin
-rm /var/www/mediawiki/LocalSettings.php
+php /app/maintenance/install.php --dbuser root --dbpass toor --dbname $1 --dbserver db-master --lang en --pass dockerpass docker-$1 admin
+
+# Move the generated LocalSettings file, but keep it around incase we want to look at it...
+rm /app/LocalSettings.php.docker.lastgenereated
+mv /app/LocalSettings.php /app/LocalSettings.php.docker.lastgenereated
 
 # Move back the old LocalSettings if we had moved one!
-if [ -f /var/www/mediawiki/LocalSettings.php.docker.tmp ]
+if [ -f /app/LocalSettings.php.docker.tmp ]
 then
-    mv /var/www/mediawiki/LocalSettings.php.docker.tmp /var/www/mediawiki/LocalSettings.php
+    mv /app/LocalSettings.php.docker.tmp /app/LocalSettings.php
 fi
 
 # Run update.php too
-php /var/www/mediawiki/maintenance/update.php --wiki $1 --quick
+php /app/maintenance/update.php --wiki $1 --quick

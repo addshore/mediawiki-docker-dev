@@ -2,26 +2,26 @@
 
 namespace Addshore\Mwdd\Command\Base;
 
-use Addshore\Mwdd\DockerCompose\Base;
-use Addshore\Mwdd\Shell\DockerCompose;
+use Addshore\Mwdd\Files\DotHosts;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Suspend extends Command
+class HostsAdd extends Command
 {
 
-	protected static $defaultName = 'base:suspend';
+	protected static $defaultName = 'base:hosts-add';
 
 	protected function configure()
 	{
-		$this->setDescription('Suspends an already running base systems.');
-		$this->setHelp('Suspends an already running base systems.');
+		$this->setHidden(true);
+		$this->addArgument( 'host' );
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		(new DockerCompose())->stop(Base::SERVICES);
+		$host = $input->getArgument( 'host' );
+		(new DotHosts())->addHost( '127.0.0.1', $host );
 		return 0;
 	}
 }

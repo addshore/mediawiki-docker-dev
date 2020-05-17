@@ -14,10 +14,10 @@ if [ -e "$position_file" ]; then
 fi
 
 echo "Waiting for mysql master to start"
-/mwdd-scripts/wait-for-it.sh  db-master:3306
+/wait-for-it.sh  db-master:3306
 # Wait and double check
 sleep 1
-/mwdd-scripts/wait-for-it.sh  db-master:3306
+/wait-for-it.sh  db-master:3306
 
 echo "* Get the binlog file and position"
 MYSQL01_Position=$(eval "mysql --host db-master -uroot -p$MYSQL_MASTER_PASSWORD -e 'show master status \G' | grep Position | sed -n -e 's/^.*: //p'")

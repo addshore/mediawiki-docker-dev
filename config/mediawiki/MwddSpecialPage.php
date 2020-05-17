@@ -18,6 +18,11 @@ class MwddSpecial extends SpecialPage {
 		$this->getOutput()->addHTML( "Which services are running?" );
 		$this->getOutput()->addHTML( "</br>" );
 		$this->getOutput()->addHTML( json_encode( $mwddServices ) );
+		$this->getOutput()->addHTML( "</br>" );
+		$this->getOutput()->addHTML( "How does DB lag look?" );
+		$this->getOutput()->addHTML( "</br>" );
+		$this->getOutput()->addHTML( json_encode( \MediaWiki\MediaWikiServices::getInstance()->getDBLoadBalancer()->getMaxLag()[1] ) );
+
 	}
 
 }

@@ -3,7 +3,6 @@
 namespace Addshore\Mwdd\Command\Mediawiki;
 
 use Addshore\Mwdd\DockerCompose\Base;
-use Addshore\Mwdd\DockerCompose\Legacy;
 use Addshore\Mwdd\Shell\DockerCompose;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -41,7 +40,7 @@ class Maint extends Command
 		$script = implode( ' ', $input->getArgument('script') );
 		(new DockerCompose())->exec(
 			Base::SRV_MEDIAWIKI,
-			"sh -c \"${debugPrefix}php //var/www/mediawiki/${script} --wiki ${wiki}\""
+			"sh -c \"${debugPrefix}php //app/${script} --wiki ${wiki}\""
 		);
 		return 0;
 	}

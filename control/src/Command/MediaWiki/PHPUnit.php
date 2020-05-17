@@ -44,7 +44,7 @@ class PHPUnit extends Command
 		}
 		(new DockerCompose())->exec(
 			Base::SRV_MEDIAWIKI,
-			"sh -c \"${debugPrefix}php //var/www/mediawiki/tests/phpunit/phpunit.php ${args} --wiki ${wiki} //var/www/mediawiki/${path}\""
+			"sh -c \"${debugPrefix}php //app/tests/phpunit/phpunit.php ${args} --wiki ${wiki} //app/${path}\""
 		);
 		return 0;
 	}

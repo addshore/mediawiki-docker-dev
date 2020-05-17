@@ -1,0 +1,41 @@
+version: '2.2'
+
+services:
+  db-master:
+    image: ${DB}:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+    hostname: db-master.mw.localhost
+    dns:
+      - 172.0.0.10
+    networks:
+      - dps
+    volumes:
+      - db-data-master:/var/lib/mysql
+      - ./config/mysql/master:/mwdd-custom
+    entrypoint: "/mwdd-custom/entrypoint.sh"
+    command: "mysqld"
+    depends_on:
+      # This feels like a backward dependancy, but it makes sense as the replication configure services waits for the master anyway.
+      # and whenever the master is created we want the configure replciation service to run to write the initial file and position for replication..
+      - db-master-configure-replication
+
+  db-master-configure-replication:
+    image: ${DB}:latest
+    environment:
+      - "MYSQL_REPLICA_PASSWORD=toor"
+      - "MYSQL_MASTER_PASSWORD=toor"
+      - "MYSQL_ROOT_PASSWORD=toor"
+      - "MYSQL_REPLICATION_USER=repl"
+      - "MYSQL_REPLICATION_PASSWORD=repl"
+    networks:
+      - dps
+    volumes:
+      - ./config/wait-for-it.sh:/wait-for-it.sh:ro
+      - ./config/mysql/master:/mwdd-custom
+      - db-data-configure-replication:/mwdd-connector
+    command: /bin/bash -x /mwdd-custom/mysql_connector_master.sh
+
+volumes:
+  db-data-master:
+  db-data-configure-replication:

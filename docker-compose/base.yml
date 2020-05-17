@@ -11,70 +11,6 @@ services:
       dps:
         ipv4_address: 172.0.0.10
 
-  db-master:
-    image: ${DB}:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=toor
-    hostname: db-master.mw.localhost
-    dns:
-      - 172.0.0.10
-    networks:
-      - dps
-    volumes:
-      - sql-data-master:/var/lib/mysql
-      - ./config/mysql/master:/tmp/mwdd
-    entrypoint: "/tmp/mwdd/entrypoint.sh"
-    command: "mysqld"
-
-  db-configure:
-    image: ${DB}:latest
-    environment:
-      - "MYSQL_REPLICA_PASSWORD=toor"
-      - "MYSQL_MASTER_PASSWORD=toor"
-      - "MYSQL_ROOT_PASSWORD=toor"
-      - "MYSQL_REPLICATION_USER=repl"
-      - "MYSQL_REPLICATION_PASSWORD=repl"
-    depends_on:
-      - db-master
-    networks:
-      - dps
-    volumes:
-      - ./scripts:/mwdd-scripts
-      - sql-data-configure:/mwdd-connector
-    command: /bin/bash -x /mwdd-scripts/mysql_connector_master.sh
-
-  mediawiki:
-    image: webdevops/php-${WEBSERVER}-dev:${RUNTIMEVERSION}
-    user: "${UID}:${GID}"
-    environment:
-     - WEB_DOCUMENT_ROOT=/var/www
-     # Used by various maintenance scripts to find MediaWiki.
-     # Also required for /var/www/index.php - https://phabricator.wikimedia.org/T153882
-     - MW_INSTALL_PATH=/var/www/mediawiki
-     - VIRTUAL_HOST=*.web.mw.localhost
-     - PHP_DEBUGGER=xdebug
-     - XDEBUG_REMOTE_AUTOSTART=${XDEBUG_REMOTE_AUTOSTART}
-     - XDEBUG_REMOTE_HOST=${IDELOCALHOST}
-     - XDEBUG_REMOTE_PORT=9000
-     - XDEBUG_REMOTE_CONNECT_BACK=0
-     - XDEBUG_PROFILER_ENABLE_TRIGGER=1
-     - PHP_IDE_CONFIG=serverName=docker
-     - PHP_UPLOAD_MAX_FILESIZE=1024M
-     - PHP_POST_MAX_SIZE=1024M
-    hostname: mediawiki.mw.localhost
-    dns:
-      - 172.0.0.10
-    dns_search:
-      - mw.localhost
-    networks:
-      - dps
-    volumes:
-     - "${DOCKER_MW_PATH}:/var/www/mediawiki:cached"
-     - ./config/mediawiki:/var/www/mediawiki/.docker:ro
-     - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
-     - mw-images:/var/www/mediawiki/images/docker:delegated
-     - mw-logs:/var/log/mediawiki:delegated
-
   nginx-proxy:
     # TODO: replace with jwilder/nginx-proxy, once updated
     image: silvanwmde/nginx-proxy:latest
@@ -84,6 +20,8 @@ services:
       - HTTP_PORT=${DOCKER_MW_PORT}      # internal port
     ports:
       - "${DOCKER_MW_PORT}:${DOCKER_MW_PORT}"
+    depends_on:
+      - dps
     hostname: proxy.mw.localhost
     dns:
       - 172.0.0.10
@@ -95,12 +33,6 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./config/nginx/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
       - ./config/nginx/timeouts.conf:/etc/nginx/conf.d/timeouts.conf:ro
-
-volumes:
-  sql-data-master:
-  sql-data-configure:
-  mw-logs:
-  mw-images:
 
 networks:
   dps:

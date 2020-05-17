@@ -5,6 +5,9 @@ services:
     image: adminer
     environment:
       - VIRTUAL_HOST=adminer.mw.localhost
+    depends_on:
+      - dps
+      - nginx-proxy
     hostname: adminer.mw.localhost
     dns:
       - 172.0.0.10

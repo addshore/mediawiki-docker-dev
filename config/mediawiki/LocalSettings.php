@@ -83,7 +83,7 @@ $wgDBprefix = "";
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
 ## Site settings
-$wgScriptPath = "/mediawiki";
+$wgScriptPath = "";
 
 $wgSitename = "docker-$dockerDb";
 $wgMetaNamespace = "Project";

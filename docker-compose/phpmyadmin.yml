@@ -9,6 +9,9 @@ services:
       - PMA_HOSTS=db-master,db-replica
       - PMA_ARBITRARY=1
       - VIRTUAL_HOST=phpmyadmin.mw.localhost
+    depends_on:
+      - dps
+      - nginx-proxy
     hostname: phpmyadmin.mw.localhost
     dns:
       - 172.0.0.10

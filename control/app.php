@@ -29,7 +29,27 @@ define('MWDD_DIR', dirname( __DIR__ ));
 
 $application = new \Symfony\Component\Console\Application('mwdd');
 
+$application->add(new \Addshore\Mwdd\Command\Base\HostsAdd());
+
 // TODO register these using a factory or something...
+$mwHelp = <<<EOH
+MediaWiki.
+
+MediaWiki will be accessible at a location such as: http://default.web.mw.localhost:8080/api.php
+EOH;
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('mw', $mwHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('mw', $mwHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('mw', $mwHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('mw', $mwHelp));
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\GetCode());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\PHPUnit());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Composer());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Fresh());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\LogsTail());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Maint());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Quibble());
+$application->add(new \Addshore\Mwdd\Command\MediaWiki\Install());
+
 $adminerHelp = 'Adminer is a tool for managing content in MySQL databases.';
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('adminer', $adminerHelp));
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('adminer', $adminerHelp));
@@ -55,22 +75,31 @@ $application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('statsd', $stat
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('statsd', $statsdHelp));
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('statsd', $statsdHelp));
 
-$replicaHelp = 'A second SQL server replciating from the master.';
+$masterHelp = <<<EOH
+A primary MySql server (master).
+
+You can alter the image that is used in you local.env file.
+EOH;
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('db', $masterHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('db', $masterHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('db', $masterHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('db', $masterHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Cli('db', 'mysql', $masterHelp));
+
+$replicaHelp = <<< EOH
+A second MySql server with automatic replication from the master.
+
+You can alter the image that is used in you local.env file.
+
+Upon startup it might take a short while for server to catch up with the master, depending on how much data has been written.
+
+You can check the replication status using <info>SHOW SLAVE STATUS</info>
+EOH;
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('db-replica', $replicaHelp));
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('db-replica', $replicaHelp));
-$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('db-replica', $statsdHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('db-replica', $replicaHelp));
 $application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('db-replica', $replicaHelp));
-$application->add(new \Addshore\Mwdd\Command\ServiceBase\Cli('db-replica', 'mysql', $redisHelp));
-
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\GetCode());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\PHPUnit());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\Composer());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\Fresh());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\LogsTail());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\Bash());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\Maint());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\Quibble());
-$application->add(new \Addshore\Mwdd\Command\MediaWiki\InstallSite());
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Cli('db-replica', 'mysql', $replicaHelp));
 
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
@@ -81,11 +110,5 @@ $application->add(new \Addshore\Mwdd\Command\DockerCompose\Bash());
 $application->add(new \Addshore\Mwdd\Command\Control\Create());
 $application->add(new \Addshore\Mwdd\Command\Control\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Control\Bash());
-
-// TODO remove all of these commands...
-$application->add(new \Addshore\Mwdd\Command\V0\Bash());
-$application->add(new \Addshore\Mwdd\Command\V0\HostsAdd());
-$application->add(new \Addshore\Mwdd\Command\V0\AddSite());
-$application->add(new \Addshore\Mwdd\Command\V0\HostsAdd());
 
 $application->run();

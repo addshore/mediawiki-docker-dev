@@ -4,19 +4,23 @@
 position_file=/mwdd-connector/master_position
 file_file=/mwdd-connector/master_file
 
+echo "Waiting for mysql replica to start"
+/wait-for-it.sh  db-master:3306
+/wait-for-it.sh  db-replica:3306
+# Wait and double check
+sleep 1
+/wait-for-it.sh  db-master:3306
+/wait-for-it.sh  db-replica:3306
+
+# TODO add resilience? and wait for the position file to be created...?
+# But this is probably okay, as the replica will take a while to start anyway..
+
 # Only save the data if the files don't already exist
 # They might have been created during another container startup
 if [ ! -e "$position_file" ]; then
     echo "Position file doesnt exist, can't start replication"
     exit 1
 fi
-
-echo "Waiting for mysql replica to start"
-/mwdd-scripts/wait-for-it.sh  db-master:3306
-/mwdd-scripts/wait-for-it.sh  db-replica:3306
-# Double check
-/mwdd-scripts/wait-for-it.sh  db-master:3306
-/mwdd-scripts/wait-for-it.sh  db-replica:3306
 
 echo "* Create replication user"
 

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Create extends Command
 {
 
-	protected static $defaultName = 'base:create';
+	protected static $defaultName = 'baseXXX:create';
 
 	protected function configure()
 	{
@@ -60,7 +60,7 @@ EOT
 		if(file_exists(MWDD_DIR . '/.hosts')) {
 			unlink( MWDD_DIR . '/.hosts' );
 		}
-		$this->getApplication()->find('v0:hosts-add')->run( new ArrayInput([ 'host' => 'proxy.mw.localhost' ]), $output );
+		$this->getApplication()->find('base:hosts-add')->run( new ArrayInput([ 'host' => 'proxy.mw.localhost' ]), $output );
 
 		$this->getApplication()->find('mw:installsite')->run( new ArrayInput([ 'site' => 'default' ]), $output );
 

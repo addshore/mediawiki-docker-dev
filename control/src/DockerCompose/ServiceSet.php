@@ -48,6 +48,10 @@ class ServiceSet {
 		return $this->getServices()[$name];
 	}
 
+	public function getFirstServiceName() {
+		return array_keys($this->getServices())[0];
+	}
+
 	public function getServiceNames() {
 		return array_keys($this->getServices());
 	}
@@ -57,7 +61,7 @@ class ServiceSet {
 
 		// Bail early if there are no environment values
 		if(!array_key_exists('environment', $service)) {
-			return '';
+			return new Parser('');
 		}
 
 		// Replace values from .env that need it
@@ -76,11 +80,19 @@ class ServiceSet {
 		return new Parser(implode(PHP_EOL, $cleanedEnvData));
 	}
 
+	public function getEnvVar( string $serviceName, string $envVarName ) {
+		$environment = $this->getParsedEquivEnvFile( $serviceName );
+		return $environment->getContent( $envVarName );
+	}
+
+	public function getEnvVarForFirstService( string $envVarName ) {
+		return $this->getEnvVar( $this->getFirstServiceName(), $envVarName );
+	}
+
 	public function getVirtualHosts() {
 		$hosts = [];
 		foreach($this->getServiceNames() as $servicesName ) {
-			$environment = $this->getParsedEquivEnvFile( $servicesName );
-			$host = $environment->getContent('VIRTUAL_HOST');
+			$host = $this->getEnvVar( $servicesName, 'VIRTUAL_HOST' );
 			if($host) {
 				$hosts[] = $host;
 			}

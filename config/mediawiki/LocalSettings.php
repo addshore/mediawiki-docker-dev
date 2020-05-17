@@ -97,7 +97,7 @@ $wgCacheDirectory = "{$wgUploadDirectory}/cache";
 
 ## Dev & Debug
 
-$dockerLogDirectory = "/var/log/mediawiki";
+$dockerLogDirectory = getenv( 'MWDD_LOG_DIR' );
 $wgDebugLogFile = "$dockerLogDirectory/debug.log";
 
 ini_set( 'xdebug.var_display_max_depth', -1 );

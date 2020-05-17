@@ -21,7 +21,7 @@ class Destroy extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$output->writeln("Containers and volumes are being destroyed.");
-		(new DockerCompose())->downWithVolumes();
+		(new DockerCompose())->downWithVolumesAndOrphans();
 
 		if(file_exists(MWDD_DIR . '/.hosts')) {
 			unlink( MWDD_DIR . '/.hosts' );

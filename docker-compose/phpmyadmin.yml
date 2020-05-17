@@ -4,8 +4,8 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      - PMA_USER:root
-      - PMA_PASSWORD:toor
+      - PMA_USER=root
+      - PMA_PASSWORD=toor
       - PMA_HOSTS=db-master,db-replica
       - PMA_ARBITRARY=1
       - VIRTUAL_HOST=phpmyadmin.mw.localhost

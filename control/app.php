@@ -29,9 +29,38 @@ define('MWDD_DIR', dirname( __DIR__ ));
 
 $application = new \Symfony\Component\Console\Application('mwdd');
 
-$application->add(new \Addshore\Mwdd\Command\Base\Create());
-$application->add(new \Addshore\Mwdd\Command\Base\Suspend());
-$application->add(new \Addshore\Mwdd\Command\Base\Resume());
+// TODO register these using a factory or something...
+$adminerHelp = 'Adminer is a tool for managing content in MySQL databases.';
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('adminer', $adminerHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('adminer', $adminerHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('adminer', $adminerHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('adminer', $adminerHelp));
+
+$phpMyAdminHelp = 'phpMyAdmin is a free and open source administration tool for MySQL and MariaDB.';
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('phpmyadmin', $phpMyAdminHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('phpmyadmin', $phpMyAdminHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('phpmyadmin', $phpMyAdminHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('phpmyadmin', $phpMyAdminHelp));
+
+$redisHelp = 'Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.';
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('redis', $redisHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('redis', $redisHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('redis', $redisHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('redis', $redisHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Cli('redis', 'redis-cli', $redisHelp));
+
+$statsdHelp = 'Statsd and Graphite allow for simple time series data collection.';
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('statsd', $statsdHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('statsd', $statsdHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('statsd', $statsdHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('statsd', $statsdHelp));
+
+$replicaHelp = 'A second SQL server replciating from the master.';
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Create('db-replica', $replicaHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Suspend('db-replica', $replicaHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Resume('db-replica', $statsdHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Exec('db-replica', $replicaHelp));
+$application->add(new \Addshore\Mwdd\Command\ServiceBase\Cli('db-replica', 'mysql', $redisHelp));
 
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\GetCode());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\PHPUnit());
@@ -43,28 +72,6 @@ $application->add(new \Addshore\Mwdd\Command\MediaWiki\Maint());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\Quibble());
 $application->add(new \Addshore\Mwdd\Command\MediaWiki\InstallSite());
 
-$application->add(new \Addshore\Mwdd\Command\DbReplica\Create());
-$application->add(new \Addshore\Mwdd\Command\DbReplica\Suspend());
-$application->add(new \Addshore\Mwdd\Command\DbReplica\Resume());
-$application->add(new \Addshore\Mwdd\Command\DbReplica\MySql());
-
-$application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Create());
-$application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Suspend());
-$application->add(new \Addshore\Mwdd\Command\PhpMyAdmin\Resume());
-
-$application->add(new \Addshore\Mwdd\Command\Adminer\Create());
-$application->add(new \Addshore\Mwdd\Command\Adminer\Suspend());
-$application->add(new \Addshore\Mwdd\Command\Adminer\Resume());
-
-$application->add(new \Addshore\Mwdd\Command\Statsd\Create());
-$application->add(new \Addshore\Mwdd\Command\Statsd\Suspend());
-$application->add(new \Addshore\Mwdd\Command\Statsd\Resume());
-
-$application->add(new \Addshore\Mwdd\Command\Redis\Create());
-$application->add(new \Addshore\Mwdd\Command\Redis\Suspend());
-$application->add(new \Addshore\Mwdd\Command\Redis\Resume());
-$application->add(new \Addshore\Mwdd\Command\Redis\Cli());
-
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Raw());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Ps());
 $application->add(new \Addshore\Mwdd\Command\DockerCompose\Logs());
@@ -75,17 +82,9 @@ $application->add(new \Addshore\Mwdd\Command\Control\Create());
 $application->add(new \Addshore\Mwdd\Command\Control\Suspend());
 $application->add(new \Addshore\Mwdd\Command\Control\Bash());
 
-$application->add(new \Addshore\Mwdd\Command\V0\Suspend());
-$application->add(new \Addshore\Mwdd\Command\V0\Resume());
+// TODO remove all of these commands...
 $application->add(new \Addshore\Mwdd\Command\V0\Bash());
-$application->add(new \Addshore\Mwdd\Command\V0\MySql());
-$application->add(new \Addshore\Mwdd\Command\V0\PHPUnit());
-$application->add(new \Addshore\Mwdd\Command\V0\PHPUnitFile());
-$application->add(new \Addshore\Mwdd\Command\V0\Script());
-$application->add(new \Addshore\Mwdd\Command\V0\LogsTail());
 $application->add(new \Addshore\Mwdd\Command\V0\HostsAdd());
-$application->add(new \Addshore\Mwdd\Command\V0\Create());
-$application->add(new \Addshore\Mwdd\Command\V0\Destroy());
 $application->add(new \Addshore\Mwdd\Command\V0\AddSite());
 $application->add(new \Addshore\Mwdd\Command\V0\HostsAdd());
 

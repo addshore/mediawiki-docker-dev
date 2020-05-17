@@ -56,8 +56,8 @@ class DockerCompose {
 		$this->passthruDc( $shell );
 	}
 
-	public function downWithVolumes() {
-		$shell = $this->cmd . " down -v";
+	public function downWithVolumesAndOrphans() {
+		$shell = $this->cmd . " down --volumes --remove-orphans";
 		$this->passthruDc( $shell );
 	}
 

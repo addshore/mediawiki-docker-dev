@@ -4,6 +4,7 @@ namespace Addshore\Mwdd\Command\MediaWiki;
 
 use Addshore\Mwdd\DockerCompose\Base;
 use Addshore\Mwdd\Shell\DockerCompose;
+use Addshore\Mwdd\Shell\Id;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,9 +43,14 @@ class PHPUnit extends Command
 		if($input->getOption('debug')) {
 			$debugPrefix = 'XDEBUG_CONFIG=\"remote_host=${XDEBUG_REMOTE_HOST}\" ';
 		}
+
+		$ug = (new Id())->ug();
+		// This runs in the mediawiki service currently, but we could consider running it as a tool (similar to fresh etc)
+		// exec instead of run so that we don't load the depends ons..... (but we could state not to load them?)
 		(new DockerCompose())->exec(
 			Base::SRV_MEDIAWIKI,
-			"sh -c \"${debugPrefix}php //app/tests/phpunit/phpunit.php ${args} --wiki ${wiki} //app/${path}\""
+			"sh -c \"${debugPrefix}php //app/tests/phpunit/phpunit.php ${args} --wiki ${wiki} //app/${path}\"",
+			"--user ${ug}"
 		);
 		return 0;
 	}

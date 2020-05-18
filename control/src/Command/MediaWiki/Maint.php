@@ -4,6 +4,7 @@ namespace Addshore\Mwdd\Command\Mediawiki;
 
 use Addshore\Mwdd\DockerCompose\Base;
 use Addshore\Mwdd\Shell\DockerCompose;
+use Addshore\Mwdd\Shell\Id;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,9 +39,13 @@ class Maint extends Command
 
 		$wiki = $input->getOption('wiki');
 		$script = implode( ' ', $input->getArgument('script') );
+
+		$ug = (new Id())->ug();
+		// exec instead of run so that we don't load the depends ons..... (but we could state not to load them?)
 		(new DockerCompose())->exec(
 			Base::SRV_MEDIAWIKI,
-			"sh -c \"${debugPrefix}php //app/${script} --wiki ${wiki}\""
+			"sh -c \"${debugPrefix}php //app/${script} --wiki ${wiki}\"",
+			"--user ${ug}"
 		);
 		return 0;
 	}

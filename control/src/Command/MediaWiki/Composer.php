@@ -62,6 +62,7 @@ EOT
 		(new DockerCompose())->upDetached(MwComposer::SERVICES);
 
 		// TODO mount local .composer cache dir?! (done in getCode a bit already)
+		// User is specified in the docker-compose yml
 		(new DockerCompose())->run(
 			MwComposer::SRV_COMPOSER,
 			"composer " . implode( ' ', $args ),

@@ -68,6 +68,7 @@ EOT
 			$output->writeln('MWDD: WARNING, Your arguments have a " in them, I currently predict something will go wrong.');
 		}
 
+		// User is specified in the docker-compose yml
 		(new DockerCompose())->run(
 			MwFresh::SRV_FRESH,
 			// TODO needs addslashes a little for " ?

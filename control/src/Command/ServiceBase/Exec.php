@@ -4,8 +4,10 @@ namespace Addshore\Mwdd\Command\ServiceBase;
 
 use Addshore\Mwdd\DockerCompose\ServiceSet;
 use Addshore\Mwdd\Shell\DockerCompose;
+use Addshore\Mwdd\Shell\Id;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Exec extends Command
@@ -13,12 +15,14 @@ class Exec extends Command
 
 	public const COMMAND = 'COMMAND';
 	public const SERVICE = 'SERVICE';
+	public const USER = 'user';
 
 	protected $serviceSetName;
 	protected $help;
 
 	protected const DEFAULT_COMMAND = 'Auto detect shell (sh/bash)';
 	protected const DEFAULT_SERVICE = 'Primary / first service';
+	protected const DEFAULT_USER = 'Host machine user';
 
 	public function __construct( string $serviceSetName, string $help ) {
 		$this->serviceSetName = $serviceSetName;
@@ -47,8 +51,17 @@ class Exec extends Command
 			self::DEFAULT_SERVICE
 		);
 
+		$this->addOption(
+			self::USER,
+			null,
+			InputOption::VALUE_OPTIONAL,
+			'Which user to run as',
+			self::DEFAULT_USER
+		);
+
 		$this->addUsage('');
 		$this->addUsage('bash');
+		$this->addUsage('--user=root bash');
 		$this->addUsage('sh');
 		$this->addUsage('sh other-service');
 	}
@@ -69,7 +82,13 @@ class Exec extends Command
 			$service = $serviceSet->getServiceNames()[0];
 		}
 
-		(new DockerCompose())->exec( $service, $command );
+		$user = $input->getOption( self::USER );
+		if($user === self::DEFAULT_USER) {
+			$output->writeln('MWDD: You may see a message saying the user or group ID doesnt exist, but you can ignore it');
+			$user = (new Id())->ug();
+		}
+
+		(new DockerCompose())->exec( $service, $command, '--user ' . $user );
 
 		return 0;
 	}

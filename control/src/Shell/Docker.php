@@ -14,6 +14,10 @@ class Docker {
 	public function runComposerInstall( string $dir ) {
 		// TODO should this method be somewhere else?
 		$homeComposerMntString = "";
+		// TODO make this ALWAYS mount the directory...?
+		// Otherwise the following happens...
+		// Cannot create cache directory /tmp/cache/repo/https---repo.packagist.org/, or directory is not writable. Proceeding without cache
+		// Cannot create cache directory /tmp/cache/files/, or directory is not writable. Proceeding without cache
 		if( file_exists( getenv('HOME') . '/.composer' ) ) {
 			// Note: this relies on the fact that the COMPOSER_HOME value is set to /tmp in the image by default.
 			$homeComposerMntString = "-v " . getenv('HOME') . '/.composer' . ":/tmp";

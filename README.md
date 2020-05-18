@@ -34,16 +34,22 @@ See [How can I use Docker without sudo](https://askubuntu.com/questions/477551/h
 
 [Installation and Configuration](https://www.php.net/manual/en/install.php)
 
-#### 5) Clone this repository
+#### 5) Clone this repository (v1 branch)
 
 ```bash
-    git clone https://github.com/addshore/mediawiki-docker-dev.git
+git clone https://github.com/addshore/mediawiki-docker-dev.git --branch v1 ~/dev
 ```
 
-**TODO also you need to composer install in the control directory currently.**
-**TODO also you need to copy default.env into a local.env file!**
+#### 6) Extra v1 setup
 
-### Alias for your pleasure (highly recommended)
+```bash
+# Composer install the control dir (using docker on linux you can use something like the below)
+docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v ~/dev/control:/app docker.io/composer install
+# Create an basic local.env
+echo "DOCKER_MW_PATH=~/src" >> ~/dev/local.env
+```
+
+#### 7) Alias for your pleasure (highly recommended)
 
 Create an alias like this so that you can run the command from anywhere.
 

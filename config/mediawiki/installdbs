@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Make sure the master db is ready
-//srv/wait-for-it.sh db-master:3306
+/wait-for-it.sh db-master:3306
 
 # Hide the current LocalSettings.php if it exists
 if [ -f /app/LocalSettings.php ]
@@ -12,8 +12,12 @@ fi
 # Install the base Mediawiki tables on the db server & remove the generated LocalSettings.php
 php /app/maintenance/install.php --dbuser root --dbpass toor --dbname $1 --dbserver db-master --lang en --pass dockerpass docker-$1 admin
 
+# Remove previous last generated file if it exists
+if [ -f /app/LocalSettings.php.docker.lastgenereated ]
+then
+    rm /app/LocalSettings.php.docker.lastgenereated
+fi
 # Move the generated LocalSettings file, but keep it around incase we want to look at it...
-rm /app/LocalSettings.php.docker.lastgenereated
 mv /app/LocalSettings.php /app/LocalSettings.php.docker.lastgenereated
 
 # Move back the old LocalSettings if we had moved one!

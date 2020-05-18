@@ -5,6 +5,7 @@ namespace Addshore\Mwdd\Command\Mediawiki;
 use Addshore\Mwdd\Command\TraitForCommandsThatAddHosts;
 use Addshore\Mwdd\DockerCompose\Base;
 use Addshore\Mwdd\Shell\DockerCompose;
+use Addshore\Mwdd\Shell\Id;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,11 +47,14 @@ EOH
 		$output->writeln("Adding new site: " . $site);
 
 		// Make some directories that ONLY exist within the container (anon volume)
+		// TODO could chown the dirs to someone else?
 		(new DockerCompose())->exec( Base::SRV_MEDIAWIKI, 'mkdir -m 777 -p //app/images/docker/' . $site );
 		(new DockerCompose())->exec( Base::SRV_MEDIAWIKI, 'mkdir -m 777 -p //app/images/docker/' . $site . '/tmp' );
 		(new DockerCompose())->exec( Base::SRV_MEDIAWIKI, 'mkdir -m 777 -p //app/images/docker/' . $site . '/cache' );
 
-		(new DockerCompose())->exec( Base::SRV_MEDIAWIKI, 'bash //app/.docker/installdbs ' . $site );
+		$ug = (new Id())->ug();
+		// TODO try to output these commands as they are running to the user for observability..?
+		(new DockerCompose())->exec( Base::SRV_MEDIAWIKI, 'bash //mwdd-custom/installdbs ' . $site, "--user ${ug}" );
 
 		$this->addHostsAndPrintOutput( [ $site . '.web.mw.localhost' ], $output );
 		return 0;

@@ -61,6 +61,7 @@ EOT
 		$output->writeln("MWDD: Sorry that this is a bit slow to run (need to think of a nice fix) as it runs up each time");
 		(new DockerCompose())->upDetached(MwComposer::SERVICES);
 
+		// TODO mount local .composer cache dir?! (done in getCode a bit already)
 		(new DockerCompose())->run(
 			MwComposer::SRV_COMPOSER,
 			"composer " . implode( ' ', $args ),

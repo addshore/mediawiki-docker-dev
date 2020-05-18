@@ -79,7 +79,7 @@ class DockerCompose {
 
 	// Command in a new container
 	public function run( string $service, $command, $extraArgString = '' ) {
-		$shell = $this->cmd . " run ${extraArgString} \"${service}\" ${command}";
+		$shell = $this->cmd . " run ${extraArgString} ${service} ${command}";
 		$this->passthruDc( $shell );
 	}
 

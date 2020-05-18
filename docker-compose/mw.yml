@@ -32,8 +32,8 @@ services:
       - dps
     volumes:
      - "${DOCKER_MW_PATH}:/app:cached"
-     - ./config/mediawiki:/app/.docker:ro
-     - ./config/wait-for-it.sh:/srv/wait-for-it.sh:ro
+     - ./config/mediawiki:/mwdd-custom:ro
+     - ./config/wait-for-it.sh:/wait-for-it.sh:ro
      - mw-images:/app/images/docker:delegated
      - mw-logs:/var/log/mediawiki:delegated
 

@@ -6,8 +6,7 @@ version: '2.2'
 services:
   mw-quibble:
     image: docker-registry.wikimedia.org/releng/quibble-stretch-php72:latest
-# Commented out as quibble shouldn't be writing to /src?
-#    user: "${UID}:${GID}"
+    user: "${UID}:${GID}"
     entrypoint: /bin/sh
     command: -c "echo started"
     working_dir: /src
@@ -20,3 +19,12 @@ services:
       # TODO is this bit of config even needed?
       - "${DOCKER_MW_PATH}:/workspace/src:cached"
       - ./config/mediawiki:/workspace/src/.docker:ro
+      # TODO cache should be mounted from the user machine?
+      - mw-quibble-workspace-cache:/workspace/cache
+      - mw-quibble-workspace-log:/workspace/log
+      - mw-quibble-workspace-ref:/workspace/ref
+
+volumes:
+  mw-quibble-workspace-cache:
+  mw-quibble-workspace-log:
+  mw-quibble-workspace-ref:

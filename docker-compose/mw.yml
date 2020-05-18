@@ -35,7 +35,7 @@ services:
      - ./config/mediawiki:/mwdd-custom:ro
      - ./config/wait-for-it.sh:/wait-for-it.sh:ro
      - mw-images:/app/images/docker:delegated
-     - mw-logs:/var/log/mediawiki:delegated
+     - "${DOCKER_MW_LOG_VOLUME}:/var/log/mediawiki:delegated"
 
 volumes:
   mw-logs:

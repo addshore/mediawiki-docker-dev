@@ -18,6 +18,7 @@ services:
      - PHP_IDE_CONFIG=serverName=docker
      - PHP_UPLOAD_MAX_FILESIZE=1024M
      - PHP_POST_MAX_SIZE=1024M
+     - php.apc.enable_cli=1
      # The below env var is not needed by the container, only by MWDD
      - MWDD_LOG_DIR=/var/log/mediawiki/
     hostname: mediawiki.mw.localhost

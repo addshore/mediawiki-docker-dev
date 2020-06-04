@@ -74,6 +74,8 @@ class ServiceSet {
 				$matchesEnvKey = $matches[1][$matchKey];
 				$envLine = str_replace( $match, $dotEnv->getValue($matchesEnvKey), $envLine );
 			}
+			// XXX EVIL SUPER EVIL HACK
+			$envLine = str_replace( 'php.apc.enable_cli', 'php_apc_enable_cli', $envLine );
 			$cleanedEnvData[] = $envLine;
 		}
 

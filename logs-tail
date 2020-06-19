@@ -11,7 +11,7 @@ if [ -z "${1:-}" ]; then
 	echo "    File path relative to /var/log/mediawiki/,"
 	echo "    for example 'debug.log'."
 	echo ""
-	echo "Exampless:"
+	echo "Examples:"
 	echo ""
 	echo "    $ logs-tail debug.log"
 	echo ""

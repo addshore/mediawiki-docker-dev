@@ -12,8 +12,10 @@ from `default.env`.
 ### Semi-automatic Installation
 
 There is a setup script that you can run with `INSTALL_DIR=~/src ./setup.sh` if you already have Docker
-installed and want to skip the manual steps 2-6. Note that `INSTALL_DIR` is the parent directory where MediaWiki
+installed and want to skip the manual steps 2-4. Note that `INSTALL_DIR` is the parent directory where MediaWiki
 core will be downloaded, so in the example above, you would end up with a codebase at `~/src/mediawiki`.
+
+After using the `./setup.sh` script, continue from [step 5](#5-create-a-basic-localsettingsphp).
 
 ### Manual Installation
 

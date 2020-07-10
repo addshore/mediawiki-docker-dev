@@ -348,6 +348,82 @@ services:
 
 Note that the other volumes for the `web` service will be merged, so you don't need to specify every volume mapping from the main `docker-compose.yml` file in your `docker-compose.override.yml` file.
 
+## Adding Wikidata Query Service
+
+Mediawiki-docker-dev can be extended with the wikidata-query service by following these steps.
+
+- Add the following example yaml markup to your `docker-compose.override.yml` file
+- Add a `.htaccess` file in the root of this repository
+- Create a symlink from `/var/www/mediawiki` to `/var/www/w` in your web container so that **wdqs-updater** can reach your local wikibase through `/w/api.php`. Example: `docker exec -it mediawiki-docker-dev_web_1 ln -sn /var/www/mediawiki /var/www/w`
+- Make sure the following exists in your LocalSettings.php. `$wgScriptPath = "/w";` and `$wgArticlePath = "/wiki/$1";`
+
+Example `docker-compose.override.yml`
+```yaml
+version: '2.2'
+
+services:
+  wdqs-updater:
+    image: wikibase/wdqs:latest
+    restart: unless-stopped
+    command: /runUpdate.sh
+    depends_on:
+    - wdqs
+    - web
+    networks:
+     - dps
+    environment:
+     - WIKIBASE_HOST=default.web.mw.localhost:8080
+     - WDQS_HOST=wdqs
+     - WDQS_PORT=9999
+     - WDQS_ENTITY_NAMESPACES=120,122
+    dns:
+     - 172.0.0.10
+  wdqs:
+    image: wikibase/wdqs:latest
+    volumes:
+      - query-service-data:/wdqs/data
+    environment:
+     - WIKIBASE_HOST=default.web.mw.localhost:8080
+     - WDQS_HOST=wdqs.mw.localhost
+     - WDQS_PORT=9999
+     - WDQS_ENTITY_NAMESPACES=120,122
+     - WIKIBASE_SCHEME=http
+    dns:
+      - 172.0.0.10
+    networks:
+      - dps
+    restart: unless-stopped
+    command: /runBlazegraph.sh
+    hostname: wdqs.mw.localhost
+    expose:
+        - 9999
+  wdqs-proxy:
+    image: wikibase/wdqs-proxy
+    restart: unless-stopped
+    environment:
+      - PROXY_PASS_HOST=wdqs:9999
+    ports:
+     - "8989:80"
+    depends_on:
+    - wdqs
+    networks:
+      - dps
+  web:
+    volumes:
+     - .htaccess:/var/www/.htaccess
+
+volumes:
+  query-service-data:
+
+```
+The `.htaccess` file is needed to do rewrites of the requests issued by wdqs-updater. Place the file in the mediawiki-docker-dev source folder and it will be mounted into the web container.
+```
+RewriteEngine On
+
+RewriteRule ^/?wiki(/.*)?$ %{DOCUMENT_ROOT}/mediawiki/index.php [L]
+
+```
+
 ## Troubleshooting
 
 ### MediaWiki

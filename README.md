@@ -304,12 +304,18 @@ docker-compose exec "web" bash -c "cd /var/www/mediawiki/extensions/WikibaseLexe
 
 While using PHP you can use remote xdebug debugging.
 
-To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker.
+To do so you need to set `IDELOCALHOST` in you local.env file to the IP of your local machine (where you run your IDE) as it appears to docker containers.
+
+To determine the IP of your local machine as it appears to the docker container you can try the following:
+* See the default route of the container:
+  ** `./bash` and run `route` and use the "Gateway" for the "default" "Destination"
+  ** Use the ip assigned to your developer machine by your router (e.g. type `ip addr`)
 
 xdebug connections will then be sent to this IP address on port 9000.
 
 Verify in php.ini that `xdebug_remote_host` is set to the value of `IDELOCALHOST` and `xdebug_remote_port` is 9000. (You may need to destroy and create your containers)
 
+**VS Code Configuration**
 If using Visual Studio Code editor, add the following to your `launch.json`.
 
 ```json

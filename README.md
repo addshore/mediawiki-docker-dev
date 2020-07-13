@@ -422,6 +422,10 @@ RewriteEngine On
 
 RewriteRule ^/?wiki(/.*)?$ %{DOCUMENT_ROOT}/mediawiki/index.php [L]
 
+# rewrite /entity/ URLs like wikidata per
+# https://meta.wikimedia.org/wiki/Wikidata/Notes/URI_scheme
+RewriteRule ^/?entity/(.*)$ /wiki/Special:EntityData/$1 [R=303,QSA]
+
 ```
 
 ## Troubleshooting

@@ -77,6 +77,12 @@ class DockerCompose {
 		$this->passthruDc( $shell );
 	}
 
+	// Command in an already running container
+	public function execIt( string $service, $command, $extraArgString = '' ) {
+		$shell = $this->cmd . " exec -e COLUMNS=$(tput cols) -e LINES=$(tput lines) ${extraArgString} \"${service}\" ${command}";
+		$this->passthruDc( $shell );
+	}
+
 	// Command in a new container
 	public function run( string $service, $command, $extraArgString = '' ) {
 		$shell = $this->cmd . " run ${extraArgString} ${service} ${command}";

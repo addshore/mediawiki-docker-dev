@@ -88,7 +88,7 @@ class Exec extends Command
 			$user = (new Id())->ug();
 		}
 
-		(new DockerCompose())->exec( $service, $command, '--user ' . $user );
+		(new DockerCompose())->execIt( $service, $command, '--user ' . $user );
 
 		return 0;
 	}

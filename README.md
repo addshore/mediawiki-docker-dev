@@ -266,6 +266,12 @@ mw-docker-dev phpunit-file default extensions/FileImporter/tests/phpunit
 
 See also <https://www.mediawiki.org/wiki/Manual:PHP_unit_testing>
 
+### Maintenance Scripts
+
+```
+mw-docker-dev script default maintenance/update.php
+```
+
 ### QUnit
 
 To run the QUnit tests from the browser, use [Special:JavaScriptTest](http://default.web.mw.localhost:8080/index.php?title=Special:JavaScriptTest).

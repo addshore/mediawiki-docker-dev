@@ -107,6 +107,7 @@ services:
      - ./config/mediawiki:/var/www/mediawiki/.docker:ro
      - ./scripts/wait-for-it.sh:/srv/wait-for-it.sh:ro
      - mw-images:/var/www/mediawiki/images/docker:delegated
+     - ./config/apache/vhost.conf:/opt/docker/etc/httpd/vhost.common.d/vhost.conf
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:

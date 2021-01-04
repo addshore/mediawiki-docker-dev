@@ -18,6 +18,10 @@ touch local.env
 cat local.env >> .env
 echo >> .env
 
+# Pull latest version of specified containers
+echo "Pulling latest containers"
+docker-compose pull
+
 # Start Containers
 echo "Containers are starting"
 docker-compose up -d

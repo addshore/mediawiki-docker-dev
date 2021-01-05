@@ -4,6 +4,13 @@ This file contains a brief overview of the Majorish changes to the environment.
 
 Most recent changes are at the top.
 
+### 2021
+
+#### January 2021
+
+* Allow encoded url slashes in mediawiki web server [#122](https://github.com/addshore/mediawiki-docker-dev/pull/122)
+* Pull images as part of the `./create` script [#116](https://github.com/addshore/mediawiki-docker-dev/pull/116)
+
 ### 2020
 
 #### March 2020

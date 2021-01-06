@@ -12,7 +12,7 @@ services:
         ipv4_address: 172.0.0.10
 
   db-master:
-    image: ${DB}:latest
+    image: mariadb@sha256:a317e3553e49f718a462f544cfc0ad9f83d705667f73dd9dc774515c338c547a
     environment:
       - MYSQL_ROOT_PASSWORD=toor
     hostname: db-master.mw.localhost
@@ -27,7 +27,7 @@ services:
     command: "mysqld"
 
   db-slave:
-    image: ${DB}:latest
+    image: mariadb@sha256:a317e3553e49f718a462f544cfc0ad9f83d705667f73dd9dc774515c338c547a
     environment:
       - MYSQL_ROOT_PASSWORD=toor
     hostname: db-slave.mw.localhost
@@ -42,7 +42,7 @@ services:
     command: "mysqld"
 
   db-configure:
-    image: ${DB}:latest
+    image: mariadb@sha256:a317e3553e49f718a462f544cfc0ad9f83d705667f73dd9dc774515c338c547a
     environment:
       - "MYSQL_SLAVE_PASSWORD=toor"
       - "MYSQL_MASTER_PASSWORD=toor"

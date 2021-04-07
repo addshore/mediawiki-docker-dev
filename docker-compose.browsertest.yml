@@ -4,7 +4,7 @@ services:
   seleniumtests:
     image: "node:6"
     environment:
-      - "MW_SERVER=http://default.web.mw.localhost"
+      - "MW_SERVER=http://default.web.mw.localhost:8080"
       - "MW_SCRIPT_PATH=/mediawiki"
       - "MEDIAWIKI_USER=lil-seleni"
       - "MEDIAWIKI_PASSWORD=test123456!"

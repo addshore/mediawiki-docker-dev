@@ -19,6 +19,8 @@ services:
       - "${SELENIUM_LOG_PATH}:/app/tests/selenium/log"
     dns:
       - 172.0.0.10
+    dns_search:
+      - mw.localhost
     networks:
       - dps
     depends_on:
@@ -30,6 +32,8 @@ services:
     shm_size: '2gb'
     dns:
       - 172.0.0.10
+    dns_search:
+      - mw.localhost
     networks:
       - dps
     depends_on:

@@ -4,7 +4,7 @@ services:
   seleniumtests:
     image: "node:12"
     environment:
-      - "MW_SERVER=http://default.web.mw.localhost:8080"
+      - "MW_SERVER=http://default.web.mw.local:8080"
       - "MW_SCRIPT_PATH=/mediawiki"
       - "MEDIAWIKI_USER=lil-seleni"
       - "MEDIAWIKI_PASSWORD=test123456!"
@@ -23,10 +23,16 @@ services:
 
   selenium:
     image: selenium/standalone-chrome
-    hostname: selenium.mw.localhost
-    shm_size: '2gb'
+    hostname: selenium.mw.local
+    environment:
+      - JAVA_OPTS=-Dwebdriver.chrome.whitelistedIps=
+    volumes:
+      - /dev/shm:/dev/shm
+#    shm_size: '2gb'
     dns:
       - 172.0.0.10
+    dns_search:
+      - mw.local
     networks:
       - dps
     depends_on:

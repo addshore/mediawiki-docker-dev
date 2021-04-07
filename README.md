@@ -3,7 +3,7 @@
 ## Installation
 
 By default the below steps will install MediaWiki at `~/src/mediawiki`
-and start a server for <http://default.web.mw.localhost:8080>.
+and start a server for <http://default.web.mw.local:8080>.
 
 Many aspect of the container, including the port and MediaWiki path, can be customised
 by creating a `local.env` in the root directory of this project, in which to override one or more variables
@@ -122,14 +122,14 @@ TIMEOUT=${TIMEOUT:-30}
 
 #### 8) Configure name resolution
 
-For host name resolution of the containers inside the docker network, this setup includes [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/), a DNS Proxy server. All wikis at `*.web.mw.localhost` will automatically resolve to the nginx-proxy container's IP address. The web container's name is `mediawiki.mw.localhost` and all other containers can be reached from each other via their corresponding host names, defined in `docker-compose.yml`:
- - `dps.mw.localhost`
- - `db-master.mw.localhost`
- - `db-slave.mw.localhost`
- - `phpmyadmin.mw.localhost`
- - `graphite.mw.localhost`
- - `proxy.mw.localhost`
- - `redis.mw.localhost`
+For host name resolution of the containers inside the docker network, this setup includes [DPS](http://mageddo.github.io/dns-proxy-server/latest/en/), a DNS Proxy server. All wikis at `*.web.mw.local` will automatically resolve to the nginx-proxy container's IP address. The web container's name is `mediawiki.mw.local` and all other containers can be reached from each other via their corresponding host names, defined in `docker-compose.yml`:
+ - `dps.mw.local`
+ - `db-master.mw.local`
+ - `db-slave.mw.local`
+ - `phpmyadmin.mw.local`
+ - `graphite.mw.local`
+ - `proxy.mw.local`
+ - `redis.mw.local`
 
 In order to access the containers by name from your docker host system, there are two different ways:
 
@@ -137,10 +137,10 @@ In order to access the containers by name from your docker host system, there ar
 
 Add the following to your `/etc/hosts` file:
 ```text
-127.0.0.1 default.web.mw.localhost # mediawiki-docker-dev
-127.0.0.1 proxy.mw.localhost # mediawiki-docker-dev
-127.0.0.1 phpmyadmin.mw.localhost # mediawiki-docker-dev
-127.0.0.1 graphite.mw.localhost # mediawiki-docker-dev
+127.0.0.1 default.web.mw.local # mediawiki-docker-dev
+127.0.0.1 proxy.mw.local # mediawiki-docker-dev
+127.0.0.1 phpmyadmin.mw.local # mediawiki-docker-dev
+127.0.0.1 graphite.mw.local # mediawiki-docker-dev
 ```
 You can use the `./hosts-sync` script to try and update it automatically if possible. You may need to use `sudo ./hosts-sync` instead, if the file is not writable by the shell user.
 
@@ -175,7 +175,7 @@ The below documentation assumes this alias in examples, but each of these also w
 
 Create and start containers.
 
-This includes installing a default wiki at [http://default.web.mw.localhost:8080](http://default.web.mw.localhost:8080) with an "Admin" user that has password "dockerpass".
+This includes installing a default wiki at [http://default.web.mw.local:8080](http://default.web.mw.local:8080) with an "Admin" user that has password "dockerpass".
 
 The spec of the system that this command will create is based on environment variables. The default spec resides in `default.env`. You can customize these variable from a file called `local.env`, which you may create in this directory.
 
@@ -268,14 +268,14 @@ See also <https://www.mediawiki.org/wiki/Manual:PHP_unit_testing>
 
 ### QUnit
 
-To run the QUnit tests from the browser, use [Special:JavaScriptTest](http://default.web.mw.localhost:8080/index.php?title=Special:JavaScriptTest).
+To run the QUnit tests from the browser, use [Special:JavaScriptTest](http://default.web.mw.local:8080/index.php?title=Special:JavaScriptTest).
 
 See also <https://www.mediawiki.org/wiki/Manual:JavaScript_unit_testing>.
 
 To run QUnit from the command-line, make sure you have [Node.js v4 or later](https://nodejs.org/) installed on the host, and set the following environment variables:
 
 ```bash
-export MW_SERVER='http://default.web.mw.localhost:8080'
+export MW_SERVER='http://default.web.mw.local:8080'
 export MW_SCRIPT_PATH='/mediawiki'
 ```
 
@@ -296,9 +296,9 @@ docker-compose exec "web" bash -c "cd /var/www/mediawiki/extensions/WikibaseLexe
 
 ## Access
 
-- [Default MediaWiki Site](http://default.web.mw.localhost:8080)
-- [Graphite](http://graphite.mw.localhost:8080)
-- [PhpMyAdmin](http://phpmyadmin.mw.localhost:8080)
+- [Default MediaWiki Site](http://default.web.mw.local:8080)
+- [Graphite](http://graphite.mw.local:8080)
+- [PhpMyAdmin](http://phpmyadmin.mw.local:8080)
 
 ## Debugging
 
@@ -378,7 +378,7 @@ services:
     networks:
      - dps
     environment:
-     - WIKIBASE_HOST=default.web.mw.localhost:8080
+     - WIKIBASE_HOST=default.web.mw.local:8080
      - WDQS_HOST=wdqs
      - WDQS_PORT=9999
      - WDQS_ENTITY_NAMESPACES=120,122
@@ -389,8 +389,8 @@ services:
     volumes:
       - query-service-data:/wdqs/data
     environment:
-     - WIKIBASE_HOST=default.web.mw.localhost:8080
-     - WDQS_HOST=wdqs.mw.localhost
+     - WIKIBASE_HOST=default.web.mw.local:8080
+     - WDQS_HOST=wdqs.mw.local
      - WDQS_PORT=9999
      - WDQS_ENTITY_NAMESPACES=120,122
      - WIKIBASE_SCHEME=http
@@ -400,7 +400,7 @@ services:
       - dps
     restart: unless-stopped
     command: /runBlazegraph.sh
-    hostname: wdqs.mw.localhost
+    hostname: wdqs.mw.local
     expose:
         - 9999
   wdqs-proxy:

@@ -15,4 +15,4 @@ docker-compose exec --user application "web" mkdir -p //var/www/mediawiki/images
 echo "Running install.php script"
 docker-compose exec --user application "web" bash //var/www/mediawiki/.docker/installdbs $1
 
-./hosts-add $1.web.mw.localhost
+./hosts-add $1.web.mw.local

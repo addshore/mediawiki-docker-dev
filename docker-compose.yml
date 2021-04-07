@@ -6,7 +6,7 @@ services:
     image: defreitas/dns-proxy-server
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    hostname: dps.mw.localhost
+    hostname: dps.mw.local
     networks:
       dps:
         ipv4_address: 172.0.0.10
@@ -15,7 +15,7 @@ services:
     image: ${DB}:latest
     environment:
       - MYSQL_ROOT_PASSWORD=toor
-    hostname: db-master.mw.localhost
+    hostname: db-master.mw.local
     dns:
       - 172.0.0.10
     networks:
@@ -30,7 +30,7 @@ services:
     image: ${DB}:latest
     environment:
       - MYSQL_ROOT_PASSWORD=toor
-    hostname: db-slave.mw.localhost
+    hostname: db-slave.mw.local
     dns:
       - 172.0.0.10
     networks:
@@ -66,8 +66,8 @@ services:
      - PMA_PASSWORD:toor
      - PMA_HOSTS=db-master,db-slave
      - PMA_ARBITRARY=1
-     - VIRTUAL_HOST=phpmyadmin.mw.localhost
-    hostname: phpmyadmin.mw.localhost
+     - VIRTUAL_HOST=phpmyadmin.mw.local
+    hostname: phpmyadmin.mw.local
     dns:
       - 172.0.0.10
     networks:
@@ -82,7 +82,7 @@ services:
      # Used by various maintenance scripts to find MediaWiki.
      # Also required for /var/www/index.php - https://phabricator.wikimedia.org/T153882
      - MW_INSTALL_PATH=/var/www/mediawiki
-     - VIRTUAL_HOST=*.web.mw.localhost
+     - VIRTUAL_HOST=*.web.mw.local
      - PHP_DEBUGGER=xdebug
      - XDEBUG_REMOTE_AUTOSTART=${XDEBUG_REMOTE_AUTOSTART}
      - XDEBUG_REMOTE_HOST=${IDELOCALHOST}
@@ -93,11 +93,11 @@ services:
      - PHP_UPLOAD_MAX_FILESIZE=1024M
      - PHP_POST_MAX_SIZE=1024M
      - php.apc.enable_cli=1
-    hostname: mediawiki.mw.localhost
+    hostname: mediawiki.mw.local
     dns:
       - 172.0.0.10
     dns_search:
-      - mw.localhost
+      - mw.local
     networks:
       - dps
     depends_on:
@@ -111,8 +111,8 @@ services:
   graphite-statsd:
     image: hopsoft/graphite-statsd
     environment:
-     - VIRTUAL_HOST=graphite.mw.localhost
-    hostname: graphite.mw.localhost
+     - VIRTUAL_HOST=graphite.mw.local
+    hostname: graphite.mw.local
     dns:
       - 172.0.0.10
     networks:
@@ -124,16 +124,16 @@ services:
     # TODO: replace with jwilder/nginx-proxy, once updated
     image: silvanwmde/nginx-proxy:latest
     environment:
-      - VIRTUAL_HOST=proxy.mw.localhost
-      - HOSTNAMES=.web.mw.localhost      # wildcard name resolution, thanks to DPS
+      - VIRTUAL_HOST=proxy.mw.local
+      - HOSTNAMES=.web.mw.local      # wildcard name resolution, thanks to DPS
       - HTTP_PORT=${DOCKER_MW_PORT}      # internal port
     ports:
       - "${DOCKER_MW_PORT}:${DOCKER_MW_PORT}"
-    hostname: proxy.mw.localhost
+    hostname: proxy.mw.local
     dns:
       - 172.0.0.10
     dns_search:
-      - mw.localhost
+      - mw.local
     networks:
       - dps
     volumes:
@@ -143,7 +143,7 @@ services:
 
   redis:
     image: redis
-    hostname: redis.mw.localhost
+    hostname: redis.mw.local
     dns:
       - 172.0.0.10
     networks:

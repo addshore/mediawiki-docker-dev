@@ -18,7 +18,7 @@ if (
 
 if ( defined( "MW_DB" ) ) {
     $dockerDb = MW_DB;
-    $wgServer = "//$dockerDb.web.mw.localhost:80";
+    $wgServer = "//$dockerDb.web.mw.local:80";
 } elseif( array_key_exists( 'SERVER_NAME', $_SERVER ) ) {
     $dockerHostParts = explode( '.', $_SERVER['SERVER_NAME'] );
     $dockerDb = $dockerHostParts[0];

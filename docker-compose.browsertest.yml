@@ -26,6 +26,7 @@ services:
 
   selenium:
     image: selenium/standalone-chrome
+    hostname: selenium.mw.localhost
     shm_size: '2gb'
     dns:
       - 172.0.0.10

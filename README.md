@@ -54,25 +54,25 @@ git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /srv/dev/git/ger
 Either on your host machine inside the `/srv/dev/git/gerrit/mediawiki` directory (you need [composer locally](https://getcomposer.org/download/)):
 
 ```bash
-composer install
+composer install --ignore-platform-reqs
 ```
 
 or with Docker on Linux,
 
 ```bash
-docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install
+docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install --ignore-platform-reqs
 ```
 
 or with Docker on Windows with bash,
 
 ```bash
-docker run -it --rm -v /$HOME/.composer:/tmp -v /$PWD:/app docker.io/composer install
+docker run -it --rm -v /$HOME/.composer:/tmp -v /$PWD:/app docker.io/composer install --ignore-platform-reqs
 ```
 
 or with Docker on Windows with cmd,
 
 ```cmd
-docker run -it --rm -v %HOMEDRIVE%%HOMEPATH%\.composer:/tmp -v %CD%:/app docker.io/composer install
+docker run -it --rm -v %HOMEDRIVE%%HOMEPATH%\.composer:/tmp -v %CD%:/app docker.io/composer install --ignore-platform-reqs
 ```
 
 #### 5) Create a basic LocalSettings.php

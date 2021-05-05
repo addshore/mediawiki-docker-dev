@@ -6,6 +6,14 @@ Most recent changes are at the top.
 
 ### 2021
 
+#### May 2021
+
+* Add environment variables to the `web` service for newer versions of xdebug [#133](https://github.com/addshore/mediawiki-docker-dev/pull/133)
+
+#### March 2021
+
+* Default `RUNTIMEVERSION` for `web` service switched to 7.4 (as upstream changed their recommendations) [#128](https://github.com/addshore/mediawiki-docker-dev/pull/128)
+
 #### January 2021
 
 * Allow encoded url slashes in mediawiki web server [#122](https://github.com/addshore/mediawiki-docker-dev/pull/122)

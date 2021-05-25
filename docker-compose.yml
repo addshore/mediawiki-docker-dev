@@ -97,6 +97,7 @@ services:
      - PHP_UPLOAD_MAX_FILESIZE=1024M
      - PHP_POST_MAX_SIZE=1024M
      - php.apc.enable_cli=1
+     - PHPUNIT_WIKI
     hostname: mediawiki.mw.localhost
     dns:
       - 172.0.0.10

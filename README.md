@@ -1,12 +1,12 @@
 # Future
 
-At some point in 2021 this repository will no longer be maintained, and my focus will move to supporting "mediawiki-docker-dev" functionality within the "mwcli" tool being developed on Gerrit.
+This repository will no longer be maintained (by Addshore). I'll be focusing on supporting "mediawiki-docker-dev" functionality within the "mwcli" tool being developed on Gerrit.
 
 You can see the full history of [mediawiki-docker-dev outlined in this blog post](https://addshore.com/2021/05/mediawiki-docker-dev-a-history/).
 
-Right now you can see my fork of that tool [here](https://github.com/addshore/mwcli) with mwdd specific docs [here](https://github.com/addshore/mwcli/blob/dev/README-MWDD.md)
+Right now you can see my fork of that tool [here](https://github.com/addshore/mwcli) with [documentation currently on mediawiki.org](https://www.mediawiki.org/wiki/Cli)
 
-If you have concerns please reach out.
+If you have concerns please reach out!
 
 # Instructions
 
